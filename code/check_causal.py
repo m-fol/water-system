@@ -2,7 +2,7 @@ import numpy as np
 import torch
 
 from data import generate_trajectory
-from train_v5 import make
+from train_architectures import make
 from network import STATE_DIM
 
 N_TRAJ = 30

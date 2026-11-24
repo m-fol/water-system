@@ -5,7 +5,7 @@ from data import generate_trajectory
 from kalman_smoother import build_A, calibrate_Q, kalman_filter, rts_smoother
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "results", "smoother.json")
+OUT = os.path.join(HERE, "..", "results", "smoother_uncorrected_timing.json")
 A = build_A()
 
 

@@ -1,29 +1,29 @@
 {
-  "description": "Kalman filter and RTS smoother MSE by regime, 300 trajectories per regime, corrected timing (code/baselines_v10.py). Q calibrated on seeds 4242 (calm) and 4343 (events), not on evaluation seeds. Earlier values: smoother_v3_timing.json.",
-  "regimes": [
-    {
-      "label": "Calm, Q from calm data",
-      "kf": 0.003743870312686134,
-      "rts": 0.00084764596669391,
-      "ratio": 0.226409008832826
-    },
-    {
-      "label": "Calm, Q from event data",
-      "kf": 0.004120575812552305,
-      "rts": 0.0011175999821805712,
-      "ratio": 0.27122422521048684
-    },
-    {
-      "label": "Events, Q from event data",
-      "kf": 0.07171057321948675,
-      "rts": 0.07331291591007771,
-      "ratio": 1.0223445807034148
-    },
-    {
-      "label": "Events, Q from calm data",
-      "kf": 0.09706942529669382,
-      "rts": 0.12942494655279005,
-      "ratio": 1.3333235069353837
-    }
-  ]
+ "description": "Kalman filter and RTS smoother MSE by regime, 300 trajectories per regime, corrected timing (code/kalman_baselines_corrected.py). Q calibrated on seeds 4242 (calm) and 4343 (events), not on evaluation seeds.",
+ "regimes": [
+  {
+   "label": "Calm, Q from calm data",
+   "kf": 0.003743870312686134,
+   "rts": 0.00084764596669391,
+   "ratio": 0.226409008832826
+  },
+  {
+   "label": "Calm, Q from event data",
+   "kf": 0.004120575812552305,
+   "rts": 0.0011175999821805712,
+   "ratio": 0.27122422521048684
+  },
+  {
+   "label": "Events, Q from event data",
+   "kf": 0.07171057321948675,
+   "rts": 0.07331291591007771,
+   "ratio": 1.0223445807034148
+  },
+  {
+   "label": "Events, Q from calm data",
+   "kf": 0.09706942529669382,
+   "rts": 0.12942494655279005,
+   "ratio": 1.3333235069353837
+  }
+ ]
 }

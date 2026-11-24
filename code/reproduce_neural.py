@@ -7,8 +7,8 @@ REPRO = os.path.join(RES, "repro")
 os.makedirs(REPRO, exist_ok=True)
 
 SUITES = {
-    "v5": ("jobs_v5.txt", "train_v5.py", "results_v5.txt"),
-    "v6": ("jobs_v6.txt", "train_v6.py", "results_v6.txt"),
+    "architectures": ("jobs_architectures.txt", "train_architectures.py", "results_architectures.txt"),
+    "controls": ("jobs_architecture_controls.txt", "train_architecture_controls.py", "results_architecture_controls.txt"),
 }
 
 

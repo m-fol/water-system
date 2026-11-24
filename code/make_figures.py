@@ -11,14 +11,14 @@ os.makedirs(FIG, exist_ok=True)
 plt.rcParams.update({"font.size": 11, "figure.dpi": 150, "savefig.bbox": "tight"})
 
 runs = []
-with open(os.path.join(RES, "results_v5.txt"), encoding="utf-8") as f:
+with open(os.path.join(RES, "results_architectures.txt"), encoding="utf-8") as f:
     for line in f:
         if line.startswith("RESULT "):
             runs.append(json.loads(line[len("RESULT "):]))
 by = {}
 for r in runs:
     by.setdefault(r["config"], {})[r["seed"]] = r
-with open(os.path.join(RES, "summary_v5.json"), encoding="utf-8") as f:
+with open(os.path.join(RES, "summary_architectures.json"), encoding="utf-8") as f:
     summary = json.load(f)
 with open(os.path.join(RES, "baselines.json"), encoding="utf-8") as f:
     baselines = json.load(f)

@@ -7,5 +7,5 @@
     "kf": 0.11945556479781604,
     "rts": 0.12017054841915038
   },
-  "description": "Kalman filter and RTS smoother MSE on the 1,000 evaluation trajectories (seed 777), corrected timing (code/baselines_v10.py). Oracle Q calibrated on seed 4242, not an evaluation seed. The earlier values (baselines_v3_timing.json) used the forcing one step late."
+  "description": "Kalman filter and RTS smoother MSE on the 1,000 evaluation trajectories (seed 777), corrected timing (code/kalman_baselines_corrected.py). Oracle Q calibrated on seed 4242, not an evaluation seed. The earlier values (an earlier results file, not included here) used the forcing one step late."
 }
