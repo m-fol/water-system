@@ -341,5 +341,14 @@
     "G_sym_removed_dev": 4.872670270452633e-10
    }
   ]
+ },
+ "random_graphs": {
+  "graphs": 400,
+  "with_unobservable": 86,
+  "unobservable_equals_symmetry": 84,
+  "unobservable_exceeds_symmetry": 2,
+  "max_rel_dev": 0.03912117841306728,
+  "zero_H_cases": 7,
+  "zero_H_max_abs_eig": 1.5706636340983556e-16
  }
 }

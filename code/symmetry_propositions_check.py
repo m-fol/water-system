@@ -73,3 +73,51 @@ for name, (n, tanks, edges) in TD.TOPOS.items():
     print("%-55s |G|=%2d d=%d unobs=%d  |M U|=%.1e  sym-pert resid=%.1e  base=%s (<=log2|G|=%.2f)  unobs after=%d" % (name[:55], len(G), d, ud, inside, sym_keep, chosen, np.log2(len(G)), ud_after))
     for r in rows: print("      eig(W)=%s  eps2*eig(G)=%s  dev=%.1e  Gmin=%.2e  sym-removed dev=%.1e" % (np.array2string(np.array(r["eig_W"]), precision=3), np.array2string(np.array(r["eps2_eig_G"]), precision=3), r["max_rel_dev"], r["G_min_eig"], r["G_sym_removed_dev"]))
 json.dump(res, open(os.path.join("..", "results", "symmetry_propositions_check.json"), "w"), indent=1)
+
+rng2 = np.random.default_rng(11)
+rg = {"graphs": 0, "with_unobservable": 0, "unobservable_equals_symmetry": 0, "unobservable_exceeds_symmetry": 0, "max_rel_dev": 0.0, "zero_H_cases": 0, "zero_H_max_abs_eig": 0.0}
+for _ in range(400):
+    nn = int(rng2.integers(6, 9))
+    ed = set()
+    for j in range(2, nn):
+        ed.add((int(rng2.integers(2, j)) if j > 2 else 2, j) if j > 2 else None)
+    ed.discard(None)
+    ed = [e for e in ed if e[0] != e[1]]
+    extra = int(rng2.integers(0, 4))
+    for _e in range(extra):
+        a, b = sorted(int(x) for x in rng2.choice(np.arange(2, nn), 2, replace=False))
+        if (a, b) not in ed:
+            ed.append((a, b))
+    t1, t2 = (int(x) for x in rng2.choice(np.arange(2, nn), 2, replace=False))
+    ed = [(0, t1), (1, t2)] + ed
+    nodes_seen = {x for e in ed for x in e}
+    if len(nodes_seen) < nn:
+        continue
+    rg["graphs"] += 1
+    tk = [0, 1]; C_ = Cof(nn, tk); A0_ = A_of(nn, tk, ed, np.full(len(ed), K0))
+    d_ = unobs_dim(A0_, C_, nn, 64)
+    if d_ == 0:
+        continue
+    rg["with_unobservable"] += 1
+    G_ = autos(nn, tk, ed); P_ = sum(perm_mat(m, nn) for m in G_) / len(G_)
+    w_, V_ = np.linalg.eigh(np.eye(nn) - P_); symd = int((w_ > 0.5).sum())
+    rg["unobservable_equals_symmetry" if d_ == symd else "unobservable_exceeds_symmetry"] += 1
+    M0_ = Mof(A0_, C_, 64); Uo_, sv_, Vt_ = np.linalg.svd(M0_, full_matrices=True)
+    Ur_ = Uo_[:, :int((sv_ > 1e-9).sum())]; N0_ = Vt_[int((sv_ > 1e-9).sum()):].T
+    u_ = rng2.uniform(-1, 1, len(ed)); a1_ = A1_of(nn, tk, ed, u_)
+    cj_ = [np.zeros((len(C_), d_))]
+    for j in range(1, 64):
+        acc = np.zeros((nn, d_))
+        for i in range(j):
+            acc += np.linalg.matrix_power(A0_, j - 1 - i) @ a1_ @ np.linalg.matrix_power(A0_, i) @ N0_
+        cj_.append(C_ @ acc)
+    c1_ = np.vstack(cj_); pc_ = c1_ - Ur_ @ (Ur_.T @ c1_); H_ = pc_.T @ pc_
+    eps_ = 1e-3; Ae_ = A_of(nn, tk, ed, K0 * (1 + eps_ * u_)); We_ = Mof(Ae_, C_, 64); ev_ = np.linalg.eigvalsh(We_.T @ We_)[:d_]; th_ = np.linalg.eigvalsh(H_) * eps_ ** 2
+    for x, y in zip(ev_, th_):
+        if y > 1e-16:
+            rg["max_rel_dev"] = max(rg["max_rel_dev"], abs(x / y - 1))
+        else:
+            rg["zero_H_cases"] += 1; rg["zero_H_max_abs_eig"] = max(rg["zero_H_max_abs_eig"], abs(float(x)))
+print("random graphs:", rg)
+res["random_graphs"] = rg
+json.dump(res, open(os.path.join("..", "results", "symmetry_propositions_check.json"), "w"), indent=1)
