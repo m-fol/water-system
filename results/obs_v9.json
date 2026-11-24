@@ -1,0 +1,68 @@
+{
+ "prior_A_variance_along_v": 0.06479559462444123,
+ "prior_B_variance_along_v": 0.24999999999999994,
+ "A_empirical_T6": {
+  "homogeneous": {
+   "reduction_along_v": 6.563151207072959e-05,
+   "reduction_along_weakest": 6.563151206950835e-05,
+   "cos_weakest_v": 1.0
+  },
+  "heterogeneous": {
+   "reduction_along_v_median": 0.0067825408036625845,
+   "reduction_along_v_min": 5.029471782713735e-05,
+   "reduction_along_v_max": 0.08049752082319683,
+   "reduction_along_weakest_median": 0.04293829518051895,
+   "reduction_along_weakest_max": 0.2697793163603932,
+   "cos_weakest_v_median": 0.9984988481582873,
+   "cos_weakest_v_min": 0.9901279593341505
+  }
+ },
+ "A_empirical_T64": {
+  "homogeneous": {
+   "reduction_along_v": 7.708665069683374e-05,
+   "reduction_along_weakest": 7.708665069572351e-05,
+   "cos_weakest_v": 0.9999999999999999
+  },
+  "heterogeneous": {
+   "reduction_along_v_median": 0.021571263840284405,
+   "reduction_along_v_min": 7.549311411814141e-05,
+   "reduction_along_v_max": 0.13740565560701568,
+   "reduction_along_weakest_median": 0.02001466027188553,
+   "reduction_along_weakest_max": 0.1251976369387371,
+   "cos_weakest_v_median": 0.9983198619659124,
+   "cos_weakest_v_min": 0.9911468374699823
+  }
+ },
+ "B_independent_T6": {
+  "homogeneous": {
+   "reduction_along_v": 4.440892098500626e-16,
+   "reduction_along_weakest": 4.440892098500626e-16,
+   "cos_weakest_v": 1.0
+  },
+  "heterogeneous": {
+   "reduction_along_v_median": 0.02239548049643847,
+   "reduction_along_v_min": 1.0187275938378093e-06,
+   "reduction_along_v_max": 0.22705396980208603,
+   "reduction_along_weakest_median": 0.019258303070520733,
+   "reduction_along_weakest_max": 0.21853094268867912,
+   "cos_weakest_v_median": 0.9984988481582873,
+   "cos_weakest_v_min": 0.9901279593341505
+  }
+ },
+ "B_independent_T64": {
+  "homogeneous": {
+   "reduction_along_v": 1.7763568394002505e-15,
+   "reduction_along_weakest": 1.9984014443252818e-15,
+   "cos_weakest_v": 0.9999999999999999
+  },
+  "heterogeneous": {
+   "reduction_along_v_median": 0.06931066011145315,
+   "reduction_along_v_min": 2.143487321637494e-06,
+   "reduction_along_v_max": 0.355165008208994,
+   "reduction_along_weakest_median": 0.06702738940927544,
+   "reduction_along_weakest_max": 0.3457413532946133,
+   "cos_weakest_v_median": 0.9983198619659124,
+   "cos_weakest_v_min": 0.9911468374699823
+  }
+ }
+}

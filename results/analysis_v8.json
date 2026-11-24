@@ -1,0 +1,87 @@
+{
+  "prior_only_J2_minus_J4": {
+    "train_variance_in_v": 0.06479220985440909,
+    "const_mean": -0.00010612275445324133,
+    "per_test_set": [
+      {
+        "seed_eval": 777,
+        "mse_const_mean": 0.07141008423244102,
+        "mse_time_mean": 0.07147390437158986
+      },
+      {
+        "seed_eval": 888,
+        "mse_const_mean": 0.06879966995614094,
+        "mse_time_mean": 0.06879590722181288
+      },
+      {
+        "seed_eval": 999,
+        "mse_const_mean": 0.06821933696497837,
+        "mse_time_mean": 0.06830360397543114
+      }
+    ],
+    "mse_const_mean_avg": 0.06947636371785344,
+    "mse_time_mean_avg": 0.06952447185627796
+  },
+  "gramian_noise_normalised": {
+    "homogeneous_T6": {
+      "lambda_min_normalised": -2.908784324517988e-14,
+      "posterior_sd_unit_prior": 1.0000000000000147,
+      "alignment_with_v": 0.9999999999999998
+    },
+    "homogeneous_T64": {
+      "lambda_min_normalised": 3.130828929442537e-14,
+      "posterior_sd_unit_prior": 0.9999999999999843,
+      "alignment_with_v": 0.9999999999999999
+    },
+    "heterogeneous_T6": {
+      "lambda_min_normalised_median": 0.0785458803569086,
+      "lambda_min_normalised_min": 3.7579034112213943e-06,
+      "lambda_min_normalised_max": 1.1185647884283754,
+      "posterior_sd_unit_prior_median": 0.96289890388074
+    },
+    "heterogeneous_T64": {
+      "lambda_min_normalised_median": 0.28738066747853797,
+      "lambda_min_normalised_min": 8.260182740278461e-06,
+      "lambda_min_normalised_max": 2.1137900433453707,
+      "posterior_sd_unit_prior_median": 0.8813541473612925
+    }
+  },
+  "sensor_placement": {
+    "none": {
+      "kf_mse": 0.08450006611264876,
+      "kf_mse_antisym": 0.06942503833078643,
+      "kf_model_posterior_var_antisym": 0.1294896934769254,
+      "ridge64_mse": 0.0874646720019898,
+      "ridge64_mse_antisym": 0.07006057923206009
+    },
+    "J1": {
+      "kf_mse": 0.039718727308674644,
+      "kf_mse_antisym": 0.06942765194311896,
+      "kf_model_posterior_var_antisym": 0.1294896569784301,
+      "ridge64_mse": 0.035610713055292974,
+      "ridge64_mse_antisym": 0.07055549303462201
+    },
+    "J2": {
+      "kf_mse": 0.03979690222878382,
+      "kf_mse_antisym": 0.06260724110785061,
+      "kf_model_posterior_var_antisym": 0.0634574258163667,
+      "ridge64_mse": 0.03345237717757729,
+      "ridge64_mse_antisym": 0.04986517642941312
+    },
+    "J3": {
+      "kf_mse": 0.04088395339033457,
+      "kf_mse_antisym": 0.0694251230688343,
+      "kf_model_posterior_var_antisym": 0.12948967719663973,
+      "ridge64_mse": 0.03562272747111749,
+      "ridge64_mse_antisym": 0.07027337008100053
+    },
+    "J4": {
+      "kf_mse": 0.03968214188194585,
+      "kf_mse_antisym": 0.06200712887138016,
+      "kf_model_posterior_var_antisym": 0.06359388620351873,
+      "ridge64_mse": 0.03315827741814633,
+      "ridge64_mse_antisym": 0.04895082664159458
+    }
+  },
+  "notes": "KF rows use the first 300 trajectories of each of the three test sets. Extra sensor has the same noise std as the tanks and is never dropped. Ridge: 300 training trajectories (seed 1), lambda=1e-3."
+}

@@ -1,0 +1,20 @@
+{
+ "time_only": {
+  "mse": 0.24338164281100036,
+  "mse_null_dirs": 0.12665149484852312
+ },
+ "kf_known_start": {
+  "mse": 1.2966670533113198,
+  "mse_null_dirs": 0.12655339816518604
+ },
+ "imm_true_known_start": {
+  "mse": 1.405834984192267,
+  "mse_null_dirs": 0.1265700728982732
+ },
+ "imm_supervised_identified": {
+  "mse": 0.0662038421705076,
+  "mse_null_dirs": 0.12732551845626183
+ },
+ "n_unobservable_dirs": 1,
+ "n_test_trajectories": 300
+}

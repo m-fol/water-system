@@ -1,0 +1,766 @@
+{
+ "b1_true": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0009842344224439009,
+    "mean_ratio_to_oracle": 1.0363422875434287
+   },
+   "gram_E": {
+    "mean_mse": 0.0009592836131679056,
+    "mean_ratio_to_oracle": 1.0101082693616679
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009497923176280174,
+    "mean_ratio_to_oracle": 1.0000979758312056
+   },
+   "symmetry": {
+    "mean_mse": 0.0009550506074152325,
+    "mean_ratio_to_oracle": 1.0056359991694632
+   },
+   "bayes": {
+    "mean_mse": 0.0009596072789689142,
+    "mean_ratio_to_oracle": 1.010445475411216
+   },
+   "oracle": {
+    "mean_mse": 0.0009496975718354315,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0010075554887947532,
+    "mean_ratio_to_oracle": 1.10400551537648
+   },
+   "gram_E": {
+    "mean_mse": 0.000944934598043749,
+    "mean_ratio_to_oracle": 1.0347813346351662
+   },
+   "gram_trace": {
+    "mean_mse": 0.00091373751348756,
+    "mean_ratio_to_oracle": 1.001230748017838
+   },
+   "symmetry": {
+    "mean_mse": 0.0010075554887947532,
+    "mean_ratio_to_oracle": 1.10400551537648
+   },
+   "bayes": {
+    "mean_mse": 0.0009325210722138885,
+    "mean_ratio_to_oracle": 1.0214687033953345
+   },
+   "oracle": {
+    "mean_mse": 0.0009126187739444312,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0010686076752491793,
+    "mean_ratio_to_oracle": 1.1374333222476367
+   },
+   "gram_E": {
+    "mean_mse": 0.0010236336796126282,
+    "mean_ratio_to_oracle": 1.0896617998797011
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009393444814498611,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.0010392673721208083,
+    "mean_ratio_to_oracle": 1.1061725934942674
+   },
+   "bayes": {
+    "mean_mse": 0.001025338862839747,
+    "mean_ratio_to_oracle": 1.0914253700290741
+   },
+   "oracle": {
+    "mean_mse": 0.0009393444814498611,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0009245619389701479,
+    "mean_ratio_to_oracle": 1.0256314324612383
+   },
+   "gram_E": {
+    "mean_mse": 0.0009089770659181145,
+    "mean_ratio_to_oracle": 1.0083524112028612
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009015124129316068,
+    "mean_ratio_to_oracle": 1.000054080049064
+   },
+   "symmetry": {
+    "mean_mse": 0.0009065797311678634,
+    "mean_ratio_to_oracle": 1.0056825004157934
+   },
+   "bayes": {
+    "mean_mse": 0.0009111426719148389,
+    "mean_ratio_to_oracle": 1.0107555015238086
+   },
+   "oracle": {
+    "mean_mse": 0.0009014626527871665,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0012445047368157738,
+    "mean_ratio_to_oracle": 1.0341907010525966
+   },
+   "gram_E": {
+    "mean_mse": 0.0012108246741917709,
+    "mean_ratio_to_oracle": 1.006208468702386
+   },
+   "gram_trace": {
+    "mean_mse": 0.001208822805975044,
+    "mean_ratio_to_oracle": 1.004518695143627
+   },
+   "symmetry": {
+    "mean_mse": 0.0012196046044968048,
+    "mean_ratio_to_oracle": 1.0135320979340576
+   },
+   "bayes": {
+    "mean_mse": 0.001209949639484504,
+    "mean_ratio_to_oracle": 1.0055049631629074
+   },
+   "oracle": {
+    "mean_mse": 0.0012033393510861772,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0013224019799757019,
+    "mean_ratio_to_oracle": 1.1533330741116128
+   },
+   "gram_E": {
+    "mean_mse": 0.0012117957889126315,
+    "mean_ratio_to_oracle": 1.05650510584153
+   },
+   "gram_trace": {
+    "mean_mse": 0.00114876368281374,
+    "mean_ratio_to_oracle": 1.0019008302544261
+   },
+   "symmetry": {
+    "mean_mse": 0.0013224019799757019,
+    "mean_ratio_to_oracle": 1.1533330741116128
+   },
+   "bayes": {
+    "mean_mse": 0.0012184788515430104,
+    "mean_ratio_to_oracle": 1.062713778878602
+   },
+   "oracle": {
+    "mean_mse": 0.0011465972867890925,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "n_symmetries": 3,
+   "random": {
+    "mean_mse": 0.0009724955331455501,
+    "mean_ratio_to_oracle": 1.0431020382172622
+   },
+   "gram_E": {
+    "mean_mse": 0.0009389198941466242,
+    "mean_ratio_to_oracle": 1.0071127452889492
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009386575360810237,
+    "mean_ratio_to_oracle": 1.0068062198101928
+   },
+   "symmetry": {
+    "mean_mse": 0.000938918896339802,
+    "mean_ratio_to_oracle": 1.0070966814142293
+   },
+   "bayes": {
+    "mean_mse": 0.0009382714454111205,
+    "mean_ratio_to_oracle": 1.0064243337172842
+   },
+   "oracle": {
+    "mean_mse": 0.0009322980695983709,
+    "mean_ratio_to_oracle": 1.0
+   }
+  }
+ },
+ "b1_nominal": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0009842344224439009,
+    "mean_ratio_to_oracle": 1.0363422875434287
+   },
+   "gram_E": {
+    "mean_mse": 0.0009550506074152325,
+    "mean_ratio_to_oracle": 1.0056359991694632
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009550506074152325,
+    "mean_ratio_to_oracle": 1.0056359991694632
+   },
+   "symmetry": {
+    "mean_mse": 0.0009550506074152325,
+    "mean_ratio_to_oracle": 1.0056359991694632
+   },
+   "bayes": {
+    "mean_mse": 0.0009550506074152325,
+    "mean_ratio_to_oracle": 1.0056359991694632
+   },
+   "oracle": {
+    "mean_mse": 0.0009496975718354315,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0010075554887947532,
+    "mean_ratio_to_oracle": 1.10400551537648
+   },
+   "gram_E": {
+    "mean_mse": 0.0009171186364762879,
+    "mean_ratio_to_oracle": 1.0049236484641417
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009171186364762879,
+    "mean_ratio_to_oracle": 1.0049236484641417
+   },
+   "symmetry": {
+    "mean_mse": 0.0010075554887947532,
+    "mean_ratio_to_oracle": 1.10400551537648
+   },
+   "bayes": {
+    "mean_mse": 0.0009171186364762879,
+    "mean_ratio_to_oracle": 1.0049236484641417
+   },
+   "oracle": {
+    "mean_mse": 0.0009126187739444312,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0010686076752491793,
+    "mean_ratio_to_oracle": 1.1374333222476367
+   },
+   "gram_E": {
+    "mean_mse": 0.0010392673721208083,
+    "mean_ratio_to_oracle": 1.1061725934942674
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009393444814498611,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.0010392673721208083,
+    "mean_ratio_to_oracle": 1.1061725934942674
+   },
+   "bayes": {
+    "mean_mse": 0.0010392673721208083,
+    "mean_ratio_to_oracle": 1.1061725934942674
+   },
+   "oracle": {
+    "mean_mse": 0.0009393444814498611,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0009245619389701479,
+    "mean_ratio_to_oracle": 1.0256314324612383
+   },
+   "gram_E": {
+    "mean_mse": 0.0009065797311678634,
+    "mean_ratio_to_oracle": 1.0056825004157934
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009065797311678634,
+    "mean_ratio_to_oracle": 1.0056825004157934
+   },
+   "symmetry": {
+    "mean_mse": 0.0009065797311678634,
+    "mean_ratio_to_oracle": 1.0056825004157934
+   },
+   "bayes": {
+    "mean_mse": 0.0009065797311678634,
+    "mean_ratio_to_oracle": 1.0056825004157934
+   },
+   "oracle": {
+    "mean_mse": 0.0009014626527871665,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0012445047368157738,
+    "mean_ratio_to_oracle": 1.0341907010525966
+   },
+   "gram_E": {
+    "mean_mse": 0.0012196046044968048,
+    "mean_ratio_to_oracle": 1.0135320979340576
+   },
+   "gram_trace": {
+    "mean_mse": 0.0012196046044968048,
+    "mean_ratio_to_oracle": 1.0135320979340576
+   },
+   "symmetry": {
+    "mean_mse": 0.0012196046044968048,
+    "mean_ratio_to_oracle": 1.0135320979340576
+   },
+   "bayes": {
+    "mean_mse": 0.0012196046044968048,
+    "mean_ratio_to_oracle": 1.0135320979340576
+   },
+   "oracle": {
+    "mean_mse": 0.0012033393510861772,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0013224019799757019,
+    "mean_ratio_to_oracle": 1.1533330741116128
+   },
+   "gram_E": {
+    "mean_mse": 0.0011525615133629059,
+    "mean_ratio_to_oracle": 1.0052042441714697
+   },
+   "gram_trace": {
+    "mean_mse": 0.0011525615133629059,
+    "mean_ratio_to_oracle": 1.0052042441714697
+   },
+   "symmetry": {
+    "mean_mse": 0.0013224019799757019,
+    "mean_ratio_to_oracle": 1.1533330741116128
+   },
+   "bayes": {
+    "mean_mse": 0.0011525615133629059,
+    "mean_ratio_to_oracle": 1.0052042441714697
+   },
+   "oracle": {
+    "mean_mse": 0.0011465972867890925,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "n_symmetries": 3,
+   "random": {
+    "mean_mse": 0.0009724955331455501,
+    "mean_ratio_to_oracle": 1.0431020382172622
+   },
+   "gram_E": {
+    "mean_mse": 0.0009724955331455501,
+    "mean_ratio_to_oracle": 1.0431020382172622
+   },
+   "gram_trace": {
+    "mean_mse": 0.000938918896339802,
+    "mean_ratio_to_oracle": 1.0070966814142293
+   },
+   "symmetry": {
+    "mean_mse": 0.000938918896339802,
+    "mean_ratio_to_oracle": 1.0070966814142293
+   },
+   "bayes": {
+    "mean_mse": 0.000938918896339802,
+    "mean_ratio_to_oracle": 1.0070966814142293
+   },
+   "oracle": {
+    "mean_mse": 0.0009322980695983709,
+    "mean_ratio_to_oracle": 1.0
+   }
+  }
+ },
+ "b2_true": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007492836815143708,
+    "mean_ratio_to_oracle": 1.147628683558214
+   },
+   "gram_E": {
+    "mean_mse": 0.0007578307893931542,
+    "mean_ratio_to_oracle": 1.1608389098623453
+   },
+   "gram_trace": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "bayes": {
+    "mean_mse": 0.0007577541678033334,
+    "mean_ratio_to_oracle": 1.1607152984166702
+   },
+   "oracle": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0007549269484273205,
+    "mean_ratio_to_oracle": 1.1176474191664667
+   },
+   "gram_E": {
+    "mean_mse": 0.0007179846283317301,
+    "mean_ratio_to_oracle": 1.0626601604186505
+   },
+   "gram_trace": {
+    "mean_mse": 0.0006755427512661898,
+    "mean_ratio_to_oracle": 1.00003680142359
+   },
+   "symmetry": {
+    "mean_mse": 0.0007549269484273205,
+    "mean_ratio_to_oracle": 1.1176474191664667
+   },
+   "bayes": {
+    "mean_mse": 0.0007222263045367758,
+    "mean_ratio_to_oracle": 1.069002359108424
+   },
+   "oracle": {
+    "mean_mse": 0.000675516756663232,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007819707839185798,
+    "mean_ratio_to_oracle": 1.131318984505156
+   },
+   "gram_E": {
+    "mean_mse": 0.0007200705995132217,
+    "mean_ratio_to_oracle": 1.0419890888167078
+   },
+   "gram_trace": {
+    "mean_mse": 0.0007179540338177992,
+    "mean_ratio_to_oracle": 1.038975129471363
+   },
+   "symmetry": {
+    "mean_mse": 0.000691741782891634,
+    "mean_ratio_to_oracle": 1.0007750426052886
+   },
+   "bayes": {
+    "mean_mse": 0.0007205382323253264,
+    "mean_ratio_to_oracle": 1.0426554659238405
+   },
+   "oracle": {
+    "mean_mse": 0.0006911977466931203,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007087107074186796,
+    "mean_ratio_to_oracle": 1.1675818471975383
+   },
+   "gram_E": {
+    "mean_mse": 0.0007201597929245299,
+    "mean_ratio_to_oracle": 1.1864400886013624
+   },
+   "gram_trace": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "bayes": {
+    "mean_mse": 0.000720011648390034,
+    "mean_ratio_to_oracle": 1.1861976690252696
+   },
+   "oracle": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.001000389847488693,
+    "mean_ratio_to_oracle": 1.128531938793609
+   },
+   "gram_E": {
+    "mean_mse": 0.0008932271008359805,
+    "mean_ratio_to_oracle": 1.0076457047040517
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009772602557356629,
+    "mean_ratio_to_oracle": 1.102638783873038
+   },
+   "symmetry": {
+    "mean_mse": 0.0009452593147139459,
+    "mean_ratio_to_oracle": 1.0663879227985902
+   },
+   "bayes": {
+    "mean_mse": 0.0008998347274240975,
+    "mean_ratio_to_oracle": 1.0151021705973964
+   },
+   "oracle": {
+    "mean_mse": 0.000886405004034017,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0010268030944660966,
+    "mean_ratio_to_oracle": 1.17665398453593
+   },
+   "gram_E": {
+    "mean_mse": 0.0009193030141931302,
+    "mean_ratio_to_oracle": 1.0535914487348526
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009192545884922358,
+    "mean_ratio_to_oracle": 1.0535349891186534
+   },
+   "symmetry": {
+    "mean_mse": 0.0010268030944660966,
+    "mean_ratio_to_oracle": 1.17665398453593
+   },
+   "bayes": {
+    "mean_mse": 0.0009195322231241261,
+    "mean_ratio_to_oracle": 1.0538421697086258
+   },
+   "oracle": {
+    "mean_mse": 0.0008725220976217341,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "n_symmetries": 3,
+   "random": {
+    "mean_mse": 0.0007982685353262509,
+    "mean_ratio_to_oracle": 1.0508778403856407
+   },
+   "gram_E": {
+    "mean_mse": 0.0007801958312661648,
+    "mean_ratio_to_oracle": 1.0270985287639367
+   },
+   "gram_trace": {
+    "mean_mse": 0.0007754945034038704,
+    "mean_ratio_to_oracle": 1.020921681395189
+   },
+   "symmetry": {
+    "mean_mse": 0.0007759455724914863,
+    "mean_ratio_to_oracle": 1.0214937670502267
+   },
+   "bayes": {
+    "mean_mse": 0.0007808714125516516,
+    "mean_ratio_to_oracle": 1.0280046148184632
+   },
+   "oracle": {
+    "mean_mse": 0.0007596075895610746,
+    "mean_ratio_to_oracle": 1.0
+   }
+  }
+ },
+ "b2_nominal": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007492836815143708,
+    "mean_ratio_to_oracle": 1.147628683558214
+   },
+   "gram_E": {
+    "mean_mse": 0.0007660875564479688,
+    "mean_ratio_to_oracle": 1.1733318206115195
+   },
+   "gram_trace": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "bayes": {
+    "mean_mse": 0.0007660875564479688,
+    "mean_ratio_to_oracle": 1.1733318206115195
+   },
+   "oracle": {
+    "mean_mse": 0.0006528003422620732,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0007549269484273205,
+    "mean_ratio_to_oracle": 1.1176474191664667
+   },
+   "gram_E": {
+    "mean_mse": 0.0006755427512661898,
+    "mean_ratio_to_oracle": 1.00003680142359
+   },
+   "gram_trace": {
+    "mean_mse": 0.0006755427512661898,
+    "mean_ratio_to_oracle": 1.00003680142359
+   },
+   "symmetry": {
+    "mean_mse": 0.0007549269484273205,
+    "mean_ratio_to_oracle": 1.1176474191664667
+   },
+   "bayes": {
+    "mean_mse": 0.0006755427512661898,
+    "mean_ratio_to_oracle": 1.00003680142359
+   },
+   "oracle": {
+    "mean_mse": 0.000675516756663232,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007819707839185798,
+    "mean_ratio_to_oracle": 1.131318984505156
+   },
+   "gram_E": {
+    "mean_mse": 0.0007209691104462476,
+    "mean_ratio_to_oracle": 1.043324494570439
+   },
+   "gram_trace": {
+    "mean_mse": 0.0007209691104462476,
+    "mean_ratio_to_oracle": 1.043324494570439
+   },
+   "symmetry": {
+    "mean_mse": 0.000691741782891634,
+    "mean_ratio_to_oracle": 1.0007750426052886
+   },
+   "bayes": {
+    "mean_mse": 0.0007209691104462476,
+    "mean_ratio_to_oracle": 1.043324494570439
+   },
+   "oracle": {
+    "mean_mse": 0.0006911977466931203,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.0007087107074186796,
+    "mean_ratio_to_oracle": 1.1675818471975383
+   },
+   "gram_E": {
+    "mean_mse": 0.0007187073833676976,
+    "mean_ratio_to_oracle": 1.1840401363619646
+   },
+   "gram_trace": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "symmetry": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   },
+   "bayes": {
+    "mean_mse": 0.0007187073833676976,
+    "mean_ratio_to_oracle": 1.1840401363619646
+   },
+   "oracle": {
+    "mean_mse": 0.000606925277795911,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "n_symmetries": 1,
+   "random": {
+    "mean_mse": 0.001000389847488693,
+    "mean_ratio_to_oracle": 1.128531938793609
+   },
+   "gram_E": {
+    "mean_mse": 0.0008883779528825112,
+    "mean_ratio_to_oracle": 1.0022195390354989
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009452593147139459,
+    "mean_ratio_to_oracle": 1.0663879227985902
+   },
+   "symmetry": {
+    "mean_mse": 0.0009452593147139459,
+    "mean_ratio_to_oracle": 1.0663879227985902
+   },
+   "bayes": {
+    "mean_mse": 0.0009014664805954213,
+    "mean_ratio_to_oracle": 1.016968500971133
+   },
+   "oracle": {
+    "mean_mse": 0.000886405004034017,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "n_symmetries": 0,
+   "random": {
+    "mean_mse": 0.0010268030944660966,
+    "mean_ratio_to_oracle": 1.17665398453593
+   },
+   "gram_E": {
+    "mean_mse": 0.0009192545884922358,
+    "mean_ratio_to_oracle": 1.0535349891186534
+   },
+   "gram_trace": {
+    "mean_mse": 0.0009192545884922358,
+    "mean_ratio_to_oracle": 1.0535349891186534
+   },
+   "symmetry": {
+    "mean_mse": 0.0010268030944660966,
+    "mean_ratio_to_oracle": 1.17665398453593
+   },
+   "bayes": {
+    "mean_mse": 0.0009192545884922358,
+    "mean_ratio_to_oracle": 1.0535349891186534
+   },
+   "oracle": {
+    "mean_mse": 0.0008725220976217341,
+    "mean_ratio_to_oracle": 1.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "n_symmetries": 3,
+   "random": {
+    "mean_mse": 0.0007982685353262509,
+    "mean_ratio_to_oracle": 1.0508778403856407
+   },
+   "gram_E": {
+    "mean_mse": 0.0007826782053237585,
+    "mean_ratio_to_oracle": 1.0303485237713181
+   },
+   "gram_trace": {
+    "mean_mse": 0.0007759455724914863,
+    "mean_ratio_to_oracle": 1.0214937670502267
+   },
+   "symmetry": {
+    "mean_mse": 0.0007759455724914863,
+    "mean_ratio_to_oracle": 1.0214937670502267
+   },
+   "bayes": {
+    "mean_mse": 0.0007826782053237585,
+    "mean_ratio_to_oracle": 1.0303485237713181
+   },
+   "oracle": {
+    "mean_mse": 0.0007596075895610746,
+    "mean_ratio_to_oracle": 1.0
+   }
+  }
+ }
+}

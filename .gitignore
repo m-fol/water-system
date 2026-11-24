@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.aux
+*.log
+*.out
+*.blg
+*.bbl
+*.synctex.gz
+battledim_data/
+code/temp.*
+*.zip

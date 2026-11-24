@@ -1,0 +1,51 @@
+{
+ "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+  "n_states": 6,
+  "unobservable_dims_homogeneous": 1,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.28738066747853797,
+  "gramian_lambda_min_normalised_T64_hetero_min": 8.260182740278461e-06
+ },
+ "tanks on adjacent junctions (T1-J1, T2-J2)": {
+  "n_states": 6,
+  "unobservable_dims_homogeneous": 0,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 2.9428491185020604,
+  "gramian_lambda_min_normalised_T64_hetero_min": 1.4447062079198665
+ },
+ "both tanks on the same junction (T1-J1, T2-J1)": {
+  "n_states": 6,
+  "unobservable_dims_homogeneous": 1,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.018157047607146263,
+  "gramian_lambda_min_normalised_T64_hetero_min": 2.6976438562769197e-06
+ },
+ "loop plus chord J1-J3": {
+  "n_states": 6,
+  "unobservable_dims_homogeneous": 1,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.19348306557610928,
+  "gramian_lambda_min_normalised_T64_hetero_min": 0.0006725911921302705
+ },
+ "8 nodes: 6-junction ring, tanks at opposite junctions": {
+  "n_states": 8,
+  "unobservable_dims_homogeneous": 2,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.02596826020130516,
+  "gramian_lambda_min_normalised_T64_hetero_min": 2.909768950824357e-05
+ },
+ "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+  "n_states": 8,
+  "unobservable_dims_homogeneous": 0,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.18878365516784304,
+  "gramian_lambda_min_normalised_T64_hetero_min": 0.06123248239779053
+ },
+ "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+  "n_states": 8,
+  "unobservable_dims_homogeneous": 2,
+  "unobservable_dims_heterogeneous_max": 0,
+  "gramian_lambda_min_normalised_T64_hetero_median": 0.005518587376046958,
+  "gramian_lambda_min_normalised_T64_hetero_min": 1.0674828961479619e-05
+ }
+}

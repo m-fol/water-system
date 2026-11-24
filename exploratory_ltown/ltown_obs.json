@@ -1,0 +1,77 @@
+{
+ "assumptions": {
+  "free_junctions": 779,
+  "fixed_head_nodes": 6,
+  "pipes_used": 905,
+  "pipes_closed": 0,
+  "sensors_used": 33,
+  "conductance": "C^0.54 D^2.63 / L^0.54 (linearised Hazen-Williams, scale calibrated)",
+  "median_measured_pressure_sd_m": 0.4922453349365301
+ },
+ "runs": [
+  {
+   "demand_rel_sd": 0.3,
+   "sensor_noise_sd_m": 0.1,
+   "total_variance_left_fraction_unsensed": 0.02735719651917303,
+   "median_node_variance_left": 0.025274354866710022,
+   "share_unsensed_nodes_with_over_50pct_variance_left": 0.04155495978552279,
+   "worst_mode_variance_left": 0.9999999999927304,
+   "modes_with_over_50pct_left": 763,
+   "modes_with_over_90pct_left": 749,
+   "n_modes": 779,
+   "existing_33_total_variance_left": 0.027051267428823893,
+   "random_33_total_variance_left_mean": 0.043312145218063855,
+   "random_33_total_variance_left_sd": 0.01623463994054076,
+   "greedy_33_from_scratch_total_variance_left": 0.021393783412622807,
+   "add_5_to_existing": {
+    "nodes": [
+     "n21",
+     "n30",
+     "n241",
+     "n529",
+     "n48"
+    ],
+    "fraction_of_total_variance_removed_each": [
+     0.0014805725698102024,
+     0.0013590673643705663,
+     0.000758880095009547,
+     0.0006163979940184565,
+     0.0005770112136357273
+    ],
+    "total_variance_left_after": 0.02225933819197939
+   }
+  },
+  {
+   "demand_rel_sd": 0.3,
+   "sensor_noise_sd_m": 0.5,
+   "total_variance_left_fraction_unsensed": 0.14488746103593433,
+   "median_node_variance_left": 0.14996164413001117,
+   "share_unsensed_nodes_with_over_50pct_variance_left": 0.04155495978552279,
+   "worst_mode_variance_left": 0.9999999999927581,
+   "modes_with_over_50pct_left": 775,
+   "modes_with_over_90pct_left": 769,
+   "n_modes": 779,
+   "existing_33_total_variance_left": 0.14509352877593176,
+   "random_33_total_variance_left_mean": 0.15475959301871503,
+   "random_33_total_variance_left_sd": 0.01458734512416497,
+   "greedy_33_from_scratch_total_variance_left": 0.11163096210039664,
+   "add_5_to_existing": {
+    "nodes": [
+     "n50",
+     "n358",
+     "n276",
+     "n614",
+     "n674"
+    ],
+    "fraction_of_total_variance_removed_each": [
+     0.006267036582436258,
+     0.005783642612077748,
+     0.004055020497604243,
+     0.002923681102321887,
+     0.0029025332029858192
+    ],
+    "total_variance_left_after": 0.12316161477850579
+   }
+  }
+ ]
+}

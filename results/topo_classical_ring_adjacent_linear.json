@@ -1,0 +1,20 @@
+{
+ "time_only": {
+  "mse": 0.1255141304867963,
+  "mse_null_dirs": NaN
+ },
+ "kf_known_start": {
+  "mse": 0.10069957970775559,
+  "mse_null_dirs": NaN
+ },
+ "imm_true_known_start": {
+  "mse": 0.03551156987000787,
+  "mse_null_dirs": NaN
+ },
+ "imm_supervised_identified": {
+  "mse": 0.035120747631252704,
+  "mse_null_dirs": NaN
+ },
+ "n_unobservable_dirs": 0,
+ "n_test_trajectories": 300
+}

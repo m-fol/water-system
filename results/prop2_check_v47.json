@@ -1,0 +1,345 @@
+{
+ "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+  "n": 6,
+  "aut_order": 2,
+  "orbits": 5,
+  "dim_V0": 1,
+  "unobs_dim_homog": 1,
+  "V0_residual": 4.455952219067146e-17,
+  "sym_perturbation_residual": 3.0505989045742946e-17,
+  "greedy_base": [
+   3
+  ],
+  "log2_order": 1.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": [
+   {
+    "eig_W": [
+     2.0503223933628346e-09
+    ],
+    "eps2_eig_G": [
+     2.050679131354608e-09
+    ],
+    "max_rel_dev": 0.00017396090218069205,
+    "G_min_eig": 0.0020506791313546083,
+    "G_sym_removed_dev": 4.768509997230716e-10
+   },
+   {
+    "eig_W": [
+     5.163697535519111e-09
+    ],
+    "eps2_eig_G": [
+     5.16629690083297e-09
+    ],
+    "max_rel_dev": 0.0005031389724117208,
+    "G_min_eig": 0.005166296900832971,
+    "G_sym_removed_dev": 6.756532561934793e-10
+   },
+   {
+    "eig_W": [
+     8.624733506828188e-09
+    ],
+    "eps2_eig_G": [
+     8.62442934846105e-09
+    ],
+    "max_rel_dev": 3.526707157641695e-05,
+    "G_min_eig": 0.008624429348461051,
+    "G_sym_removed_dev": 3.270527139522392e-11
+   },
+   {
+    "eig_W": [
+     8.99393803211647e-09
+    ],
+    "eps2_eig_G": [
+     8.988081532866498e-09
+    ],
+    "max_rel_dev": 0.0006515850160633274,
+    "G_min_eig": 0.0089880815328665,
+    "G_sym_removed_dev": 2.1402178694278532e-10
+   }
+  ]
+ },
+ "tanks on adjacent junctions (T1-J1, T2-J2)": {
+  "n": 6,
+  "aut_order": 1,
+  "orbits": 6,
+  "dim_V0": 0,
+  "unobs_dim_homog": 0,
+  "V0_residual": 0.0,
+  "sym_perturbation_residual": 0.0,
+  "greedy_base": [],
+  "log2_order": 0.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": []
+ },
+ "both tanks on the same junction (T1-J1, T2-J1)": {
+  "n": 6,
+  "aut_order": 2,
+  "orbits": 5,
+  "dim_V0": 1,
+  "unobs_dim_homog": 1,
+  "V0_residual": 2.3895776527567258e-17,
+  "sym_perturbation_residual": 2.7633333680433092e-17,
+  "greedy_base": [
+   3
+  ],
+  "log2_order": 1.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": [
+   {
+    "eig_W": [
+     2.2859387095360316e-10
+    ],
+    "eps2_eig_G": [
+     2.280161611275962e-10
+    ],
+    "max_rel_dev": 0.0025336354368481473,
+    "G_min_eig": 0.00022801616112759623,
+    "G_sym_removed_dev": 2.377467823166255e-16
+   },
+   {
+    "eig_W": [
+     6.27672083679263e-10
+    ],
+    "eps2_eig_G": [
+     6.272882969355011e-10
+    ],
+    "max_rel_dev": 0.0006118187532540009,
+    "G_min_eig": 0.0006272882969355011,
+    "G_sym_removed_dev": 1.7283953451422098e-16
+   },
+   {
+    "eig_W": [
+     3.8375565607492695e-10
+    ],
+    "eps2_eig_G": [
+     3.8347246870739537e-10
+    ],
+    "max_rel_dev": 0.0007384816137809835,
+    "G_min_eig": 0.00038347246870739537,
+    "G_sym_removed_dev": 1.3709936174238367e-10
+   },
+   {
+    "eig_W": [
+     9.297584308444624e-10
+    ],
+    "eps2_eig_G": [
+     9.295179573991758e-10
+    ],
+    "max_rel_dev": 0.00025870769184432874,
+    "G_min_eig": 0.0009295179573991759,
+    "G_sym_removed_dev": 1.7611838760456091e-10
+   }
+  ]
+ },
+ "loop plus chord J1-J3": {
+  "n": 6,
+  "aut_order": 2,
+  "orbits": 5,
+  "dim_V0": 1,
+  "unobs_dim_homog": 1,
+  "V0_residual": 3.218893817119162e-17,
+  "sym_perturbation_residual": 3.275654504722047e-17,
+  "greedy_base": [
+   3
+  ],
+  "log2_order": 1.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": [
+   {
+    "eig_W": [
+     3.3193046960001525e-10
+    ],
+    "eps2_eig_G": [
+     3.3165390824312756e-10
+    ],
+    "max_rel_dev": 0.000833885414927682,
+    "G_min_eig": 0.0003316539082431276,
+    "G_sym_removed_dev": 8.768859435144105e-10
+   },
+   {
+    "eig_W": [
+     4.889639912279456e-10
+    ],
+    "eps2_eig_G": [
+     4.899028584951873e-10
+    ],
+    "max_rel_dev": 0.0019164355768928054,
+    "G_min_eig": 0.0004899028584951873,
+    "G_sym_removed_dev": 1.241362859183218e-09
+   },
+   {
+    "eig_W": [
+     3.549375200223471e-09
+    ],
+    "eps2_eig_G": [
+     3.5475758370563578e-09
+    ],
+    "max_rel_dev": 0.0005072092182829557,
+    "G_min_eig": 0.003547575837056358,
+    "G_sym_removed_dev": 9.982172773990305e-11
+   },
+   {
+    "eig_W": [
+     2.5159785771259036e-09
+    ],
+    "eps2_eig_G": [
+     2.5134623209464275e-09
+    ],
+    "max_rel_dev": 0.001001111557753065,
+    "G_min_eig": 0.0025134623209464276,
+    "G_sym_removed_dev": 1.3527526070507312e-10
+   }
+  ]
+ },
+ "8 nodes: 6-junction ring, tanks at opposite junctions": {
+  "n": 8,
+  "aut_order": 2,
+  "orbits": 6,
+  "dim_V0": 2,
+  "unobs_dim_homog": 2,
+  "V0_residual": 3.489701121855359e-17,
+  "sym_perturbation_residual": 7.773063760213586e-17,
+  "greedy_base": [
+   3
+  ],
+  "log2_order": 1.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": [
+   {
+    "eig_W": [
+     5.3122033908179454e-11,
+     5.670817501917812e-10
+    ],
+    "eps2_eig_G": [
+     5.302507128261692e-11,
+     5.667409866412529e-10
+    ],
+    "max_rel_dev": 0.001828618485880673,
+    "G_min_eig": 5.302507128261692e-05,
+    "G_sym_removed_dev": 5.473982496326244e-10
+   },
+   {
+    "eig_W": [
+     3.731859048963113e-11,
+     8.590025840694934e-11
+    ],
+    "eps2_eig_G": [
+     3.7327543675579867e-11,
+     8.598220421776232e-11
+    ],
+    "max_rel_dev": 0.0009530554788458323,
+    "G_min_eig": 3.732754367557987e-05,
+    "G_sym_removed_dev": 1.1667106076797485e-09
+   },
+   {
+    "eig_W": [
+     2.0339955577714968e-10,
+     7.10361041074914e-10
+    ],
+    "eps2_eig_G": [
+     2.0341801965552433e-10,
+     7.105989376935237e-10
+    ],
+    "max_rel_dev": 0.00033478324549984784,
+    "G_min_eig": 0.00020341801965552433,
+    "G_sym_removed_dev": 1.8023668868446504e-10
+   },
+   {
+    "eig_W": [
+     2.8921943468156228e-11,
+     9.239160796415967e-11
+    ],
+    "eps2_eig_G": [
+     2.8966244239672346e-11,
+     9.230083657899496e-11
+    ],
+    "max_rel_dev": 0.0015293930117264987,
+    "G_min_eig": 2.8966244239672347e-05,
+    "G_sym_removed_dev": 2.448112499516528e-09
+   }
+  ]
+ },
+ "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+  "n": 8,
+  "aut_order": 1,
+  "orbits": 8,
+  "dim_V0": 0,
+  "unobs_dim_homog": 0,
+  "V0_residual": 0.0,
+  "sym_perturbation_residual": 0.0,
+  "greedy_base": [],
+  "log2_order": 0.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": []
+ },
+ "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+  "n": 8,
+  "aut_order": 4,
+  "orbits": 6,
+  "dim_V0": 2,
+  "unobs_dim_homog": 2,
+  "V0_residual": 3.342959275531315e-17,
+  "sym_perturbation_residual": 2.8154471721636154e-17,
+  "greedy_base": [
+   3,
+   4
+  ],
+  "log2_order": 2.0,
+  "unobs_dim_after_greedy": 0,
+  "checks": [
+   {
+    "eig_W": [
+     4.45331929660509e-11,
+     1.5483593281484405e-09
+    ],
+    "eps2_eig_G": [
+     4.4594327900186644e-11,
+     1.5462459856788147e-09
+    ],
+    "max_rel_dev": 0.0013709127822842948,
+    "G_min_eig": 4.4594327900186645e-05,
+    "G_sym_removed_dev": 3.5896044772178847e-10
+   },
+   {
+    "eig_W": [
+     1.2495087204875538e-11,
+     8.264415292857813e-10
+    ],
+    "eps2_eig_G": [
+     1.247272049851057e-11,
+     8.260073749675825e-10
+    ],
+    "max_rel_dev": 0.0017932500265391838,
+    "G_min_eig": 1.247272049851057e-05,
+    "G_sym_removed_dev": 3.9451959480290494e-10
+   },
+   {
+    "eig_W": [
+     3.055186981817721e-10,
+     6.333529439494165e-10
+    ],
+    "eps2_eig_G": [
+     3.0594314891994686e-10,
+     6.328565674510903e-10
+    ],
+    "max_rel_dev": 0.001387351668678205,
+    "G_min_eig": 0.0003059431489199469,
+    "G_sym_removed_dev": 2.0669320478508712e-10
+   },
+   {
+    "eig_W": [
+     2.0660524369275914e-13,
+     2.3882235841199027e-10
+    ],
+    "eps2_eig_G": [
+     2.0645998636121128e-13,
+     2.3880551853557224e-10
+    ],
+    "max_rel_dev": 0.0007035616639716746,
+    "G_min_eig": 2.0645998636121128e-07,
+    "G_sym_removed_dev": 4.872670270452633e-10
+   }
+  ]
+ }
+}

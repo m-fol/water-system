@@ -1,0 +1,38 @@
+{
+  "description": "equal-information linear baseline (tank readings and masks over the last 6 steps)",
+  "test_sets": [
+    {
+      "seed_eval": 777,
+      "mse": 0.14228190080591352,
+      "mse_tank": 0.005848721876413848,
+      "mse_junction": 0.21049849027066334,
+      "mse_antisym": 0.07142678303362117,
+      "auc_innovation": 0.5731711480541752,
+      "auc_innovation_dropout": 0.859872938108657,
+      "auc_innovation_pump_trip": 0.4798032466886042,
+      "auc_innovation_demand_spike": 0.37533228458197343
+    },
+    {
+      "seed_eval": 888,
+      "mse": 0.14284089338508207,
+      "mse_tank": 0.0056957763958302475,
+      "mse_junction": 0.21141345187970803,
+      "mse_antisym": 0.06883607801677087,
+      "auc_innovation": 0.5808647728699782,
+      "auc_innovation_dropout": 0.8604676706437608,
+      "auc_innovation_pump_trip": 0.49527639948835234,
+      "auc_innovation_demand_spike": 0.3937231144547439
+    },
+    {
+      "seed_eval": 999,
+      "mse": 0.14092794512994827,
+      "mse_tank": 0.005604532597972403,
+      "mse_junction": 0.2085896513959362,
+      "mse_antisym": 0.06824541246528815,
+      "auc_innovation": 0.5768350273744475,
+      "auc_innovation_dropout": 0.8591418596486746,
+      "auc_innovation_pump_trip": 0.4791571838601578,
+      "auc_innovation_demand_spike": 0.37581085954172433
+    }
+  ]
+}

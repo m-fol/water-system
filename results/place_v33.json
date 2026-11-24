@@ -1,0 +1,1214 @@
+{
+ "b1_true": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009617054145603005,
+    "ratio_to_oracle": 1.1774948277131256,
+    "fraction_removed": 0.11804029236155265
+   },
+   "symmetry": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "gram_E": {
+    "mean_var": 0.0008496437446709362,
+    "ratio_to_oracle": 1.040680358538445,
+    "fraction_removed": 0.22062665778082122
+   },
+   "gram_trace": {
+    "mean_var": 0.000816522703697754,
+    "ratio_to_oracle": 1.0000081569533068,
+    "fraction_removed": 0.2506554477343104
+   },
+   "bayes": {
+    "mean_var": 0.0008503726349602931,
+    "ratio_to_oracle": 1.041567366734722,
+    "fraction_removed": 0.2199628270825319
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008509327573479945,
+    "ratio_to_oracle": 1.0422412894241542,
+    "fraction_removed": 0.2194554034003658
+   },
+   "oracle": {
+    "mean_var": 0.0008165156475803809,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.25066164518998835
+   },
+   "none": {
+    "mean_var": 0.0010908199754974147,
+    "ratio_to_oracle": 1.335243690399207,
+    "fraction_removed": 0.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007370925083008267,
+    "ratio_to_oracle": 1.1134612690037837,
+    "fraction_removed": 0.09058076037996157
+   },
+   "symmetry": {
+    "mean_var": 0.0007370925083008267,
+    "ratio_to_oracle": 1.1134612690037837,
+    "fraction_removed": 0.09058076037996157
+   },
+   "gram_E": {
+    "mean_var": 0.0006988035885252234,
+    "ratio_to_oracle": 1.05431559127824,
+    "fraction_removed": 0.13924350136301825
+   },
+   "gram_trace": {
+    "mean_var": 0.0006618962058976398,
+    "ratio_to_oracle": 1.0001704105937008,
+    "fraction_removed": 0.18295522899727282
+   },
+   "bayes": {
+    "mean_var": 0.0006893541619512839,
+    "ratio_to_oracle": 1.0407962801544504,
+    "fraction_removed": 0.1501162121947598
+   },
+   "bayes_weak": {
+    "mean_var": 0.0006786132015100224,
+    "ratio_to_oracle": 1.0255009780664697,
+    "fraction_removed": 0.1624619653853883
+   },
+   "oracle": {
+    "mean_var": 0.0006617826969593601,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.18309650255384796
+   },
+   "none": {
+    "mean_var": 0.0008107779448901376,
+    "ratio_to_oracle": 1.2244433809633757,
+    "fraction_removed": 0.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009721940875540348,
+    "ratio_to_oracle": 1.165544632156378,
+    "fraction_removed": 0.1101964624225392
+   },
+   "symmetry": {
+    "mean_var": 0.0008538644548914147,
+    "ratio_to_oracle": 1.02391022415627,
+    "fraction_removed": 0.21825176581440048
+   },
+   "gram_E": {
+    "mean_var": 0.0008488388381407429,
+    "ratio_to_oracle": 1.0180304853807025,
+    "fraction_removed": 0.222570911933243
+   },
+   "gram_trace": {
+    "mean_var": 0.0010885452121527364,
+    "ratio_to_oracle": 1.3048311374737591,
+    "fraction_removed": 0.003917493412077694
+   },
+   "bayes": {
+    "mean_var": 0.0008523270094947136,
+    "ratio_to_oracle": 1.0221743650560742,
+    "fraction_removed": 0.21949602480551142
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008547117729725465,
+    "ratio_to_oracle": 1.025083710673112,
+    "fraction_removed": 0.21733431413661874
+   },
+   "oracle": {
+    "mean_var": 0.0008339307893704043,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.23619337468694204
+   },
+   "none": {
+    "mean_var": 0.0010929089241807019,
+    "ratio_to_oracle": 1.3100152425042346,
+    "fraction_removed": 0.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009582731472122369,
+    "ratio_to_oracle": 1.1774231166805698,
+    "fraction_removed": 0.11768363251435032
+   },
+   "symmetry": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "gram_E": {
+    "mean_var": 0.0008398038430401924,
+    "ratio_to_oracle": 1.0322322778922284,
+    "fraction_removed": 0.22660460574150082
+   },
+   "gram_trace": {
+    "mean_var": 0.0008137137337201606,
+    "ratio_to_oracle": 1.0000041522269942,
+    "fraction_removed": 0.25024893646614094
+   },
+   "bayes": {
+    "mean_var": 0.0008465590955936894,
+    "ratio_to_oracle": 1.040590414441678,
+    "fraction_removed": 0.22037566482795257
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008473062181994817,
+    "ratio_to_oracle": 1.041488863797455,
+    "fraction_removed": 0.21970337570191045
+   },
+   "oracle": {
+    "mean_var": 0.0008137102181311633,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.25025210603586046
+   },
+   "none": {
+    "mean_var": 0.0010864709409894907,
+    "ratio_to_oracle": 1.334630538806649,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.001229988604570921,
+    "ratio_to_oracle": 1.1004094179882222,
+    "fraction_removed": 0.12081960211856342
+   },
+   "symmetry": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "gram_E": {
+    "mean_var": 0.0011445172210090568,
+    "ratio_to_oracle": 1.0241413936005748,
+    "fraction_removed": 0.18156163760934796
+   },
+   "gram_trace": {
+    "mean_var": 0.0011212333554799694,
+    "ratio_to_oracle": 1.0032309346139892,
+    "fraction_removed": 0.19822935532159952
+   },
+   "bayes": {
+    "mean_var": 0.001143451278820841,
+    "ratio_to_oracle": 1.0232735755891855,
+    "fraction_removed": 0.182239253088782
+   },
+   "bayes_weak": {
+    "mean_var": 0.0011416507402999345,
+    "ratio_to_oracle": 1.0216226311025889,
+    "fraction_removed": 0.18355458626210822
+   },
+   "oracle": {
+    "mean_var": 0.001117579559633569,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.20080349564444444
+   },
+   "none": {
+    "mean_var": 0.001399704490563295,
+    "ratio_to_oracle": 1.2518337834568793,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007263310921367429,
+    "ratio_to_oracle": 1.1253996998300138,
+    "fraction_removed": 0.05594508363781434
+   },
+   "symmetry": {
+    "mean_var": 0.0007263310921367429,
+    "ratio_to_oracle": 1.1253996998300138,
+    "fraction_removed": 0.05594508363781434
+   },
+   "gram_E": {
+    "mean_var": 0.0006987149998083147,
+    "ratio_to_oracle": 1.0821209003310965,
+    "fraction_removed": 0.09256721802911094
+   },
+   "gram_trace": {
+    "mean_var": 0.0006486585065424894,
+    "ratio_to_oracle": 1.0053702363678076,
+    "fraction_removed": 0.156510550308316
+   },
+   "bayes": {
+    "mean_var": 0.000716255098715842,
+    "ratio_to_oracle": 1.1100987821530142,
+    "fraction_removed": 0.06914840611327248
+   },
+   "bayes_weak": {
+    "mean_var": 0.0006473157143211608,
+    "ratio_to_oracle": 1.0031606338184806,
+    "fraction_removed": 0.15840796970308982
+   },
+   "oracle": {
+    "mean_var": 0.0006451952752907005,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.1610148388525458
+   },
+   "none": {
+    "mean_var": 0.000769523004694642,
+    "ratio_to_oracle": 1.1921317320552998,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0007625031056235345,
+    "ratio_to_oracle": 1.04430371739631,
+    "fraction_removed": 0.06469470772332787
+   },
+   "symmetry": {
+    "mean_var": 0.00073629595038235,
+    "ratio_to_oracle": 1.0084443933637934,
+    "fraction_removed": 0.09680747238457832
+   },
+   "gram_E": {
+    "mean_var": 0.0007358544288327768,
+    "ratio_to_oracle": 1.0078335411961592,
+    "fraction_removed": 0.09735492533844262
+   },
+   "gram_trace": {
+    "mean_var": 0.0007307551407611927,
+    "ratio_to_oracle": 1.0008898441657887,
+    "fraction_removed": 0.10355391656596716
+   },
+   "bayes": {
+    "mean_var": 0.0007367166862637049,
+    "ratio_to_oracle": 1.0090061317546892,
+    "fraction_removed": 0.0963076226894289
+   },
+   "bayes_weak": {
+    "mean_var": 0.0007361465556520272,
+    "ratio_to_oracle": 1.0082121454423274,
+    "fraction_removed": 0.0970181442534528
+   },
+   "oracle": {
+    "mean_var": 0.0007301038960551985,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.10435179014637339
+   },
+   "none": {
+    "mean_var": 0.0008153016503405086,
+    "ratio_to_oracle": 1.1165463466986376,
+    "fraction_removed": 0.0
+   }
+  }
+ },
+ "b1_nominal": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009617054145603005,
+    "ratio_to_oracle": 1.1774948277131256,
+    "fraction_removed": 0.11804029236155265
+   },
+   "symmetry": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "gram_E": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "gram_trace": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "bayes": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008339571347718146,
+    "ratio_to_oracle": 1.0213991307975503,
+    "fraction_removed": 0.23484767609904394
+   },
+   "oracle": {
+    "mean_var": 0.0008165156475803809,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.25066164518998835
+   },
+   "none": {
+    "mean_var": 0.0010908199754974147,
+    "ratio_to_oracle": 1.335243690399207,
+    "fraction_removed": 0.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007370925083008267,
+    "ratio_to_oracle": 1.1134612690037837,
+    "fraction_removed": 0.09058076037996157
+   },
+   "symmetry": {
+    "mean_var": 0.0007370925083008267,
+    "ratio_to_oracle": 1.1134612690037837,
+    "fraction_removed": 0.09058076037996157
+   },
+   "gram_E": {
+    "mean_var": 0.000671297440173513,
+    "ratio_to_oracle": 1.0143756720171573,
+    "fraction_removed": 0.17145466763189585
+   },
+   "gram_trace": {
+    "mean_var": 0.000671297440173513,
+    "ratio_to_oracle": 1.0143756720171573,
+    "fraction_removed": 0.17145466763189585
+   },
+   "bayes": {
+    "mean_var": 0.000671297440173513,
+    "ratio_to_oracle": 1.0143756720171573,
+    "fraction_removed": 0.17145466763189585
+   },
+   "bayes_weak": {
+    "mean_var": 0.000671297440173513,
+    "ratio_to_oracle": 1.0143756720171573,
+    "fraction_removed": 0.17145466763189585
+   },
+   "oracle": {
+    "mean_var": 0.0006617826969593601,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.18309650255384796
+   },
+   "none": {
+    "mean_var": 0.0008107779448901376,
+    "ratio_to_oracle": 1.2244433809633757,
+    "fraction_removed": 0.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009721940875540348,
+    "ratio_to_oracle": 1.165544632156378,
+    "fraction_removed": 0.1101964624225392
+   },
+   "symmetry": {
+    "mean_var": 0.0008538644548914147,
+    "ratio_to_oracle": 1.02391022415627,
+    "fraction_removed": 0.21825176581440048
+   },
+   "gram_E": {
+    "mean_var": 0.0008538644548914147,
+    "ratio_to_oracle": 1.02391022415627,
+    "fraction_removed": 0.21825176581440048
+   },
+   "gram_trace": {
+    "mean_var": 0.0010885452121527364,
+    "ratio_to_oracle": 1.3048311374737591,
+    "fraction_removed": 0.003917493412077694
+   },
+   "bayes": {
+    "mean_var": 0.0008538644548914147,
+    "ratio_to_oracle": 1.02391022415627,
+    "fraction_removed": 0.21825176581440048
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008538644548914147,
+    "ratio_to_oracle": 1.02391022415627,
+    "fraction_removed": 0.21825176581440048
+   },
+   "oracle": {
+    "mean_var": 0.0008339307893704043,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.23619337468694204
+   },
+   "none": {
+    "mean_var": 0.0010929089241807019,
+    "ratio_to_oracle": 1.3100152425042346,
+    "fraction_removed": 0.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0009582731472122369,
+    "ratio_to_oracle": 1.1774231166805698,
+    "fraction_removed": 0.11768363251435032
+   },
+   "symmetry": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "gram_E": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "gram_trace": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "bayes": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "bayes_weak": {
+    "mean_var": 0.0008306783728367535,
+    "ratio_to_oracle": 1.0209497384567054,
+    "fraction_removed": 0.23482129549243283
+   },
+   "oracle": {
+    "mean_var": 0.0008137102181311633,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.25025210603586046
+   },
+   "none": {
+    "mean_var": 0.0010864709409894907,
+    "ratio_to_oracle": 1.334630538806649,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.001229988604570921,
+    "ratio_to_oracle": 1.1004094179882222,
+    "fraction_removed": 0.12081960211856342
+   },
+   "symmetry": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "gram_E": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "gram_trace": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "bayes": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "bayes_weak": {
+    "mean_var": 0.0011457797659889036,
+    "ratio_to_oracle": 1.0252748605770423,
+    "fraction_removed": 0.1807693906177331
+   },
+   "oracle": {
+    "mean_var": 0.001117579559633569,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.20080349564444444
+   },
+   "none": {
+    "mean_var": 0.001399704490563295,
+    "ratio_to_oracle": 1.2518337834568793,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007263310921367429,
+    "ratio_to_oracle": 1.1253996998300138,
+    "fraction_removed": 0.05594508363781434
+   },
+   "symmetry": {
+    "mean_var": 0.0007263310921367429,
+    "ratio_to_oracle": 1.1253996998300138,
+    "fraction_removed": 0.05594508363781434
+   },
+   "gram_E": {
+    "mean_var": 0.0006520654910582118,
+    "ratio_to_oracle": 1.0106492848851345,
+    "fraction_removed": 0.15215108475577085
+   },
+   "gram_trace": {
+    "mean_var": 0.0006520654910582118,
+    "ratio_to_oracle": 1.0106492848851345,
+    "fraction_removed": 0.15215108475577085
+   },
+   "bayes": {
+    "mean_var": 0.0006520654910582118,
+    "ratio_to_oracle": 1.0106492848851345,
+    "fraction_removed": 0.15215108475577085
+   },
+   "bayes_weak": {
+    "mean_var": 0.0006520654910582118,
+    "ratio_to_oracle": 1.0106492848851345,
+    "fraction_removed": 0.15215108475577085
+   },
+   "oracle": {
+    "mean_var": 0.0006451952752907005,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.1610148388525458
+   },
+   "none": {
+    "mean_var": 0.000769523004694642,
+    "ratio_to_oracle": 1.1921317320552998,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0007625031056235345,
+    "ratio_to_oracle": 1.04430371739631,
+    "fraction_removed": 0.06469470772332787
+   },
+   "symmetry": {
+    "mean_var": 0.00073629595038235,
+    "ratio_to_oracle": 1.0084443933637934,
+    "fraction_removed": 0.09680747238457832
+   },
+   "gram_E": {
+    "mean_var": 0.0007625031056235345,
+    "ratio_to_oracle": 1.04430371739631,
+    "fraction_removed": 0.06469470772332787
+   },
+   "gram_trace": {
+    "mean_var": 0.00073629595038235,
+    "ratio_to_oracle": 1.0084443933637934,
+    "fraction_removed": 0.09680747238457832
+   },
+   "bayes": {
+    "mean_var": 0.00073629595038235,
+    "ratio_to_oracle": 1.0084443933637934,
+    "fraction_removed": 0.09680747238457832
+   },
+   "bayes_weak": {
+    "mean_var": 0.00073629595038235,
+    "ratio_to_oracle": 1.0084443933637934,
+    "fraction_removed": 0.09680747238457832
+   },
+   "oracle": {
+    "mean_var": 0.0007301038960551985,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.10435179014637339
+   },
+   "none": {
+    "mean_var": 0.0008153016503405086,
+    "ratio_to_oracle": 1.1165463466986376,
+    "fraction_removed": 0.0
+   }
+  }
+ },
+ "b2_true": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007788947862166315,
+    "ratio_to_oracle": 1.8314294196321077,
+    "fraction_removed": 0.2852392117063539
+   },
+   "symmetry": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "gram_E": {
+    "mean_var": 0.0007869640148284937,
+    "ratio_to_oracle": 1.8507676755344165,
+    "fraction_removed": 0.2770405480872175
+   },
+   "gram_trace": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "bayes": {
+    "mean_var": 0.0007868862838440935,
+    "ratio_to_oracle": 1.8505798673191884,
+    "fraction_removed": 0.27712247158711534
+   },
+   "bayes_weak": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "oracle": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "none": {
+    "mean_var": 0.0010908199754974147,
+    "ratio_to_oracle": 2.5643999297512248,
+    "fraction_removed": 0.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.000635897701829964,
+    "ratio_to_oracle": 1.5699379101926063,
+    "fraction_removed": 0.2148330354770604
+   },
+   "symmetry": {
+    "mean_var": 0.000635897701829964,
+    "ratio_to_oracle": 1.5699379101926063,
+    "fraction_removed": 0.2148330354770604
+   },
+   "gram_E": {
+    "mean_var": 0.0005362952726148714,
+    "ratio_to_oracle": 1.3239205551664537,
+    "fraction_removed": 0.3370088680367054
+   },
+   "gram_trace": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "bayes": {
+    "mean_var": 0.0005495590804495709,
+    "ratio_to_oracle": 1.3569158973921152,
+    "fraction_removed": 0.3200464924656011
+   },
+   "bayes_weak": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "oracle": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "none": {
+    "mean_var": 0.0008107779448901376,
+    "ratio_to_oracle": 2.0012421946894885,
+    "fraction_removed": 0.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007841963184510225,
+    "ratio_to_oracle": 1.843578236760955,
+    "fraction_removed": 0.2817732706411167
+   },
+   "symmetry": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "gram_E": {
+    "mean_var": 0.0007715808972065308,
+    "ratio_to_oracle": 1.8140344943396354,
+    "fraction_removed": 0.2931157036866992
+   },
+   "gram_trace": {
+    "mean_var": 0.000770501644751087,
+    "ratio_to_oracle": 1.8114798172748894,
+    "fraction_removed": 0.2940901632234329
+   },
+   "bayes": {
+    "mean_var": 0.0007679884617533495,
+    "ratio_to_oracle": 1.805595868123704,
+    "fraction_removed": 0.29639386673380913
+   },
+   "bayes_weak": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "oracle": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "none": {
+    "mean_var": 0.0010929089241807019,
+    "ratio_to_oracle": 2.5688899553208855,
+    "fraction_removed": 0.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007721845055342381,
+    "ratio_to_oracle": 1.8170275632011774,
+    "fraction_removed": 0.2885875497558065
+   },
+   "symmetry": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "gram_E": {
+    "mean_var": 0.0007916989656193088,
+    "ratio_to_oracle": 1.8629008014101567,
+    "fraction_removed": 0.27072718293362885
+   },
+   "gram_trace": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "bayes": {
+    "mean_var": 0.0007914302851615489,
+    "ratio_to_oracle": 1.862274019641992,
+    "fraction_removed": 0.2709630554263275
+   },
+   "bayes_weak": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "oracle": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "none": {
+    "mean_var": 0.0010864709409894907,
+    "ratio_to_oracle": 2.556128500729805,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0010279951036947569,
+    "ratio_to_oracle": 1.3470376887284652,
+    "fraction_removed": 0.2647838826774115
+   },
+   "symmetry": {
+    "mean_var": 0.0008652486206041544,
+    "ratio_to_oracle": 1.1339881352189274,
+    "fraction_removed": 0.38081447816229014
+   },
+   "gram_E": {
+    "mean_var": 0.0008108876125260736,
+    "ratio_to_oracle": 1.0627604123522685,
+    "fraction_removed": 0.4193952603767249
+   },
+   "gram_trace": {
+    "mean_var": 0.0008980940764532877,
+    "ratio_to_oracle": 1.1765862386765573,
+    "fraction_removed": 0.35767188966966823
+   },
+   "bayes": {
+    "mean_var": 0.0007857460827915141,
+    "ratio_to_oracle": 1.029899094363057,
+    "fraction_removed": 0.4376035524373043
+   },
+   "bayes_weak": {
+    "mean_var": 0.0007907959517212156,
+    "ratio_to_oracle": 1.036582000722664,
+    "fraction_removed": 0.4339026630931707
+   },
+   "oracle": {
+    "mean_var": 0.0007630563184163336,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4537271363873938
+   },
+   "none": {
+    "mean_var": 0.001399704490563295,
+    "ratio_to_oracle": 1.8335021290854905,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0006727446068565096,
+    "ratio_to_oracle": 1.5676742071094032,
+    "fraction_removed": 0.1252697576841787
+   },
+   "symmetry": {
+    "mean_var": 0.0006727446068565096,
+    "ratio_to_oracle": 1.5676742071094032,
+    "fraction_removed": 0.1252697576841787
+   },
+   "gram_E": {
+    "mean_var": 0.00043117024010246377,
+    "ratio_to_oracle": 1.0051742142506552,
+    "fraction_removed": 0.4373498689141737
+   },
+   "gram_trace": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "bayes": {
+    "mean_var": 0.0004428313189316181,
+    "ratio_to_oracle": 1.0316962218813837,
+    "fraction_removed": 0.4234860547586219
+   },
+   "bayes_weak": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "oracle": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "none": {
+    "mean_var": 0.000769523004694642,
+    "ratio_to_oracle": 1.7931422987752195,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0006938369872109972,
+    "ratio_to_oracle": 1.1547646180422049,
+    "fraction_removed": 0.1488134861857233
+   },
+   "symmetry": {
+    "mean_var": 0.000625981531529433,
+    "ratio_to_oracle": 1.041939030204772,
+    "fraction_removed": 0.2319457713393869
+   },
+   "gram_E": {
+    "mean_var": 0.0006340402269027991,
+    "ratio_to_oracle": 1.0553899961707476,
+    "fraction_removed": 0.22200620553326358
+   },
+   "gram_trace": {
+    "mean_var": 0.0006217787808624634,
+    "ratio_to_oracle": 1.0349500624243395,
+    "fraction_removed": 0.2370152340476993
+   },
+   "bayes": {
+    "mean_var": 0.0006360745727929415,
+    "ratio_to_oracle": 1.0587544919799716,
+    "fraction_removed": 0.21954404165129582
+   },
+   "bayes_weak": {
+    "mean_var": 0.0006331925229737564,
+    "ratio_to_oracle": 1.0539812728351887,
+    "fraction_removed": 0.22306099412626593
+   },
+   "oracle": {
+    "mean_var": 0.0006007696433160757,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.2628050100864182
+   },
+   "none": {
+    "mean_var": 0.0008153016503405086,
+    "ratio_to_oracle": 1.3567298678251933,
+    "fraction_removed": 0.0
+   }
+  }
+ },
+ "b2_nominal": {
+  "paper (T1-J1, T2-J3, loop J1-J2-J3-J4)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007788947862166315,
+    "ratio_to_oracle": 1.8314294196321077,
+    "fraction_removed": 0.2852392117063539
+   },
+   "symmetry": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "gram_E": {
+    "mean_var": 0.0007903534449995894,
+    "ratio_to_oracle": 1.8583742110262664,
+    "fraction_removed": 0.27471935905793726
+   },
+   "gram_trace": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "bayes": {
+    "mean_var": 0.0007903534449995894,
+    "ratio_to_oracle": 1.8583742110262664,
+    "fraction_removed": 0.27471935905793726
+   },
+   "bayes_weak": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "oracle": {
+    "mean_var": 0.00042511125153950975,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6089665962955282
+   },
+   "none": {
+    "mean_var": 0.0010908199754974147,
+    "ratio_to_oracle": 2.5643999297512248,
+    "fraction_removed": 0.0
+   }
+  },
+  "tanks on adjacent junctions (T1-J1, T2-J2)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.000635897701829964,
+    "ratio_to_oracle": 1.5699379101926063,
+    "fraction_removed": 0.2148330354770604
+   },
+   "symmetry": {
+    "mean_var": 0.000635897701829964,
+    "ratio_to_oracle": 1.5699379101926063,
+    "fraction_removed": 0.2148330354770604
+   },
+   "gram_E": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "gram_trace": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "bayes": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "bayes_weak": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "oracle": {
+    "mean_var": 0.00040477752922837493,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4986493036980674
+   },
+   "none": {
+    "mean_var": 0.0008107779448901376,
+    "ratio_to_oracle": 2.0012421946894885,
+    "fraction_removed": 0.0
+   }
+  },
+  "both tanks on the same junction (T1-J1, T2-J1)": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007841963184510225,
+    "ratio_to_oracle": 1.843578236760955,
+    "fraction_removed": 0.2817732706411167
+   },
+   "symmetry": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "gram_E": {
+    "mean_var": 0.0007802384833738246,
+    "ratio_to_oracle": 1.8343290713415061,
+    "fraction_removed": 0.2852775913625083
+   },
+   "gram_trace": {
+    "mean_var": 0.0007802384833738246,
+    "ratio_to_oracle": 1.8343290713415061,
+    "fraction_removed": 0.2852775913625083
+   },
+   "bayes": {
+    "mean_var": 0.0007802384833738246,
+    "ratio_to_oracle": 1.8343290713415061,
+    "fraction_removed": 0.2852775913625083
+   },
+   "bayes_weak": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "oracle": {
+    "mean_var": 0.0004251782820286105,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.6096266864026805
+   },
+   "none": {
+    "mean_var": 0.0010929089241807019,
+    "ratio_to_oracle": 2.5688899553208855,
+    "fraction_removed": 0.0
+   }
+  },
+  "loop plus chord J1-J3": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0007721845055342381,
+    "ratio_to_oracle": 1.8170275632011774,
+    "fraction_removed": 0.2885875497558065
+   },
+   "symmetry": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "gram_E": {
+    "mean_var": 0.0007809688730118388,
+    "ratio_to_oracle": 1.8377084770116006,
+    "fraction_removed": 0.2804716508466708
+   },
+   "gram_trace": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "bayes": {
+    "mean_var": 0.0007809688730118388,
+    "ratio_to_oracle": 1.8377084770116006,
+    "fraction_removed": 0.2804716508466708
+   },
+   "bayes_weak": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "oracle": {
+    "mean_var": 0.00042480627878677677,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.607787433844128
+   },
+   "none": {
+    "mean_var": 0.0010864709409894907,
+    "ratio_to_oracle": 2.556128500729805,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at opposite junctions": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0010279951036947569,
+    "ratio_to_oracle": 1.3470376887284652,
+    "fraction_removed": 0.2647838826774115
+   },
+   "symmetry": {
+    "mean_var": 0.0008652486206041544,
+    "ratio_to_oracle": 1.1339881352189274,
+    "fraction_removed": 0.38081447816229014
+   },
+   "gram_E": {
+    "mean_var": 0.0008150361686794595,
+    "ratio_to_oracle": 1.0681914930580922,
+    "fraction_removed": 0.41647562468585625
+   },
+   "gram_trace": {
+    "mean_var": 0.0008652486206041544,
+    "ratio_to_oracle": 1.1339881352189274,
+    "fraction_removed": 0.38081447816229014
+   },
+   "bayes": {
+    "mean_var": 0.0007769577330541996,
+    "ratio_to_oracle": 1.0183316716823476,
+    "fraction_removed": 0.4437924399275055
+   },
+   "bayes_weak": {
+    "mean_var": 0.0007769577330541996,
+    "ratio_to_oracle": 1.0183316716823476,
+    "fraction_removed": 0.4437924399275055
+   },
+   "oracle": {
+    "mean_var": 0.0007630563184163336,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.4537271363873938
+   },
+   "none": {
+    "mean_var": 0.001399704490563295,
+    "ratio_to_oracle": 1.8335021290854905,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring, tanks at adjacent junctions": {
+   "weak_dim": 1,
+   "random": {
+    "mean_var": 0.0006727446068565096,
+    "ratio_to_oracle": 1.5676742071094032,
+    "fraction_removed": 0.1252697576841787
+   },
+   "symmetry": {
+    "mean_var": 0.0006727446068565096,
+    "ratio_to_oracle": 1.5676742071094032,
+    "fraction_removed": 0.1252697576841787
+   },
+   "gram_E": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "gram_trace": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "bayes": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "bayes_weak": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "oracle": {
+    "mean_var": 0.0004289134115421402,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.44047546513664054
+   },
+   "none": {
+    "mean_var": 0.000769523004694642,
+    "ratio_to_oracle": 1.7931422987752195,
+    "fraction_removed": 0.0
+   }
+  },
+  "8 nodes: 6-junction ring + 2 chords, tanks opposite": {
+   "weak_dim": 2,
+   "random": {
+    "mean_var": 0.0006938369872109972,
+    "ratio_to_oracle": 1.1547646180422049,
+    "fraction_removed": 0.1488134861857233
+   },
+   "symmetry": {
+    "mean_var": 0.000625981531529433,
+    "ratio_to_oracle": 1.041939030204772,
+    "fraction_removed": 0.2319457713393869
+   },
+   "gram_E": {
+    "mean_var": 0.000635802946213177,
+    "ratio_to_oracle": 1.0582669499499977,
+    "fraction_removed": 0.21991569535161873
+   },
+   "gram_trace": {
+    "mean_var": 0.000625981531529433,
+    "ratio_to_oracle": 1.041939030204772,
+    "fraction_removed": 0.2319457713393869
+   },
+   "bayes": {
+    "mean_var": 0.000635802946213177,
+    "ratio_to_oracle": 1.0582669499499977,
+    "fraction_removed": 0.21991569535161873
+   },
+   "bayes_weak": {
+    "mean_var": 0.000635802946213177,
+    "ratio_to_oracle": 1.0582669499499977,
+    "fraction_removed": 0.21991569535161873
+   },
+   "oracle": {
+    "mean_var": 0.0006007696433160757,
+    "ratio_to_oracle": 1.0,
+    "fraction_removed": 0.2628050100864182
+   },
+   "none": {
+    "mean_var": 0.0008153016503405086,
+    "ratio_to_oracle": 1.3567298678251933,
+    "fraction_removed": 0.0
+   }
+  }
+ }
+}

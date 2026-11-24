@@ -1,0 +1,5 @@
+RESULT {"mse": 0.3208943009376526, "mse_tank": 0.16434155404567719, "mse_junction": 0.3991706669330597, "per_traj_p95": 0.6064490079879761, "kind": "probmse", "het": "hom", "seed": 1}
+RESULT {"mse": 0.34222543239593506, "mse_tank": 0.18683746457099915, "mse_junction": 0.41991937160491943, "per_traj_p95": 0.6678398251533508, "kind": "probmse", "het": "hom", "seed": 4}
+RESULT {"mse": 0.18872319161891937, "mse_tank": 0.09719181805849075, "mse_junction": 0.23448888957500458, "per_traj_p95": 0.35665449500083923, "kind": "probmse", "het": "hom", "seed": 3}
+RESULT {"mse": 0.34518566727638245, "mse_tank": 0.19027294218540192, "mse_junction": 0.4226420223712921, "per_traj_p95": 0.6172226071357727, "kind": "probmse", "het": "hom", "seed": 0}
+RESULT {"mse": 0.31696903705596924, "mse_tank": 0.19950146973133087, "mse_junction": 0.375702828168869, "per_traj_p95": 0.5967375040054321, "kind": "probmse", "het": "hom", "seed": 2}
