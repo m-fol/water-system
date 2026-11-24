@@ -304,6 +304,24 @@ def job_multistart(args):
     res = {'structure': name, 'seed': seed, 'start': start, 'theta0': theta0.tolist(), 'theta': th.tolist(), 'rel_err_to_true': (th / TRUE - 1).tolist(), 'nll_fitted': float(r.fun), 'nll_at_true_params': float(nll(np.log(TRUE))), 'nfev': int(r.nfev), 'mse': se / n, 'antisym': an / n, 'seconds': time.time() - t0}
     print(json.dumps({k: np.round(v, 4).tolist() if isinstance(v, (list, float)) else v for k, v in res.items() if k != 'theta0'}), flush=True)
     return res
+def job_independent(args):
+    seed, start, n_fit = args
+    t0 = time.time()
+    rng = np.random.default_rng(1700 + seed + 1000 * start)
+    lo = np.log([0.05, 0.1, 0.05, 0.005, 0.005])
+    hi = np.log([1.0, 2.0, 1.5, 0.3, 0.2])
+    theta0 = np.exp(rng.uniform(lo, hi))
+    train = train_set(100 + seed, n_fit)
+
+    def nll(lt):
+        M = Model(np.exp(lt))
+        return -sum((run_imm(M, o, m)[1] for o, m in train))
+    r = minimize(nll, np.log(theta0), method='Nelder-Mead', options={'xatol': 0.002, 'fatol': 0.01, 'maxiter': 500})
+    th = np.exp(r.x)
+    mse, an = evaluate('imm', th, test_set())
+    res = {'seed': seed, 'start': start, 'theta0': theta0.tolist(), 'theta': th.tolist(), 'rel_err_to_true': (th / TRUE - 1).tolist(), 'nll_fitted': float(r.fun), 'nll_at_true_params': float(nll(np.log(TRUE))), 'nfev': int(r.nfev), 'mse': mse, 'antisym': an, 'seconds': time.time() - t0}
+    print(json.dumps({k: np.round(v, 4).tolist() if isinstance(v, (list, float)) else v for k, v in res.items() if k != 'theta0'}), flush=True)
+    return res
 if __name__ == '__main__':
     _cmd = sys.argv.pop(1) if len(sys.argv) > 1 else None
     if _cmd == 'identification':
@@ -324,6 +342,60 @@ if __name__ == '__main__':
             res = p.map(job_wrong_structure, specs, chunksize=1)
         json.dump({'n_fit': n_fit, 'runs': res}, open(os.path.join('..', 'results', 'sensor_only_wrong_structure.json'), 'w'), indent=1)
         print('done')
+    elif _cmd == 'independent_start':
+        n_fit = int(sys.argv[1]) if len(sys.argv) > 1 else 30
+        n_starts = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+        nproc = int(sys.argv[3]) if len(sys.argv) > 3 else 12
+        specs = [(s, j, n_fit) for j in range(n_starts) for s in range(3)]
+        with Pool(nproc) as p:
+            res = p.map(job_independent, specs, chunksize=1)
+        json.dump({'n_fit': n_fit, 'n_starts': n_starts, 'runs': res}, open(os.path.join('..', 'results', 'sensor_only_independent_start.json'), 'w'), indent=1)
+        print('done')
+    elif _cmd == 'kf_diagnosis':
+        d = json.load(open(os.path.join('..', 'results', 'sensor_only_identification.json')))
+        n_fit = d['n_fit']
+        rng_t = np.random.default_rng(777)
+        tests = []
+        for _ in range(300):
+            o, m, x, kinds = simulate(T=64, rng=rng_t)[:4]
+            tests.append((o, m, x, np.array([k in ('pump_trip', 'demand_spike') for k in kinds])))
+
+        def by_regime(est_fn):
+            calm = ev = 0.0
+            nc = ne = 0
+            for o, m, x, act in tests:
+                e = ((est_fn(o, m) - x) ** 2).mean(axis=1)
+                calm += float(e[~act].sum())
+                nc += int((~act).sum())
+                ev += float(e[act].sum())
+                ne += int(act.sum())
+            return (calm / nc, ev / ne)
+        rows = []
+        for run in d['runs']:
+            if run['kind'] != 'kf':
+                continue
+            s_ = run['seed']
+            th = np.array(run['theta'])
+            train = train_set(100 + s_, n_fit)
+            nll = lambda t: -sum((run_kf(Model(t), o, m, kf_Q(t[3]))[1] for o, m in train))
+            th_fix = th.copy()
+
+            def nll4(lt):
+                t = np.exp(lt)
+                full = np.array([t[0], t[1], t[2], TRUE[3], t[3]])
+                return nll(full)
+            r4 = minimize(nll4, np.log(th[[0, 1, 2, 4]]), method='Nelder-Mead', options={'xatol': 0.002, 'fatol': 0.01, 'maxiter': 220})
+            t4 = np.exp(r4.x)
+            th_fix = np.array([t4[0], t4[1], t4[2], TRUE[3], t4[3]])
+            row = {'seed': s_, 'theta_fitted': th.tolist(), 'sigma_d_fitted': float(th[3]), 'nll_kf_fitted': float(nll(th)), 'nll_kf_true_params': float(nll(TRUE)),
+                   'nll_imm_true_params': float(-sum((run_imm(Model(TRUE), o, m)[1] for o, m in train))), 'theta_sigma_d_fixed': th_fix.tolist(), 'nll_kf_sigma_d_fixed': float(r4.fun)}
+            row['mse_calm_events_kf_fitted'] = by_regime(lambda o, m: run_kf(Model(th), o, m, kf_Q(th[3]))[0])
+            row['mse_calm_events_kf_true_params'] = by_regime(lambda o, m: run_kf(Model(TRUE), o, m, kf_Q(TRUE[3]))[0])
+            row['mse_calm_events_kf_sigma_d_fixed'] = by_regime(lambda o, m: run_kf(Model(th_fix), o, m, kf_Q(th_fix[3]))[0])
+            row['mse_calm_events_imm_true_params'] = by_regime(lambda o, m: run_imm(Model(TRUE), o, m)[0])
+            rows.append(row)
+            print(json.dumps({k: np.round(v, 4).tolist() if isinstance(v, (list, float)) else v for k, v in row.items()}), flush=True)
+        json.dump({'n_fit': n_fit, 'rows': rows}, open(os.path.join('..', 'results', 'single_regime_kf_diagnosis.json'), 'w'), indent=1)
     elif _cmd == 'multistart':
         n_fit = int(sys.argv[1]) if len(sys.argv) > 1 else 30
         n_starts = int(sys.argv[2]) if len(sys.argv) > 2 else 4
@@ -334,4 +406,4 @@ if __name__ == '__main__':
         json.dump({'n_fit': n_fit, 'n_starts': n_starts, 'runs': res}, open(os.path.join('..', 'results', 'sensor_only_multistart.json'), 'w'), indent=1)
         print('done')
     else:
-        raise SystemExit('usage: python sensor_only_identification.py <identification|wrong_structure|multistart> [args]')
+        raise SystemExit('usage: python sensor_only_identification.py <identification|wrong_structure|independent_start|kf_diagnosis|multistart> [args]')

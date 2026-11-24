@@ -12,7 +12,7 @@
 
 \graphicspath{{figures/}}
 
-\title{Learned and Bayesian State Estimation for a Partly Instrumented Water Network:\\What the Sensors Can and Cannot Recover}
+\title{Symmetry-Induced Observability Limits and Sensor Placement\\in a Partly Instrumented Water Network}
 
 \author{
 \IEEEauthorblockN{Authors to be supplied}
@@ -23,31 +23,30 @@
 \maketitle
 
 \begin{abstract}
-We study what sparse sensors can and cannot recover in a six-state synthetic water-network benchmark observed through two tank readings, and how much training and model knowledge help. First, topology creates an observability limit: with homogeneous pipes the difference between two junction heads is unobservable, a consequence of a graph symmetry, and a local perturbation result (Proposition~\ref{prop:scaling}) shows that the weakest observability eigenvalue and the posterior variance reduction along that direction scale as the square of the conductance asymmetry, and extends to graphs with a symmetry group, with an orbit-breaking placement rule (Propositions~\ref{prop:sym} and~\ref{prop:orbit}). No tested estimator improves on the prior-only error ($0.0695$) in that direction, and one extra junction sensor reduces it by $10$--$30\%$ only at $J_2$ or $J_4$. Second, temporal and graph networks tuned on a validation set reach MSE $0.037$--$0.041$ with the same inputs as a ridge regression ($0.086$) and a Kalman filter ($0.078$). Third, interacting multiple-model (IMM) filters reach $0.0235$ when the regime structure is known or identified with hidden states in training, and $0.0237$ when five scalar parameters of the correct structure are identified from the tank readings alone, but this lead depends on model fidelity: it does not carry over to an EPANET-engine hydraulic simulation of the same graph, where the best GRU is as good or better ($0.339$ against $0.352$), it is lost under several dynamics shifts unless the estimators are rebuilt on data from the shifted system, and it degrades under a wrongly assumed event structure.
+Which directions of a water network's state can a few sensors never recover, and where should an extra sensor go? On a six-state benchmark in which only two tank levels are measured, a graph symmetry makes the difference between two junction heads unobservable. We show that the same holds for every symmetry-induced direction of a graph with a symmetry group fixing the sensors, that conductance asymmetry restores observability only weakly (the smallest observability eigenvalue and the posterior variance reduction grow as the square of the asymmetry), and that an orbit-breaking placement rule removes the symmetry-induced directions with at most $\log_2|\mathcal G|$ sensors (Propositions~\ref{prop:scaling}--\ref{prop:orbit}). Every estimator we tested stays at the prior-only error ($0.0695$) in the unobservable direction: ridge regression, a Kalman filter, tuned recurrent and graph networks, and interacting multiple-model (IMM) filters. For the recoverable directions, tuned networks reach about half the error of ridge regression and of the Kalman filter, and the IMM's further advantage depends on model fidelity: it does not carry over to an EPANET-engine simulation of the same graph, where a GRU is as good or better ($0.339$ against $0.352$). On those simulations an orbit-breaking rule and a weak-direction Bayesian criterion choose the same sensor pair, and the best single sensor for the weak direction differs from the best for total error.
 \end{abstract}
 
 \begin{IEEEkeywords}
-state estimation, observability, graph neural networks, PointNet, probabilistic forecasting, uncertainty calibration, event detection, Kalman filtering, RTS smoothing, partially observed networks, water distribution.
+observability, graph symmetry, sensor placement, state estimation, Kalman filtering, partially observed networks, water distribution.
 \end{IEEEkeywords}
 
 \section{Introduction}
 
-Unmeasured states of a distribution network must often be estimated from sparse sensors and learned observers are a candidate for this task. Three questions decide whether they are worth using. What can the available sensors recover at all? Given the same information, does a learned observer beat a classical linear estimator? And if a learned observer reports uncertainty, is that uncertainty calibrated and does it signal disturbances?
+Unmeasured states of a water distribution network must often be estimated from a few sensors. Before an estimator is chosen, two questions decide what is possible: which state directions do the sensors determine at all, and where should an additional sensor go if they do not? No estimator, learned or model-based, recovers what the sensors do not determine, so the first question bounds every estimator, and the second is a design choice that can be made before data are collected.
 
-We study these on a synthetic six-state benchmark with two tanks, four hidden junctions, stochastic demand, measurement noise on the tanks and recorded disturbance events. The benchmark is a network-diffusion model inspired by water distribution; it is not derived from hydraulic first principles and we make no claim about a deployed network. We make no Lyapunov stability claim for the learned observers.
+We study both questions on a six-state benchmark with two tanks, four hidden junctions, stochastic demand, measurement noise on the tanks and recorded disturbance events. The mirror symmetry of the benchmark graph makes the difference between two junction heads unobservable from the tank readings; heterogeneous conductance restores observability in principle but not in practice. The benchmark is a network-diffusion model inspired by water distribution, not derived from hydraulic first principles. We check the main findings on an EPANET-engine simulation of the same graph, but all data are simulated and we make no claim about a deployed network.
 
-\textbf{Scope.} This is a preliminary, controlled simulation study of learned and model-based state estimation for partially instrumented water networks. Its purpose is to fix the hypotheses and the evaluation protocol of a later study on measured data; the plan and the pre-specified hypotheses close the Conclusion (Section~\ref{sec:conclusion}). We use a small benchmark with known ground truth to examine structural observability, practical recoverability, the sensitivity of estimators to training and to model knowledge and the value of additional sensors. The results are methodological baselines and hypotheses that future validation on laboratory or field measurements could test; they are not evidence of field-level estimator performance.
+\textbf{Scope.} This is a preliminary, controlled simulation study. Its purpose is to fix the hypotheses and the evaluation protocol of a later study on measured data; the plan and the pre-specified hypotheses close the Conclusion (Section~\ref{sec:conclusion}).
 
 \textbf{Contributions.}
 \begin{itemize}
-  \item Topology creates exact or weakly observable directions: an observability analysis with a full-posterior recoverability calculation and its dependence on graph symmetry across seven topologies (Section~\ref{sec:obs}).
-  \item A local perturbation result (Proposition~\ref{prop:scaling}): for small conductance asymmetry $\varepsilon$, the smallest eigenvalue of the observability Gramian and the Bayesian variance reduction along the weak direction are of order $\varepsilon^2$ when the asymmetry breaks the mirror symmetry, and zero otherwise, with the nondegeneracy condition certified in exact arithmetic for the benchmark graph at two horizons; the result is extended to graphs with a symmetry group (Proposition~\ref{prop:sym}), with an orbit-breaking placement rule that removes all symmetry-induced unobservable directions with at most $\log_2|\mathcal G|$ sensors (Proposition~\ref{prop:orbit}; Section~\ref{sec:obs}).
-  \item Training substantially improves the recoverable directions: an equal-input comparison of ridge regression, tuned temporal and graph networks and Kalman filters, with controls that randomise the start and the diurnal phase (Sections~\ref{sec:linear} and~\ref{sec:tuned}).
-  \item Regime-aware identification improves further when the model information is available: interacting multiple-model filters with the true regimes, supervised identification and label-free full-state identification and their sensitivity (Section~\ref{sec:model_based} and Appendix~B).
-  \item No tested estimator defeats the sensor-information limit: prior-only benchmarks, a sensor-placement study and repetition on two other topologies and with nonlinear flow (Sections~\ref{sec:antisym}, \ref{sec:sensor} and~\ref{sec:topo_est}). An untuned architecture comparison and a probabilistic-observer analysis are secondary and appear in Appendices D and E. The paper rests on three findings: the structural observability limit, the value of training and of model knowledge, and the sensitivity of estimator rankings to model mismatch (hydraulic simulation and dynamics shifts, Appendices~B and~G). The sensor-only identification and adaptation experiments are supporting evidence for the third and do not extend the observability result.
+  \item \emph{Theory.} A symmetry classification of the unobservable directions of a network whose symmetry group fixes the sensors; an order-$\varepsilon^2$ law for the weakest Gramian eigenvalues and the posterior variance reduction under conductance asymmetry $\varepsilon$, certified in exact arithmetic for the benchmark graph; and an orbit-breaking placement rule that removes all symmetry-induced unobservable directions with at most $\log_2|\mathcal G|$ sensors (Propositions~\ref{prop:scaling}--\ref{prop:orbit}, Section~\ref{sec:obs}). The tools are classical and the contribution is their combination for this problem.
+  \item \emph{Evidence that the limit binds every estimator.} Ridge regression, Kalman and RTS filters, tuned recurrent and graph networks and IMM filters all stay at the prior-only error in the unobservable direction, on the benchmark, on two other topologies with nonlinear flow and on an EPANET-engine simulation (Section~\ref{sec:antisym}).
+  \item \emph{Sensor placement.} A comparison of placement rules on seven topologies and in $15$ EPANET-engine configurations. The best sensor depends on the objective, and the orbit-breaking rule and a weak-direction Bayesian criterion choose the same pair (Section~\ref{sec:sensor}, Appendices~G and~I).
+  \item \emph{A supporting estimator comparison.} On the recoverable directions tuned networks reach about half the error of ridge regression and of a Kalman filter; the IMM's further advantage depends on model fidelity and on the correct event structure (Section~\ref{sec:estimators_summary}, Appendices~B, G and J).
 \end{itemize}
 
-\textbf{Organization.} Section~\ref{sec:model} defines the benchmark and Section~\ref{sec:obs} derives the observability limit and Proposition~\ref{prop:scaling}. Section~\ref{sec:results} reports the experiments in the order of the three findings: the recoverability limit, estimator rankings and the information they use, and sensor placement. Section~\ref{sec:discussion} draws them together and states what they do not show. The appendices carry the supporting and secondary experiments (a guide is in Appendix~A).
+\textbf{Organization.} Section~\ref{sec:model} defines the benchmark and Section~\ref{sec:obs} derives the observability limit and Propositions~\ref{prop:scaling}--\ref{prop:orbit}. Section~\ref{sec:results} reports the experiments in the order of the contributions. Section~\ref{sec:discussion} draws them together and Section~\ref{sec:conclusion} gives the plan for measured data. The appendices carry the supporting and secondary experiments (a guide is in Appendix~A).
 
 \section{Related Work}
 \label{sec:related}
@@ -56,7 +55,7 @@ We study these on a synthetic six-state benchmark with two tanks, four hidden ju
 
 \textbf{Sensor placement and state estimation in water networks.} Sensor placement in water distribution networks is usually posed as a combinatorial optimisation for contamination or leak detection~\cite{berry2005,krause2008} and hydraulic state estimation from pressure and flow measurements is a long-standing topic in the water-systems literature~\cite{bargiela1989,preis2011}; the BattLeDIM competition provided a common benchmark for leakage detection with SCADA data~\cite{vrachimis2022}. These works use hydraulic models and detection objectives. We ask a different, more basic question in a controlled model with known ground truth: which directions of the state a given sensor set can recover at all and whether learning or model knowledge changes that.
 
-\textbf{Observability and identification.} Observability of nonlinear systems was formalized by Hermann and Krener~\cite{hermann1977}. A binary rank condition says nothing about how well a direction can be estimated, so measures such as the observability Gramian and the local unobservability index and estimation condition number~\cite{krener2009} quantify the degree of observability; we pair the Gramian with a full posterior-covariance calculation and with measured estimation errors. Graph symmetries are known to produce uncontrollable (dually, unobservable) subspaces in networked systems~\cite{rahmani2009} and the unobservable direction here is of this kind. Small Gramian eigenvalues as a measure of how little a direction contributes to the output are the basis of balanced realisations~\cite{moore1981}, and the first-order behaviour of a simple zero singular value under a perturbation is classical matrix perturbation theory~\cite{stewart1990}; Section~\ref{sec:obs} applies these two tools to the symmetry-induced null direction of this benchmark. For linear systems, subspace identification estimates a state-space model directly from input--output data~\cite{vanoverschee1996} and prediction-error identification is treated in~\cite{ljung1999}. These are the classical routes to a model-based observer when the physics is unknown, which is the setting the equal-information baseline in Section~\ref{sec:linear} is meant to approximate.
+\textbf{Observability and identification.} Observability of nonlinear systems was formalized by Hermann and Krener~\cite{hermann1977}. A binary rank condition says nothing about how well a direction can be estimated, so measures such as the observability Gramian and the local unobservability index and estimation condition number~\cite{krener2009} quantify the degree of observability; we pair the Gramian with a full posterior-covariance calculation and with measured estimation errors. Graph symmetries are known to produce uncontrollable (dually, unobservable) subspaces in networked systems~\cite{rahmani2009} and the unobservable direction here is of this kind. Small Gramian eigenvalues as a measure of how little a direction contributes to the output are the basis of balanced realisations~\cite{moore1981}, and the first-order behaviour of a simple zero singular value under a perturbation is classical matrix perturbation theory~\cite{stewart1990}; Section~\ref{sec:obs} applies these two tools to the symmetry-induced null direction of this benchmark. For linear systems, subspace identification estimates a state-space model directly from input--output data~\cite{vanoverschee1996} and prediction-error identification is treated in~\cite{ljung1999}. These are the classical routes to a model-based observer when the physics is unknown, which is the setting the equal-information baseline in Appendix~\ref{sec:linear} is meant to approximate.
 
 \textbf{Switching state estimation.} The interacting multiple-model filter~\cite{blom1988,barshalom2001} is the classical estimator for systems with Markov-switching dynamics. Switching linear dynamical systems can be learned from data with variational methods~\cite{ghahramani2000} or with Bayesian nonparametric priors that infer the number of modes~\cite{fox2011}. Our label-free full-state identification is a much simpler hard-EM switching regression on the full state, enough for this benchmark and is not a contribution to switching-model learning.
 
@@ -84,7 +83,7 @@ L_K&=NKN^\top\in\mathbb{R}^{6\times 6},
 \end{aligned}
 \label{eq:flow}
 \end{equation}
-where $S=\operatorname{diag}(a_{T1},a_{T2},1,1,1,1)$ holds the tank cross-sections. For an undirected graph $NN^\top=D-A$, so $K=kI$ gives $L_K=kL$. The simulator uses $K=kI$ with $k=0.35$. Heterogeneous conductance draws each $k_e$ from $\mathcal U[0.25,0.45]$ with seed $2024$.
+where $S=\operatorname{diag}(a_{T1},a_{T2},1,1,1,1)$ holds the tank cross-sections. Dividing by $S$ converts a tank state into a head only if that state is a volume ($x_{T_i}=a_{T_i}h_{T_i}$); in every experiment the cross-sections are one, so $S=I$, $x_{T_i}=\ell_{T_i}$ is the level in metres and $h=x$. For an undirected graph $NN^\top=D-A$, so $K=kI$ gives $L_K=kL$. The simulator uses $K=kI$ with $k=0.35$. Heterogeneous conductance draws each $k_e$ from $\mathcal U[0.25,0.45]$ with seed $2024$.
 
 The discrete-time update is
 \begin{align}
@@ -94,7 +93,7 @@ u_t &= k_pE\,(x^\ast-x_t),\qquad E=\operatorname{diag}(1,1,0,0,0,0),\label{eq:pu
 d_{j,t} &= d_0\big(1+0.5\sin(2\pi t/48)\big)+\xi_{j,t}, \\
 &\qquad j\in\{J_1,\dots,J_4\},\label{eq:demand}
 \end{align}
-with $\Delta t=0.5$, $k=0.35$, $k_p=0.6$, $x^\ast=5$, $d_0=0.4$, $\xi_{j,t}\sim\mathcal N(0,0.05^2)$ and demand is clipped at zero. The simulator has no state noise, so the demand noise $\xi$ is its only random input. Disturbance events occur with probability $0.08$ per step and last six steps. The event types are sensor dropout (one tank reading is masked), pump trip (a tank's pump is forced off) and demand spike (a junction's demand is multiplied by four). About one third of all steps are event-active in this schedule.
+with $\Delta t=0.5$, $k=0.35$, $k_p=0.6$, $x^\ast=5$, $d_0=0.4$, $\xi_{j,t}\sim\mathcal N(0,0.05^2)$ and demand is clipped at zero. The demand noise $\xi$ enters the state transition and therefore acts as process noise; it is the only random input of the simulator besides the events. Disturbance events occur with probability $0.08$ per step and last six steps. The event types are sensor dropout (one tank reading is masked), pump trip (a tank's pump is forced off) and demand spike (a junction's demand is multiplied by four). About one third of all steps are event-active in this schedule.
 
 \subsection{Observation}
 
@@ -149,7 +148,7 @@ A linear system $x_{t+1}=Ax_t$, $y_t=Cx_t$ is observable when the observability 
 
 With heterogeneous conductance the same check gives full rank six in all $200$ random draws (each $k_e\sim\mathcal U[0.25,0.45]$). Heterogeneity therefore restores observability in principle. Full rank is not the same as useful information. The observability Gramian $W_o(T)=\sum_{k=0}^{T-1}(A^k)^\top C^\top CA^k$ quantifies how strongly each state direction appears in the observations over a horizon $T$. Its smallest eigenvalue is zero to machine precision for the homogeneous model, at both $T=6$ and $T=64$, so the condition number is infinite. For the heterogeneous draws the smallest eigenvalue is positive but small: its median is $7\times10^{-5}$ at $T=6$ and $3\times10^{-4}$ at $T=64$, with a range of $3\times10^{-9}$ to $2\times10^{-3}$. The J2-minus-J4 direction is therefore observable in principle under heterogeneity, but it contributes very little to the observations. This explains why no estimator reduces its error in practice (Section~\ref{sec:antisym}).
 
-\textbf{Noise-normalised recoverability.} We separate two questions.
+\textbf{Noise-normalised recoverability.} Structural observability (a rank condition), recoverability under a stated Gaussian prior (a posterior covariance) and the accuracy of an estimator under disturbances are different questions; the first two are treated analytically here and the third empirically in Section~\ref{sec:results}. We separate two questions.
 
 \emph{(i) Gaussian recoverability of the initial state.} For a Gaussian prior $P_0$ and measurement variance $\sigma_v^2=9\times10^{-4}$, the posterior covariance after a horizon $T$ is $P_{\text{post}}=(P_0^{-1}+W_o/\sigma_v^2)^{-1}$, computed in full without assuming that the weakest direction is an eigenvector of the prior. The randomised-start benchmark draws the initial state from independent normals with variance $0.25$, so $P_0=0.25I$ is the correct prior for that setting and is our main result.
 \begin{itemize}
@@ -163,7 +162,7 @@ With heterogeneous conductance the same check gives full rank six in all $200$ r
 
 \textbf{Scaling with the size of the asymmetry.} Why does algebraic observability return before useful recoverability? Write the conductances as $k_e=k(1+\varepsilon u_e)$, $u\in\mathbb R^6$, so that $A(\varepsilon)=A_0+\varepsilon A_1$ exactly, with $A_1=-\Delta t\,k\,N\operatorname{diag}(u)N^\top$ (the pump term is unchanged). Let $M_T(\varepsilon)=[C;CA;\dots;CA^{T-1}]$, so that $W_T=M_T^\top M_T$, let $v$ be the unit unobservable direction of $A_0$ ($A_0v=\lambda v$, $\lambda=0.650$, $CA_0^jv=0$), $T\ge6$ so that $M_T(0)$ has rank five, and $\Pi$ the orthogonal projector onto the complement of the range of $M_T(0)$. Define $c=\partial_\varepsilon M_T(\varepsilon)v|_{\varepsilon=0}$, the stack over $j=1,\dots,T-1$ of $c_j=\sum_{i=0}^{j-1}\lambda^{i}\,CA_0^{\,j-1-i}A_1v$.
 
-\begin{proposition}\label{prop:scaling} (a) If $A_1v\in\operatorname{span}(v)$, then $v$ is unobservable for every $\varepsilon$ and $W_T(\varepsilon)$ is singular. (b) Let $s(\varepsilon)=\min_{y\perp v}\|M_T(\varepsilon)(v+y)\|^2$. Then $s(\varepsilon)=\varepsilon^2\|\Pi c\|^2+O(\varepsilon^3)$ and $\lambda_{\min}(W_T(\varepsilon))=s(\varepsilon)\,(1+O(\varepsilon^2))$. (c) If $\Pi c\ne0$ and $P_0=pI$, the posterior variance reduction along $v$, $1-v^\top P_{\mathrm{post}}v/p$, lies between $\kappa_1\varepsilon^2$ and $\kappa_2\varepsilon^2$ for small $\varepsilon$, with constants that depend on $p/\sigma_v^2$ and $\|\Pi c\|$. (d) For the benchmark graph, $A_1v\in\operatorname{span}(v)$ if and only if $u_3=u_6$ and $u_4=u_5$ (equal perturbations of the mirror-image pipes $J_1J_2$, $J_1J_4$ and of $J_2J_3$, $J_3J_4$), and $\|\Pi c\|^2$ is a positive quadratic form in the mirror-antisymmetric part of $u$.
+\begin{proposition}\label{prop:scaling} (a) If $A_1v\in\operatorname{span}(v)$, then $v$ is unobservable for every $\varepsilon$ and $W_T(\varepsilon)$ is singular. (b) Let $s(\varepsilon)=\min_{y\perp v}\|M_T(\varepsilon)(v+y)\|^2$. Then $s(\varepsilon)=\varepsilon^2\|\Pi c\|^2+O(\varepsilon^3)$ and $\lambda_{\min}(W_T(\varepsilon))=s(\varepsilon)\,(1+O(\varepsilon^2))$. (c) If $\Pi c\ne0$ and $P_0=pI$, the posterior variance reduction along $v$, $1-v^\top P_{\mathrm{post}}v/p$, lies between $\kappa_1\varepsilon^2$ and $\kappa_2\varepsilon^2$ for small $\varepsilon$, with constants that depend on $p/\sigma_v^2$ and $\|\Pi c\|$. (d) For the benchmark graph, $A_1v\in\operatorname{span}(v)$ if and only if $u_3=u_6$ and $u_4=u_5$ (equal perturbations of the mirror-image pipes $J_1J_2$, $J_1J_4$ and of $J_2J_3$, $J_3J_4$), and, for $T=6$ and $T=64$ (certified in exact arithmetic), $\|\Pi c\|^2$ is a positive quadratic form in the mirror-antisymmetric part of $u$.
 \end{proposition}
 
 The proof (Appendix~\ref{app:proof}) writes $s(\varepsilon)$ as a Schur complement of the Gramian, shows that its first-order term is $\varepsilon^2\|\Pi c\|^2$, bounds $\lambda_{\min}$ above and below by $s$ up to a factor $1+O(\varepsilon^2)$, and obtains the posterior variance reduction from the same Schur complement; part (d) is a computation with the incidence matrix and an exact rational certificate for the $2\times2$ form.
@@ -210,7 +209,7 @@ Six-junction ring with two chords, tanks opposite & 8 & 2 & $0.0055$ \\
 Let sensors be added at a set $S$ of junctions and let $\mathcal G_S$ be the subgroup of $\mathcal G$ that fixes every node of $S$. (a) The symmetry-induced unobservable subspace of the extended system, $\ker P_S$ with $P_S$ the average over $\mathcal G_S$, has dimension $n-m(\mathcal G_S)$ and is zero if and only if $\mathcal G_S$ is trivial. (b) The orbit-breaking rule \emph{repeatedly adds a junction that the current stabiliser $\mathcal G_S$ moves} (ties broken by the weak-direction posterior criterion of Appendix~I) until $\mathcal G_S$ is trivial, and does so with at most $\lfloor\log_2|\mathcal G|\rfloor$ sensors.
 \end{proposition}
 
-Proposition~\ref{prop:sym} says that the components of the state that a symmetry cannot distinguish are unobservable, that conductance perturbations which keep the symmetry do not restore them, and that for any graph the weak eigenvalues of the unobservable directions grow like $\varepsilon^2$ under a perturbation, with a coefficient $H(u)$ that depends only on the symmetry-breaking part of the perturbation when the unobservable directions are exactly the symmetry ones. Proposition~\ref{prop:orbit} turns it into a placement rule: the sensors must break the symmetry, and the bound on their number is that of a base of a permutation group, a classical group-theoretic fact (each added sensor at a moved node at least halves the order of the stabiliser); we do not claim it as a new algorithm, only that it gives, for this class of systems, a guarantee on how few sensors remove all symmetry-induced unobservable directions. The guarantee concerns these directions only: a trivial stabiliser does not make the system observable by itself, because other unobservable directions can remain (as the random graphs below show, $N_0$ can be larger than $V_0$), and the rule says nothing about them. Propositions~\ref{prop:sym} and~\ref{prop:orbit} are built from classical tools (eigenvalue perturbation and Ostrowski's congruence theorem, Schur complements, the orbit--stabiliser theorem and the size bound for a base of a permutation group). We claim no new result in any of them; the contribution is their combination for this problem: a symmetry classification of the unobservable directions, an order-$\varepsilon^2$ law for the weak Gramian eigenvalues, and a placement rule with a size guarantee, checked on one family of graphs. We have not made an exhaustive literature search, so whether this combination is distinctive enough remains for the reader to judge. Table~\ref{tab:symmetry} checks the statements on the seven topologies of Table~\ref{tab:topo} (\texttt{symmetry\_propositions\_check.py}). In every topology $n-m$ equals the observed number of unobservable directions, so $N_0=V_0$ and part (c) applies; a symmetry-preserving perturbation leaves $V_0$ unobservable (residual below $10^{-15}$); for random perturbations the $d$ smallest eigenvalues of $W_{64}$ agree with $\varepsilon^2$ times the eigenvalues of $H(u)$ to within $0.3\%$ at $\varepsilon=10^{-3}$, $H(u)$ is unchanged by removing the symmetric part of $u$ (relative change below $10^{-8}$), and its smallest eigenvalue is positive in every draw ($\ge2.1e-07$); the greedy rule needs at most $\log_2|\mathcal G|$ sensors and after adding them the homogeneous system has no unobservable direction. The converse of (a) is not true in general and $N_0=V_0$ can fail: among $400$ random connected graphs with two tank nodes and $6$--$8$ nodes, $86$ had unobservable directions, exactly the symmetry ones in $84$ and more than the symmetry ones in $2$. Part (b) does not need the equality. On these graphs its eigenvalue law holds with a relative deviation of at most $4\%$ at $\varepsilon=10^{-3}$ for the nonzero eigenvalues of $H(u)$, and in the $7$ cases with a zero eigenvalue of $H(u)$ the corresponding Gramian eigenvalue is zero to $2e-16$.
+Proposition~\ref{prop:sym} says that the components of the state that a symmetry cannot distinguish are unobservable, that conductance perturbations which keep the symmetry do not restore them, and that for any graph the weak eigenvalues of the unobservable directions grow like $\varepsilon^2$ under a perturbation, with a coefficient $H(u)$ that depends only on the symmetry-breaking part of the perturbation when the unobservable directions are exactly the symmetry ones. Proposition~\ref{prop:orbit} turns it into a placement rule: the sensors must break the symmetry, and the bound on their number is that of a base of a permutation group, a classical group-theoretic fact (each added sensor at a moved node at least halves the order of the stabiliser); we do not claim it as a new algorithm, only that it gives, for this class of systems, a guarantee on how few sensors remove all symmetry-induced unobservable directions. The guarantee concerns these directions only: a trivial stabiliser does not make the system observable by itself, because other unobservable directions can remain (as the random graphs below show, $N_0$ can be larger than $V_0$), and the rule says nothing about them. Propositions~\ref{prop:sym} and~\ref{prop:orbit} are built from classical tools (eigenvalue perturbation and Ostrowski's congruence theorem, Schur complements, the orbit--stabiliser theorem and the size bound for a base of a permutation group). We claim no new result in any of them; the contribution is their combination for this problem: a symmetry classification of the unobservable directions, an order-$\varepsilon^2$ law for the weak Gramian eigenvalues, and a placement rule with a size guarantee, checked on one family of graphs. We have not made an exhaustive literature search. Table~\ref{tab:symmetry} checks the statements on the seven topologies of Table~\ref{tab:topo} (\texttt{symmetry\_propositions\_check.py}). In every topology $n-m$ equals the observed number of unobservable directions, so $N_0=V_0$ and part (c) applies; a symmetry-preserving perturbation leaves $V_0$ unobservable (residual below $10^{-15}$); for random perturbations the $d$ smallest eigenvalues of $W_{64}$ agree with $\varepsilon^2$ times the eigenvalues of $H(u)$ to within $0.3\%$ at $\varepsilon=10^{-3}$, $H(u)$ is unchanged by removing the symmetric part of $u$ (relative change below $10^{-8}$), and its smallest eigenvalue is positive in every draw ($\ge2.1e-07$); the greedy rule needs at most $\log_2|\mathcal G|$ sensors and after adding them the homogeneous system has no unobservable direction. The converse of (a) is not true in general and $N_0=V_0$ can fail: among $400$ random connected graphs with two tank nodes and $6$--$8$ nodes, $86$ had unobservable directions, exactly the symmetry ones in $84$ and more than the symmetry ones in $2$. Part (b) does not need the equality. On these graphs its eigenvalue law holds with a relative deviation of at most $4\%$ at $\varepsilon=10^{-3}$ for the nonzero eigenvalues of $H(u)$, and in the $7$ cases with a zero eigenvalue of $H(u)$ the corresponding Gramian eigenvalue is zero to $2e-16$.
 
 \begin{table*}[t]
 \centering
@@ -240,7 +239,7 @@ Six-junction ring with two chords, tanks opposite & $4$ & $6$ & $2$ & $2$ & $2$ 
 
 \subsection{Belief, Bayesian estimate and the Kalman filter}
 
-The belief at time $t$ is $b_t(x)=p(x_t=x\mid y_{0:t},u_{0:t-1})$ and the Bayesian estimate is its mean, $\hat x_t=\mathbb{E}[x_t\mid y_{0:t}]$. This mean minimizes the mean squared error over all functions of the observation history. For the linear model with Gaussian noise the belief is Gaussian and the Bayes filter is the Kalman filter~\cite{kalman1960}:
+The belief at time $t$ is $b_t(x)=p(x_t=x\mid y_{0:t})$ and the Bayesian estimate is its mean, $\hat x_t=\mathbb{E}[x_t\mid y_{0:t}]$. The pump inputs $u_t$ are a function of the state (Eq.~\eqref{eq:pump}) and are given to no estimator; the known deterministic forcing $b_t$ (set-point and mean diurnal demand) is part of the model of the model-based filters. This mean minimizes the mean squared error over all functions of the observation history. For the linear model with Gaussian noise the belief is Gaussian and the Bayes filter is the Kalman filter~\cite{kalman1960}:
 \begin{align}
 \hat x_{t|t-1}&=A\hat x_{t-1|t-1}+b_{t-1},\label{eq:kf1}\\
 P_{t|t-1}&=AP_{t-1|t-1}A^\top+Q,\label{eq:kf1b}\\
@@ -250,7 +249,7 @@ G_t&=P_{t|t-1}C_t^\top S_t^{-1},\label{eq:kf3}\\
 \hat x_{t|t}&=\hat x_{t|t-1}+G_t\nu_t,\label{eq:kf3b}\\
 P_{t|t}&=(I-G_tC_t)P_{t|t-1}.\label{eq:kf4}
 \end{align}
-The innovation $\nu_t$ is the reading minus its prediction. The measurement matrix $C_t$ is time-varying: it keeps the rows of the tanks that reported at step $t$. When neither tank reports, the update is skipped and $\hat x_{t|t}=\hat x_{t|t-1}$. The RTS smoother~\cite{rts1965} adds a backward pass, $C_t^{\text{s}}=P_{t|t}A^\top P_{t+1|t}^{-1}$ and $\hat x_{t|T}=\hat x_{t|t}+C_t^{\text{s}}(\hat x_{t+1|T}-\hat x_{t+1|t})$ and uses all observations, so it is an offline reference. The simulator has no state noise, so the filters' $Q$ is an effective covariance for the omitted demand and disturbance error, estimated from one-step residuals on seed 4242 (not an evaluation seed).
+The innovation $\nu_t$ is the reading minus its prediction. The measurement matrix $C_t$ is time-varying: it keeps the rows of the tanks that reported at step $t$. When neither tank reports, the update is skipped and $\hat x_{t|t}=\hat x_{t|t-1}$. The RTS smoother~\cite{rts1965} adds a backward pass, $C_t^{\text{s}}=P_{t|t}A^\top P_{t+1|t}^{-1}$ and $\hat x_{t|T}=\hat x_{t|t}+C_t^{\text{s}}(\hat x_{t+1|T}-\hat x_{t+1|t})$ and uses all observations, so it is an offline reference. The only process noise of the simulator is the demand noise $\xi$ and the events add shocks that the linear Gaussian model omits, so the filters' $Q$ is an effective covariance for the demand and disturbance error, estimated from one-step residuals on seed 4242 (not an evaluation seed).
 
 \subsection{Learned observers and the losses}
 
@@ -267,7 +266,7 @@ Hidden states are handled by three tools: a recursive Bayes filter (exact for li
 \section{Results}
 \label{sec:results}
 
-The results follow the three findings of the Introduction. \emph{The recoverability limit:} what the sensors can recover at all (Section~\ref{sec:antisym}, with the analysis of Section~\ref{sec:obs}). \emph{Estimator rankings and the information they use:} the ridge baseline (Section~\ref{sec:linear}), tuned networks (Section~\ref{sec:tuned}), regime-aware model identification (Section~\ref{sec:model_based}), other topologies and nonlinear flow (Section~\ref{sec:topo_est}) and the classical baselines (Section~\ref{sec:baselines}). \emph{Sensor placement:} one extra sensor and the placement rules (Section~\ref{sec:sensor}). Sensitivity to model mismatch (dynamics shifts, adaptation, hydraulic simulation) is reported in Appendices~B and~G. The untuned architectures, the probabilistic observer, event detection and the filter-versus-smoother comparison are secondary and are in Appendices~D--F.
+The results follow the contributions. Section~\ref{sec:antisym} shows that no estimator recovers the unobservable direction; Section~\ref{sec:estimators_summary} summarises what the estimators do achieve in the recoverable directions and how that depends on model knowledge (details in Appendix~\ref{app:estimators}, mismatch in Appendices~B and~G); Section~\ref{sec:sensor} turns to sensor placement. The untuned architectures, the probabilistic observer, event detection and the filter-versus-smoother comparison are secondary and are in Appendices~D--F.
 
 
 \subsection{Error in the unobservable direction}
@@ -284,181 +283,37 @@ To make the comparison to the prior error explicit we evaluated two estimators t
 \label{fig:antisym}
 \end{figure}
 
-\subsection{Ridge regression and the information available to the observers}
-\label{sec:linear}
+\subsection{What the estimators achieve}
+\label{sec:estimators_summary}
 
-A ridge regression predicts all six states at each step from the tank readings and masks it has observed so far. It has no time-of-day input and no hidden states. The information sets are therefore written out exactly. Each learned observer receives the readings $o_s$ for $s\le t$, with junction entries fixed at zero and dropouts appearing as zeros. The ridge model receives the same readings together with the masks $m_s$, which the observers can recover from the zeros. Neither receives the pump inputs $u_t$, the demand $d_t$, the event labels, the process noise or the true state. Trajectories start at step zero, so a window of 64 steps contains the entire observation history that the LSTM also receives. At each timestep, the ridge estimator uses only the tank measurements and observation masks available up to that timestep. Earlier unavailable observations are zero-padded with zero-valued masks. We verified numerically that features at step $t$ do not change when any later reading or mask is altered. A shorter window therefore gives the ridge model less information than the learned observers. Table~\ref{tab:window} reports the ridge MSE on the three test sets as a function of the window length $P$ (the window holds the observations and masks of the last $P$ steps, including the current one), with the ridge fitted on 300 training trajectories.
+Two questions remain once the limit is established: does any estimator beat it, and how much do training and model knowledge matter in the directions that can be recovered? Table~\ref{tab:estimators_brief} summarises the comparison; the full comparison (ridge window, tuned networks, controls on the start and the phase, other topologies, nonlinear flow and the classical baselines) is in Appendix~\ref{app:estimators}.
+\begin{itemize}
+\item \emph{The weak direction.} No estimator improves on the prior-only error there (Section~\ref{sec:antisym}).
+\item \emph{Recoverable directions.} Networks tuned on a validation set with the ridge inputs reach about half the error of ridge regression and of the true-transition-matrix Kalman filter. IMM filters with the regime structure do better still on the synthetic benchmark.
+\item \emph{Information.} The comparison is not one of equal information. The IMMs are given the regime structure and event process (and, in the randomised-start setting, the diurnal phase); the networks and the identified IMMs use the hidden states in training. The sensor-only IMM ($0.0237$) assumes the correct structure and estimates five scalar parameters.
+\item \emph{Model fidelity.} The IMM lead does not carry over to the EPANET-engine simulation, is lost under several dynamics shifts unless the estimators are rebuilt on data from the shifted system, and degrades when the assumed event structure is wrong (Appendices~B and~G).
+\end{itemize}
 
 \begin{table}[t]
 \centering
-\caption{Ridge regression MSE by window length.}
-\label{tab:window}
+\caption{Estimators in brief: MSE on the synthetic benchmark (fixed start) and on the EPANET-engine simulation. In the J2-minus-J4 direction every estimator is at the prior-only error ($0.0695$ synthetic, about $0.050$ EPANET).}
+\label{tab:estimators_brief}
 \small
-\resizebox{\linewidth}{!}{%
 \begin{tabular}{lcc}
 \toprule
-Window $P$ & MSE & Relation to the observers' information \\
+Estimator & Synthetic & EPANET \\
 \midrule
-6 & $0.142$ (0.141 to 0.143) & less than the observers receive \\
-16 & $0.122$ & less than the observers receive \\
-32 & $0.110$ & less than the observers receive \\
-64 & $\mathbf{0.087}$ & full history, same as the LSTM \\
+Ridge regression, 64 steps & $0.086$ & $0.489$ \\
+Kalman filter, true matrix & $0.078$ & $0.470$ \\
+GRU, tuned & $0.0383$ & $0.339$ \\
+Graph-LSTM, tuned & $0.0374$ & --- \\
+IMM, true regimes & $0.0235$ & --- \\
+IMM, supervised identification & $0.0235$ & $0.352$ \\
+IMM, label-free identification & $0.0236$ & $0.402$ \\
+IMM, sensor-only (correct structure) & $0.0237$ & --- \\
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table}
-
-With the full history the ridge MSE is $0.087$, below every probabilistic seed (range $0.118$ to $0.223$). Treating the ridge fit as fixed, its paired difference from the probabilistic GNN is $-0.070$ ($p=9\times10^{-5}$). This test is conditional on the single ridge fit. The ridge model has no training-seed variability, so the $p$-value reflects variation across the ten neural training runs only. It supports a comparison with these ten networks under this protocol, not a general ranking of ridge regression against recurrent networks. With the six-step window the difference is $-0.016$ (95\% CI $[-0.040,+0.008]$, $p=0.17$, lower on five of ten seeds), which is not significant. The original networks were trained for 500 epochs on fresh batches of 16 sequences without any tuning and they receive readings but not masks. We therefore tested whether this ranking survives tuning and equal inputs.
-
-\subsection{Tuned temporal networks with the ridge inputs}
-\label{sec:tuned}
-
-We trained four families of temporal networks on exactly the ridge inputs (tank readings and masks, no spatial encoder, no time-of-day input): an LSTM, a GRU, a linear recurrent network $h_t=Ah_{t-1}+Bu_t$ with a linear readout and an MLP on the last 16 steps. Each family had a small grid over hidden size and learning rate (14 configurations in total, one seed each), selected on a validation set (500 trajectories, seed 123, not a test seed). Training used 8,000 fixed trajectories, 4,000 Adam steps of batch 32, cosine learning-rate decay, gradient clipping and the best validation checkpoint. The selected configuration of each family was then retrained with five seeds and evaluated on the three test sets. To remove a training-set confound, the ridge regression was refitted on the same 8,000 trajectories with its penalty chosen on the same validation set (Table~\ref{tab:tuned}; networks: mean $\pm$ standard deviation over the five seeds of the mean MSE on the three test sets; ridge: one fit).
-
-\begin{table}[t]
-\centering
-\caption{Equal-input comparison of ridge and tuned networks.}
-\label{tab:tuned}
-\small
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{lcc}
-\toprule
-Estimator & Parameters & MSE \\
-\midrule
-Ridge, 64 steps, 300 training trajectories & --- & $0.087$ \\
-Ridge, 64 steps, 8,000 trajectories, tuned penalty & --- & $0.086$ \\
-Ridge, 64 steps + time-of-day features & --- & $0.073$ \\
-Linear recurrent network (64 hidden) & 4,806 & $0.0711\pm0.0000$ \\
-MLP on the last 16 steps (256 hidden) & 83,974 & $0.0405\pm0.0003$ \\
-LSTM (128 hidden) & 69,382 & $0.0404\pm0.0020$ \\
-GRU (64 hidden) & 13,830 & $\mathbf{0.0383\pm0.0024}$ \\
-\midrule
-Kalman filter, true transition matrix & --- & $0.0785$ \\
-RTS smoother, true transition matrix (offline) & --- & $0.0716$ \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-With the same inputs and a modest amount of tuning, the nonlinear networks reach $0.038$--$0.041$, less than half the MSE of the full-history ridge regression ($0.086$) and of the true-transition-matrix Kalman filter ($0.078$). The ranking of the original comparison therefore depended on tuning and the statement that ridge beats the neural observers holds only for the untuned networks. Equal training data did not change ridge ($0.086$ against $0.087$). A time-of-day feature (sine and cosine of the diurnal phase) lowers ridge to $0.073$ and products of these with the current readings only to $0.072$, so the diurnal forcing explains part of the gap but not most of it. The linear recurrent network ($0.071$) is similar to the ridge model with the clock features. For one MLP seed, the error is lower at every kind of step: $0.011$ against $0.040$ at calm steps, $0.015$ against $0.065$ during dropouts, $0.041$ against $0.139$ during pump trips and $0.246$ against $0.333$ during demand spikes. The advantage therefore is not confined to events. Section~\ref{sec:model_based} isolates the mechanism with model-based estimators and with controls on the start. In the J2-minus-J4 direction all tuned networks stay at $0.0695$--$0.0696$, the prior-only level, so tuning improves the observed part of the state and not the weak direction (Section~\ref{sec:antisym}).
-
-The ridge penalty of the original fit was fixed at a single value before evaluation and not tuned on the test sets.
-
-\subsection{Model-based estimators with regime knowledge and controls on the start}
-\label{sec:model_based}
-
-Table~\ref{tab:tuned} raises two questions: why do networks beat the Kalman filter that has the true transition matrix and how much of their advantage comes from the fixed start and the deterministic diurnal demand? We tested both with estimators that use only the tank readings and masks. (i) A \emph{time-only} estimator: the mean state at each time index over the training set, with no sensor reading. (ii) The Kalman filter re-implemented with the true transition matrix, the mean pump and diurnal forcing and an empirically calibrated process covariance $Q$, with a diffuse start prior or told the start distribution. (iii) An interacting multiple-model (IMM) filter with seven regimes (calm, a pump trip at either tank, a demand spike at either junction), the simulator's regime dynamics, $Q$ from the demand noise alone and regime transition probabilities derived from the event process (event durations approximated as geometric; sensor dropouts are known from the masks and are not a regime). We also repeated the comparison with a randomised start: initial tank levels $\mathcal N(5,0.5^2)$, junction heads $\mathcal N(4,0.5^2)$ and a diurnal phase uniform over the 48-step day, drawn independently per trajectory, with all learned models retrained under the same protocol (five seeds). In the randomised setting the model-based estimators are given the phase, a privilege the networks do not have. A graph estimator (two graph-convolution layers on the tank-node features $[\text{reading},\text{mask}]$ followed by an LSTM, four configurations tuned on the validation set) was added to the temporal networks. Table~\ref{tab:modelbased} gives the MSE with a fixed start and with a randomised start and phase; all rows use only the tank readings and masks and differ in model knowledge. Networks: five training seeds, mean $\pm$ standard deviation over seeds. Model-based estimators, including all IMM rows: the same 900 test trajectories (300 per test set); label-free full-state identification: mean $\pm$ standard deviation over five independent identification seeds. In the randomised setting the model-based estimators are given the diurnal phase.
-
-\begin{table*}[t]
-\centering
-\caption{MSE by estimator, fixed and randomised start.}
-\label{tab:modelbased}
-\small
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{llcc}
-\toprule
-Estimator & Model knowledge & Fixed start & Random start \\
-\midrule
-Time only & none, no sensor readings & $0.123$ & $0.899$ \\
-Ridge, 64 steps (8,000 trajectories) & learned & $0.086$ & $0.132$ \\
-MLP, last 16 steps & learned & $0.0405\pm0.0003$ & $0.0419\pm0.0006$ \\
-LSTM (128) & learned & $0.0404\pm0.0020$ & $0.0411\pm0.0013$ \\
-GRU (64) & learned & $0.0383\pm0.0024$ & $0.0406\pm0.0010$ \\
-Graph-LSTM (tuned) & learned & $0.0374\pm0.0031$ & $0.0367\pm0.0018$ \\
-\midrule
-Kalman filter, diffuse start & true matrix, mean forcing & $0.078$ & $0.073$ \\
-Kalman filter, known start & + start distribution & $0.078$ & $0.071$ \\
-IMM, supervised model identification & learned from hidden states and regime labels, + start & $0.0235$ & --- \\
-IMM, label-free full-state identification (BIC-selected $K$) & learned from hidden states, no labels, + start & $0.0236\pm0.0001$ & --- \\
-IMM, diffuse start & true regimes and event process & $0.027$ & $0.025$ \\
-IMM, known start & + start distribution & $\mathbf{0.0235}$ & $\mathbf{0.022}$ \\
-\bottomrule
-\end{tabular}}
-\end{table*}
-
-The time-only estimator reaches $0.123$, so the clock alone does not explain the networks' advantage and the sensors matter. Telling the Kalman filter the start distribution changes little ($0.078$ to $0.078$; $0.073$ to $0.071$). Randomising the start and phase barely moves the networks (GRU $0.038\to0.041$, graph $0.037\to0.037$), while the ridge regression, which cannot form a nonlinear clock, worsens from $0.086$ to $0.132$: the networks' advantage over ridge does not rely on a fixed start or on reading the time from the step count and they infer the phase from the readings.
-
-\textbf{Equal observed inputs, unequal model knowledge.} Every row of Table~\ref{tab:modelbased} uses the same observations, but the model-based rows are given different amounts of model knowledge.
-
-\emph{True model.} The true-model IMM ($0.022$--$0.027$, below every network in both settings) is a privileged reference: it knows the regime dynamics, the event process and, in the randomised setting, the phase.
-
-\emph{Supervised identification.} The transition matrices, forcing, process covariances, regime transition probabilities and measurement variance are estimated from 2,000 training trajectories, using the hidden states and the regime labels. The IMM reaches $0.0235$ on the 900 common test trajectories, within $0.0001$ of the true-model value, and is still below every network. This is not an equal-information comparison: the networks also train on the hidden states but never see the regime labels, and supervised identification was run only with a known start.
-
-\emph{Label-free identification.} Without regime labels, but with the full hidden states of the training trajectories, we fitted a single affine model, clustered its residuals with k-means and refined the result by hard-EM switching regression (Appendix~B). Over five identification seeds, with the number of groups $K$ chosen by BIC from $\{3,5,7,8,9,10,11,12\}$ (BIC selects $K=8$ or $9$), the IMM reaches $0.0236\pm0.0001$ (range $0.0235$--$0.0237$), against $0.0235$ for supervised identification and for the true regimes. Each of the five BIC-selected models recovers all seven true regimes on held-out trajectories (purity $99.97\%$; groups are matched to regimes by majority vote on the training transitions, for evaluation only), although recovery is not guaranteed at a given $K$: two of five seeds at $K=8$ and four of five at $K=9$. For $K\le7$ the IMM is worse and less stable ($0.033$ at $K=7$, up to $1.13$ at $K=3$). This method still uses the hidden states, which a deployed observer with two tank sensors would not have.
-
-\emph{From the tank readings alone.} A grey-box identification from the tank readings and masks, which assumes the graph and the regime structure and estimates five scalar parameters, reaches $0.0237$ (range $0.0234$--$0.0242$; Appendix~B). For those parameters the IMM's advantage therefore does not depend on hidden states or regime labels, but it still depends on the assumed structure; identifying the structure itself from the readings alone was not tested.
-
-\emph{Why the regime structure matters.} With a known start the single-regime Kalman filter's error is $0.41$ during demand spikes against $0.16$ for the IMM, and its single process covariance, calibrated on a mixture of calm and event data, also inflates the error at calm steps ($0.039$ against $0.007$). The networks' advantage over the true-transition-matrix Kalman filter is therefore explained by that filter's single noise model, not by a limit of model-based estimation, and a model-based estimator that has learned the regime structure from data beats the networks as well.
-
-The tuned graph estimator performs like the temporal networks with a fixed start; with a random start it is slightly and consistently better. Paired by training seed (five seeds), graph minus GRU is $-0.0009$ (95\% CI $[-0.0062,0.0044]$) with a fixed start and $-0.0039$ ($[-0.0063,-0.0016]$, lower on all five seeds) with a random start; against the LSTM and MLP the random-start differences are $-0.0044$ and $-0.0052$ (both lower on all five seeds). These comparisons are exploratory. In the J2-minus-J4 direction every estimator, including the IMMs, stays at the prior-only level ($0.069$ with a fixed start, $0.063$ with a random start).
-
-\textbf{Kalman filter timing.} An earlier version of this work reported $0.085$ for the Kalman filter; the values in this paper are $0.078$. The earlier code applied the forcing $b(t-1)$ to the transition into step $t$, although the simulator applies $b(t)$ at that step, and it used the start prior as the prediction at $t=0$ without propagating it. Correcting the timing changes $0.0844$ to $0.0814$ on the same 300 trajectories and propagating the start gives $0.0782$. All classical baselines (Tables~\ref{tab:tuned}, \ref{tab:baselines} and~\ref{tab:smoother}) were recomputed with the corrected timing.
-
-\subsection{Other topologies and nonlinear pipe flow}
-\label{sec:topo_est}
-
-Do the findings depend on the benchmark graph and on linear flow? We repeated the comparison with a fixed start on two eight-state topologies, a six-junction ring with the tanks opposite (two unobservable directions) and with the tanks on adjacent junctions (none) and on the benchmark graph with nonlinear (turbulent, square-root) pipe flow, $\Delta h\mapsto\mathrm{sign}(\Delta h)\sqrt{|\Delta h|}$. The ridge regression, a GRU and the graph estimator were trained as before, with the hyper-parameters re-selected on each setting from a seven-configuration grid (Appendix~A) and five training seeds. The model-based estimators always use the linear model, so with nonlinear flow they are misspecified; the supervised-identification IMM is fitted on data from the setting itself (Table~\ref{tab:topo_est}). The nonlinear variant is a simple turbulent-flow modification of the benchmark, not a hydraulic simulation. Table~\ref{tab:topo_est} reports the MSE over all states and, where there are unobservable directions, the MSE in those directions (fixed start). Networks are mean $\pm$ standard deviation over the five seeds; model-based and time-only estimators use 300 test trajectories; the ridge is a single fit.
-
-\begin{table*}[t]
-\centering
-\caption{Estimators on other topologies and with nonlinear flow.}
-\label{tab:topo_est}
-\small
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{llccccc}
-\toprule
- & & \multicolumn{2}{c}{Ring, tanks opposite} & Ring, tanks adjacent & \multicolumn{2}{c}{Nonlinear flow} \\
-Estimator & Model knowledge & all & unobs. & all & all & J2--J4 \\
-\midrule
-Time only (prior) & none & $0.120$ & $0.0695$ & $0.126$ & $0.243$ & $0.1267$ \\
-Ridge, 64 steps & learned & $0.102$ & $0.0668$ & $0.117$ & $0.204$ & $0.1202$ \\
-GRU (re-tuned) & learned & $0.0397\pm0.0006$ & $0.0669$ & $0.0516\pm0.0018$ & $0.0772\pm0.0024$ & $0.1203$ \\
-Graph-LSTM (re-tuned) & learned & $0.0400\pm0.0032$ & $0.0669$ & $0.0511\pm0.0082$ & $0.0801\pm0.0056$ & $0.1202$ \\
-\midrule
-Kalman filter, linear model & true linear matrix & $0.084$ & $0.0692$ & $0.101$ & $1.297$ & $0.1266$ \\
-IMM, linear regime model & true linear regimes & $0.031$ & $0.0693$ & $0.036$ & $1.406$ & $0.1266$ \\
-IMM, supervised identification & hidden states, labels & $0.031$ & $0.0703$ & $0.035$ & $0.066$ & $0.1273$ \\
-\bottomrule
-\end{tabular}}
-\end{table*}
-
-On both ring topologies the ordering of the benchmark persists: the IMMs (true or supervised) are $23$--$31\%$ below the tuned GRU ($0.031$ against $0.040$ with the tanks opposite, $0.035$ against $0.052$ with the tanks adjacent) and well below the Kalman filter and the ridge regression. With hyper-parameters selected on each setting and five seeds, the graph estimator and the GRU differ by less than the seed-to-seed variation: paired by seed, graph minus GRU is $+0.0003$ (95\% CI $[-0.004,+0.005]$) on the opposite-tank ring, $-0.0005$ ($[-0.011,+0.010]$) on the adjacent-tank ring and $+0.0029$ ($[-0.005,+0.011]$) with nonlinear flow, so we claim no difference between graph and temporal encoders. In the two unobservable directions of the opposite-tank ring every estimator is within $4\%$ of the prior-only level ($0.0668$--$0.0703$ against $0.0695$), as on the benchmark graph. With nonlinear flow the Kalman filter and the IMM built on the linear model fail ($1.30$ and $1.41$, worse than the no-sensor estimator at $0.243$) because the model is misspecified, while the IMM fitted to data from the nonlinear system is the most accurate ($0.066$), followed by the GRU ($0.077$), the graph estimator ($0.080$) and the ridge regression ($0.204$). Model-based accuracy therefore depends on model fidelity and supervised identification restores it on this benchmark, at the cost of using hidden states and regime labels in training. The unobservable direction stays at the prior-only level ($0.12$ against $0.127$). These are small exploratory experiments and not a ranking of estimator families.
-
-\textbf{Robustness.} We also tested the estimators, built on the nominal benchmark and not retrained, on shifted simulators (Appendix~B, Table~\ref{tab:robust}). The IMM stays the best estimator under changes of the event duration and rate, under overlapping events and under changes of the demand level and noise, although its error rises (for example from $0.023$ to $0.068$ with overlapping events at rate $0.08$). It is not best under every change of the dynamics: with the pump gain $20\%$ lower the Kalman filter ($0.074$) and the ridge regression ($0.093$) beat the IMM ($0.192$) and the GRU ($0.174$). The gap between the GRU and the ridge regression persists with as few as $250$ training trajectories. The losses under dynamics mismatch disappear when the estimators are rebuilt on data from the shifted system (networks retrained, IMM parameters re-identified from the tank readings alone; Appendix~B, Table~\ref{tab:adapt}), so we restrict the claims to approximately stationary systems or to settings in which such adaptation data exist.
-
-\textbf{Hydraulic check.} Appendix~G repeats the comparison on a simulation of the same graph with the EPANET hydraulic engine (Hazen--Williams head loss, cylindrical tanks, fixed-head supplies). The unobservable direction is reproduced (every estimator is at the prior-only level) and the GRU is $31\%$ below the ridge regression, but the IMMs ($0.352$ supervised, $0.402$ label-free) do not beat the GRU ($0.339$), so the IMM's lead over the networks does not carry over to this system. This is a simulation with homogeneous pipes and not field validation. On the BattLeDIM L-Town pressures (themselves EPANET-generated, not field data), the linearised model's ranking of sensor placements agrees with the measured recoverability of held-out sensors (rank correlation $0.80$--$0.93$ for the model-based estimator), but its ordering of individual unrecoverable directions does not (Appendix~C).
-
-\textbf{IMM specification and sensitivity.} Appendix~B gives the specification. Events in the simulator never overlap (none among 7,487), the filter is causal (60 perturbation checks), its error changes within $3\%$ under altered transition probabilities and an exact-duration version is $14\%$ more accurate.
-
-\subsection{Classical baselines and their information status}
-\label{sec:baselines}
-
-The true-transition-matrix Kalman filter and RTS smoother use the true simulator matrices and the mean forcing but not the event regimes and so are privileged references, not best-possible estimators. The fitted Kalman filter and RTS smoother estimate a linear model by least squares on full simulator state trajectories, including the four hidden junction states. They are therefore also privileged and they are not equal-information comparators. Table~\ref{tab:baselines} gives the values.
-
-\begin{table}[t]
-\centering
-\caption{Classical baselines (seed 777).}
-\label{tab:baselines}
-\small
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{lll}
-\toprule
-Estimator & Information & MSE \\
-\midrule
-Kalman filter & true transition matrix & $0.0785$ \\
-RTS smoother & true transition matrix (offline) & $0.0716$ \\
-Kalman filter & fitted on full state (privileged) & $0.1195$ \\
-RTS smoother & fitted on full state (privileged, offline) & $0.1202$ \\
-Ridge, full history (64 steps) & tank readings and masks & $0.087$ \\
-Ridge, 6-step window & tank readings and masks & $0.142$ \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{fig_baselines.pdf}
-\caption{Estimators on the fixed-start benchmark, all using the tank readings and masks: single-regime filters, ridge regression, tuned networks (five seeds, error bars show the standard deviation over seeds), IMM filters and for context the best original untuned network. The dashed line is the no-sensor estimator.}
-\label{fig:baselines}
-\end{figure}
 
 \subsection{Adding one junction sensor}
 \label{sec:sensor}
@@ -477,29 +332,19 @@ Can one extra sensor recover the missing direction? We added a single junction r
 \section{Discussion}
 \label{sec:discussion}
 
-\textbf{What the sensors can and cannot recover.} The two tank sensors cannot see the difference between $J_2$ and $J_4$ under homogeneous pipes. No evaluated estimator recovers that difference, including the full-history linear baseline and this holds for these disturbance distributions and observation histories. Heterogeneous conductance makes the direction observable in principle, but the error in it does not improve in practice with these sensors. Without priors or further assumptions, these sensors do not determine that difference, so no estimator can recover it uniquely from these observations. Priors can still bound the error and here the error stays at the prior level ($0.0695$, measured with prior-only estimators), including for the tuned networks. One added sensor at $J_2$ or $J_4$ lowers it only to $0.049$--$0.062$ and a sensor at $J_1$ or $J_3$ does not change it (Section~\ref{sec:sensor}).
-
-\textbf{Other networks and nonlinear flow.} The weak direction belongs to the symmetry of the benchmark graph: with the tanks on adjacent junctions the same dynamics are fully observable (Table~\ref{tab:topo}) and the estimator ordering was reproduced on two other topologies and with nonlinear pipe flow (Table~\ref{tab:topo_est}). An exploratory analysis of a larger hydraulic-simulation network (BattLeDIM L-Town) is in Appendix~C; it is not validation, uses no field measurements and rests on approximated conductances.
+\textbf{The limit is a property of the sensors, not of the estimator.} The two tank sensors cannot see the difference between $J_2$ and $J_4$ under homogeneous pipes, and no estimator we tested recovers it: the error in that direction stays at the prior-only level ($0.0695$) for ridge regression, Kalman filters, tuned networks and IMM filters, on the benchmark, on two other topologies with nonlinear flow and on an EPANET-engine simulation. Heterogeneous conductance makes the direction observable in principle, but the information about it grows only as the square of the asymmetry (Propositions~\ref{prop:scaling} and~\ref{prop:sym}), so the error does not improve in practice. This is a statement about these sensors, these disturbances and these priors: structural observability, recoverability under a prior and estimator accuracy are different questions (Section~\ref{sec:obs}). One added sensor at $J_2$ or $J_4$ lowers the error only to $0.049$--$0.062$ and a sensor at $J_1$ or $J_3$ does not change it (Section~\ref{sec:sensor}). The larger BattLeDIM L-Town network of Appendix~C is an exploratory check on simulated data, not validation.
 
 \textbf{Sensor placement depends on the objective.} The placement experiments (Section~\ref{sec:sensor}, Tables~\ref{tab:placement} and~\ref{tab:placement_weak}, and the hydraulic check in Appendix~G, Table~\ref{tab:placement_hyd}) show a trade-off between objectives.
 \begin{itemize}
 \item \emph{One extra sensor.} A junction that breaks the dominant symmetry ($J_2$ or $J_4$) is best for the weak direction in all $15$ hydraulic configurations, but a central junction ($J_1$ or $J_3$) is best for the total error in all $15$. Targeting the weak direction costs total accuracy (relative error $1.45$ against $1.29$ for random choice).
-\item \emph{Two extra sensors.} The pair $\{J_2,J_4\}$ is best for both objectives on this graph. The simple symmetry rule chooses the same pair as the weak-direction Bayesian criterion in all $15$ configurations, so the hydraulic experiment supports symmetry-informed placement and does not show an advantage of the Bayesian criterion over it.
+\item \emph{Two extra sensors.} The pair $\{J_2,J_4\}$ is best for both objectives on this graph. The orbit-breaking rule chooses the same pair as the weak-direction Bayesian criterion in all $15$ configurations, so the hydraulic experiment supports symmetry-informed placement and does not show an advantage of the Bayesian criterion over it.
 \item \emph{No exact symmetry.} Where the graph has none to exploit, the Bayesian criterion is the more robust: in the linear-Gaussian study of Table~\ref{tab:placement_weak} its worst case over topologies is $1.06$ times the best set, against $1.57$ for the symmetry rule. The generic criteria (Gramian eigenvalue, posterior trace over all states) fail in both settings when computed from a model that does not break the symmetry.
 \end{itemize}
 Two caveats limit what this shows. Sensors at both $J_2$ and $J_4$ measure the two quantities whose difference is the target, so the near-noise-level error of that pair is expected: the experiment shows that the criteria find the useful pair, not that an estimator reconstructs an inaccessible state from indirect readings. And it uses one graph, a ridge regression trained on simulated hidden heads, and heterogeneity through pipe diameters only.
 
-\textbf{Learned observers versus model-based estimation.} The comparison depends on tuning, inputs and model knowledge.
+\textbf{Estimator rankings depend on model fidelity.} Tuned networks reach about half the error of ridge regression and of the Kalman filter, which is handicapped by one noise covariance for what is a mixture of regimes. IMM filters that use the regime structure do better still on the synthetic benchmark ($0.022$--$0.027$), also when their dynamics are identified without regime labels or from the tank readings alone. These comparisons are not equal-information: the IMMs have the regime structure, the networks and the identified IMMs use hidden states in training, and the sensor-only identification assumes the correct structure and estimates five scalar parameters (Appendix~B). Its starting values do not have to be near the truth: from broad absolute ranges the start with the highest training likelihood reaches the same error ($0.0234$--$0.0237$) in all three seeds, although only some starts converge. The IMM lead does not carry over to the EPANET-engine simulation, where the GRU ($0.339$) is below the supervised IMM ($0.352$), the label-free IMM ($0.402$), the Kalman filter ($0.470$) and ridge regression ($0.489$). It disappears under several dynamics shifts and returns only if the estimators are rebuilt on data from the shifted system (Table~\ref{tab:adapt}); the IMM then needs only a few trajectories because only five parameters of a correctly structured model are re-fitted, which is not a general sample-efficiency advantage over networks. All comparisons are exploratory and specific to these simulators and training protocols; they are not a ranking of architectures.
 
-\emph{Training helps.} A full-history ridge regression beats the original untuned networks, which also lacked the masks. Networks tuned on a validation set with the ridge inputs, temporal or graph-based, reach $0.037$--$0.041$, less than half the error of ridge ($0.086$) and of the true-transition-matrix Kalman filter ($0.078$), also with a randomised start and diurnal phase.
-
-\emph{Model knowledge helps more, on this benchmark.} The Kalman filter is handicapped by one noise covariance for what is a mixture of regimes. Interacting multiple-model filters that use the same sensors reach $0.022$--$0.027$, with true regime dynamics or with dynamics from supervised identification, below every network. Label-free full-state identification matches them ($0.0236$ against $0.0235$ and $0.0235$) and recovers the true regimes in the five BIC-selected models, so the advantage does not rest on regime labels. Both the networks and the identified IMMs use training information that a deployed observer lacks: the networks use the hidden states as regression targets, the IMMs use the full-state transitions (and, for supervised identification, the regime labels). The comparison is therefore one of equal inputs but unequal model knowledge and unequal training information.
-
-\emph{The IMM lead is not general.} It does not carry over to the EPANET hydraulic simulation of Appendix~G, where the GRU ($0.339$) is below the supervised IMM ($0.352$), the label-free IMM ($0.402$), the Kalman filter ($0.470$) and ridge regression ($0.489$). It disappears under several dynamics shifts (pump gain $\times0.8$, flow gain $\times0.8$ and $\times1.2$, for estimators built on the nominal system) and returns only if the estimators are rebuilt on data from the shifted system (Table~\ref{tab:adapt}). Sensor-only identification needs several starting points and an approximately correct assumed event structure (Table~\ref{tab:multistart}). In the weakly observable direction all estimators are at the prior level in every setting we tried.
-
-These results are specific to this simulator and training protocol and are not a ranking of architectures in general; all comparisons are exploratory and differences should be judged from the confidence intervals and standard deviations reported.
-
-\textbf{Secondary results.} The original comparison of untuned architectures, the probabilistic GNN (whose advantage over a plain GNN is largely explained by per-sample weighting of the mean loss and whose intervals under-cover during pump trips and demand spikes because its predicted uncertainty barely changes between regimes) and event detection are reported in Appendices D and E.
+\textbf{Secondary results.} The comparison of untuned architectures, the probabilistic GNN (whose advantage over a plain GNN is largely explained by per-sample weighting of the mean loss and whose intervals under-cover during pump trips and demand spikes because its predicted uncertainty barely changes between regimes) and event detection are in Appendices~D and~E.
 
 \section{Limitations}
 
@@ -516,11 +361,11 @@ These results are specific to this simulator and training protocol and are not a
 
 On this synthetic benchmark, checked on an EPANET-engine simulation of the same graph, three results stand out.
 
-\emph{The recoverability limit is structural.} With homogeneous pipes the difference between two junction heads is unobservable, a consequence of a graph symmetry, and no tested estimator improves on the prior-only error in that direction. With heterogeneous pipes the weakest observability eigenvalue and the posterior variance reduction along it grow only as the square of the conductance asymmetry (Propositions~\ref{prop:scaling} and~\ref{prop:sym}).
+\emph{The recoverability limit is structural.} A graph symmetry that fixes the sensors makes the components of the state that the symmetry cannot distinguish unobservable, and no tested estimator improves on the prior-only error in that direction. Conductance asymmetry restores observability only weakly: the smallest observability eigenvalue and the posterior variance reduction grow as the square of the asymmetry (Propositions~\ref{prop:scaling} and~\ref{prop:sym}).
 
-\emph{Estimator rankings depend on the information available.} Tuned networks reach less than half the error of ridge regression and of the Kalman filter. Regime-aware IMMs do better still on the synthetic benchmark when the regime structure and parameters are right, but that lead disappears on the hydraulic simulation (GRU $0.339$, supervised IMM $0.352$), under several dynamics shifts unless the estimators are rebuilt on data from the shifted system, and under a wrongly assumed event structure.
+\emph{Sensor placement depends on the objective.} With two extra sensors the pair $\{J_2,J_4\}$ is best for both the weak direction and the total error, whereas with one sensor the best junction for the weak direction ($J_2$ or $J_4$) is not the best for total accuracy ($J_1$ or $J_3$). An orbit-breaking rule with a guaranteed size bound (Proposition~\ref{prop:orbit}) chooses the same pair as a weak-direction Bayesian criterion in all hydraulic configurations tested, so the experiments support symmetry-informed placement and do not show an advantage of the Bayesian criterion over it.
 
-\emph{Sensor placement depends on the objective.} With two extra sensors the pair $\{J_2,J_4\}$ is best for both the weak direction and the total error, whereas with one sensor the best junction for the weak direction ($J_2$ or $J_4$) is not the best for total accuracy ($J_1$ or $J_3$). The simple symmetry rule chooses the same pair as the weak-direction Bayesian criterion in all hydraulic configurations tested, so the experiments support symmetry-informed placement and do not show an advantage of the Bayesian criterion over it.
+\emph{Estimator rankings depend on the information available.} Tuned networks reach about half the error of ridge regression and of the Kalman filter. Regime-aware IMMs do better still on the synthetic benchmark when the regime structure and parameters are right, but that lead disappears on the hydraulic simulation (GRU $0.339$, supervised IMM $0.352$), under several dynamics shifts unless the estimators are rebuilt on data from the shifted system, and under a wrongly assumed event structure.
 
 \emph{Status.} These are methodological baselines and hypotheses from a preliminary simulation study, not evidence of field-level performance.
 
@@ -560,7 +405,7 @@ Code and raw outputs are in \texttt{code/} and \texttt{results/}; the script nam
 \toprule
 App. & Content & Supports \\
 \midrule
-A & Tuning grids & tuned networks (Section~\ref{sec:tuned}) \\
+A & Tuning grids & tuned networks (Appendix~\ref{sec:tuned}) \\
 B & IMM specification; label-free and sensor-only identification; robustness and adaptation & IMM results, mismatch limits \\
 C & BattLeDIM L-Town (simulated data) & placement ranking \\
 D & Untuned architectures, GNN controls & original comparison \\
@@ -569,6 +414,7 @@ F & Filter against smoother & Kalman baselines \\
 G & EPANET-engine simulation: estimators and sensor placement & hydraulic check \\
 H & Proofs of Propositions~\ref{prop:scaling}--\ref{prop:orbit} & Section~\ref{sec:obs} \\
 I & Sensor-placement rules, linear-Gaussian study & Section~\ref{sec:sensor} \\
+J & Estimator comparison in detail & Section~\ref{sec:estimators_summary} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -681,7 +527,31 @@ $K$ & Groups & Held-out purity & Regimes & ARI & IMM MSE & $J_2$--$J_4$ \\
 The result is strong because identification uses the hidden states: events are visible in the residuals of the true state, so separating the regimes is easy. Label-free identification of the model structure from the tank readings alone, which is the setting of a deployed observer, is a harder problem that we did not test; the sensor-only experiment below identifies only scalar parameters of an assumed structure.
 
 \subsection*{Sensor-only identification of the model parameters}
-We identified the IMM from the tank readings and masks alone, with no hidden junction states and no regime labels. The experiment is grey-box: the graph, the seven-regime structure, the event onset and exit probabilities, the spike multiplier ($4$), the tank set-point, the diurnal profile and the fixed start are assumed known, and five scalar parameters are estimated, namely the flow gain $k$, the pump gain, the base demand, the demand-noise standard deviation $\sigma_d$ and the measurement-noise standard deviation $\sigma_v$. The estimates maximise the IMM marginal likelihood of the readings of 60 training trajectories (Nelder--Mead on the logarithms of the parameters, at most 220 iterations), starting from the true values multiplied by independent random factors in $[0.6,1.5]$, for five independent seeds (training trajectories and starting points). The IMM with the identified parameters reaches an MSE of $0.0237$ (range $0.0234$--$0.0242$) on the 900 common test trajectories, against $0.0235$ at the true parameters; in the unobservable direction it stays at the prior-only level ($0.0694$). Table~\ref{tab:sensor_only} gives the relative errors of the estimates in percent. $k$, the pump gain, the base demand and $\sigma_v$ are recovered to within $1.3\%$, while $\sigma_d$ is only weakly identified (errors between $-44\%$ and $+50\%$) without affecting the error. A single-regime Kalman filter fitted by the same likelihood did not give a usable comparator: the likelihood absorbs the events into a very large process noise (fitted $\sigma_d\approx1.1$ against $0.05$) and the MSE was $0.21$--$1.88$, so we do not report it as a baseline.
+We identified the IMM from the tank readings and masks alone, with no hidden junction states and no regime labels. The experiment is grey-box: the graph, the seven-regime structure, the event onset and exit probabilities, the spike multiplier ($4$), the tank set-point, the diurnal profile and the fixed start are assumed known, and five scalar parameters are estimated, namely the flow gain $k$, the pump gain, the base demand, the demand-noise standard deviation $\sigma_d$ and the measurement-noise standard deviation $\sigma_v$. The estimates maximise the IMM marginal likelihood of the readings of 60 training trajectories (Nelder--Mead on the logarithms of the parameters, at most 220 iterations), starting from the true values multiplied by independent random factors in $[0.6,1.5]$, for five independent seeds (training trajectories and starting points). The IMM with the identified parameters reaches an MSE of $0.0237$ (range $0.0234$--$0.0242$) on the 900 common test trajectories, against $0.0235$ at the true parameters; in the unobservable direction it stays at the prior-only level ($0.0694$). Table~\ref{tab:sensor_only} gives the relative errors of the estimates in percent. $k$, the pump gain, the base demand and $\sigma_v$ are recovered to within $1.3\%$, while $\sigma_d$ is only weakly identified (errors between $-44\%$ and $+50\%$) without affecting the error. 
+
+\textbf{A single-regime Kalman filter fitted by likelihood.} The same likelihood fit applied to a single-regime Kalman filter, whose parameters are the same five scalars, does not give a usable comparator (Table~\ref{tab:kf_fit}, \texttt{sensor\_only\_identification.py kf\_diagnosis}). The fitted demand-noise level is $\hat\sigma_d=1.04$--$1.23$, about twenty times the true $0.05$, and the fitted filter has MSE $0.21$--$1.88$ (mean $0.63$) against $0.096$ for the filter at the true parameters. The reason is that a single Gaussian noise level cannot represent the events. At the true parameters the filter's negative log-likelihood of the tank readings of the $60$ training trajectories is $1.4$--$2.3\times10^{5}$ because events produce innovations far outside the assumed noise, whereas inflating $\sigma_d$ brings it down to $-6013$ to $-7258$; the likelihood therefore prefers an inflated process noise, which makes the dynamics parameters weakly identified (the fitted pump gain ranges from $0.13$ to $0.54$ against $0.6$) and the junction estimates erratic. Holding $\sigma_d$ at its true value does not help: the other four parameters then absorb the shocks and the error on event steps is $0.61$--$1.47$ (the filter at the true parameters has $0.29$). The IMM at the true parameters reaches a negative log-likelihood of about $-13174$, far below the best single-regime fit, so the likelihood itself identifies the missing regime structure. We report the single-regime fit for completeness; it is not a baseline for the sensor-only IMM, because it is the likelihood of the wrong model class that is being maximised.
+
+\begin{table}[t]
+\centering
+\caption{Single-regime Kalman filter with parameters fitted by likelihood from the tank readings.}
+\label{tab:kf_fit}
+\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Seed & $\hat\sigma_d$ & MSE & MSE calm & MSE events & $-\log L$ fitted & $-\log L$ true \\
+\midrule
+0 & $1.16$ & $0.52$ & $0.200$ & $1.60$ & $-7078$ & $149382$ \\
+1 & $1.23$ & $0.21$ & $0.023$ & $0.85$ & $-6610$ & $193411$ \\
+2 & $1.19$ & $1.88$ & $1.946$ & $1.65$ & $-6170$ & $226881$ \\
+3 & $1.14$ & $0.25$ & $0.171$ & $0.51$ & $-6013$ & $195475$ \\
+4 & $1.04$ & $0.29$ & $0.196$ & $0.60$ & $-7258$ & $142657$ \\
+True parameters, Kalman filter & $0.05$ & $0.096$ & $0.039$ & $0.29$ & --- & --- \\
+True parameters, IMM & $0.05$ & $0.0235$ & $0.0071$ & $0.079$ & $-13174$ & --- \\
+\bottomrule
+\end{tabular}}
+\end{table}
 
 This is a weaker form of sensor-only identification than a generic model: the true model class contains the data-generating process, so recovering the parameters is a parameter-estimation problem and not a model-discovery problem. A generic switching model identified from the tank readings alone (for example by subspace identification or EM with latent regimes) was not run.
 
@@ -703,6 +573,26 @@ Wrong event rates & $0.0365$--$32.20$ & $0.0257$--$0.0268$ & 6 of 12 \\
 Spike multiplier $2$ (true $4$) & $0.0311$--$542.91$ & $0.0311$--$0.0337$ & 5 of 12 \\
 No spike regimes & $0.0443$--$0.1229$ & $0.0443$--$0.1202$ & 2 of 12 \\
 Calm regime only & $0.1922$--$14.55$ & $0.9130$--$12.76$ & 0 of 12 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\emph{Starting values independent of the true parameters.} In the multi-start experiment above the starting values are still multiples of the true parameters. We therefore repeated the fit with the true regime structure and starting values drawn log-uniformly from broad absolute ranges that do not depend on the true values: flow gain $[0.05,1]$, pump gain $[0.1,2]$, base demand $[0.05,1.5]$, demand-noise standard deviation $[0.005,0.3]$ and measurement-noise standard deviation $[0.005,0.2]$ (the true values $0.35$, $0.6$, $0.4$, $0.05$ and $0.03$ lie inside but not at the centre of these ranges; $30$ training trajectories, three seeds, six starts each; Table~\ref{tab:independent_start}, \texttt{sensor\_only\_identification.py independent\_start}). 11 of the $18$ starts reach the test error of the true-parameter IMM ($0.0234$--$0.0237$ against $0.0235$); the other $7$ end in poor local optima or unstable parameters (MSE $1.8$ to $133$). The start with the highest training likelihood, which uses only the tank readings, is a good one in all three seeds (MSE $0.0234$--$0.0237$) and recovers the flow gain, pump gain and base demand to within $1\%$ and the measurement noise to within $3\%$; the demand-noise level is again only weakly identified ($-44\%$ to $+46\%$ in error). Starting values near the truth are therefore not needed, but several starts are, and the assumed regime structure remains the correct one; the ranges encode plausible magnitudes of the parameters, not the true values.
+
+\begin{table}[t]
+\centering
+\caption{Sensor-only identification from starting values independent of the true parameters.}
+\label{tab:independent_start}
+\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ccccccc c}
+\toprule
+Seed & Good starts (of 6) & MSE, best start & $k$ & Pump gain & Base demand & $\sigma_d$ & $\sigma_v$ \\
+\midrule
+0 & $4$ & $0.0237$ & $+0.9$ & $-0.3$ & $-0.7$ & $-35$ & $-2.8$ \\
+1 & $3$ & $0.0234$ & $+0.1$ & $-0.0$ & $+0.1$ & $-44$ & $-1.1$ \\
+2 & $4$ & $0.0237$ & $+0.2$ & $+0.3$ & $+0.1$ & $+46$ & $+1.1$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -872,7 +762,7 @@ $m$ & Rank corr., model & Rank corr., ridge & Model-based: random / greedy & Rid
 
 
 \section{Original architecture comparison (untuned networks)}
-This appendix reports the first comparison of the paper, with untuned networks that receive the readings but not the masks. It is superseded for the main argument by the tuned comparison of Section~\ref{sec:tuned}.
+This appendix reports the first comparison of the paper, with untuned networks that receive the readings but not the masks. It is superseded for the main argument by the tuned comparison of Appendix~\ref{sec:tuned}.
 
 \subsection{Architectures and controls}
 \label{sec:arch}
@@ -1267,6 +1157,187 @@ Setting & Random & Symmetry & Gramian $\lambda_{\min}$ & Gramian trace & Posteri
 \bottomrule
 \end{tabular}}
 \end{table*}
+
+\section{Estimator comparison in detail}
+\label{app:estimators}
+
+\emph{In brief:} the ridge baseline and the information each observer receives, the tuned networks, the model-based estimators with regime knowledge and the controls on the start, the other topologies with nonlinear flow, and the classical baselines. Section~\ref{sec:estimators_summary} summarises them.
+
+\subsection{Ridge regression and the information available to the observers}
+\label{sec:linear}
+
+A ridge regression predicts all six states at each step from the tank readings and masks it has observed so far. It has no time-of-day input and no hidden states. The information sets are therefore written out exactly. Each learned observer receives the readings $o_s$ for $s\le t$, with junction entries fixed at zero and dropouts appearing as zeros. The ridge model receives the same readings together with the masks $m_s$, which the observers can recover from the zeros. Neither receives the pump inputs $u_t$, the demand $d_t$, the event labels, the process noise or the true state. Trajectories start at step zero, so a window of 64 steps contains the entire observation history that the LSTM also receives. At each timestep, the ridge estimator uses only the tank measurements and observation masks available up to that timestep. Earlier unavailable observations are zero-padded with zero-valued masks. We verified numerically that features at step $t$ do not change when any later reading or mask is altered. A shorter window therefore gives the ridge model less information than the learned observers. Table~\ref{tab:window} reports the ridge MSE on the three test sets as a function of the window length $P$ (the window holds the observations and masks of the last $P$ steps, including the current one), with the ridge fitted on 300 training trajectories.
+
+\begin{table}[t]
+\centering
+\caption{Ridge regression MSE by window length.}
+\label{tab:window}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Window $P$ & MSE & Relation to the observers' information \\
+\midrule
+6 & $0.142$ (0.141 to 0.143) & less than the observers receive \\
+16 & $0.122$ & less than the observers receive \\
+32 & $0.110$ & less than the observers receive \\
+64 & $\mathbf{0.087}$ & full history, same as the LSTM \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+With the full history the ridge MSE is $0.087$, below every probabilistic seed (range $0.118$ to $0.223$). Treating the ridge fit as fixed, its paired difference from the probabilistic GNN is $-0.070$ ($p=9\times10^{-5}$). This test is conditional on the single ridge fit. The ridge model has no training-seed variability, so the $p$-value reflects variation across the ten neural training runs only. It supports a comparison with these ten networks under this protocol, not a general ranking of ridge regression against recurrent networks. With the six-step window the difference is $-0.016$ (95\% CI $[-0.040,+0.008]$, $p=0.17$, lower on five of ten seeds), which is not significant. The original networks were trained for 500 epochs on fresh batches of 16 sequences without any tuning and they receive readings but not masks. We therefore tested whether this ranking survives tuning and equal inputs.
+
+\subsection{Tuned temporal networks with the ridge inputs}
+\label{sec:tuned}
+
+We trained four families of temporal networks on exactly the ridge inputs (tank readings and masks, no spatial encoder, no time-of-day input): an LSTM, a GRU, a linear recurrent network $h_t=Ah_{t-1}+Bu_t$ with a linear readout and an MLP on the last 16 steps. Each family had a small grid over hidden size and learning rate (14 configurations in total, one seed each), selected on a validation set (500 trajectories, seed 123, not a test seed). Training used 8,000 fixed trajectories, 4,000 Adam steps of batch 32, cosine learning-rate decay, gradient clipping and the best validation checkpoint. The selected configuration of each family was then retrained with five seeds and evaluated on the three test sets. To remove a training-set confound, the ridge regression was refitted on the same 8,000 trajectories with its penalty chosen on the same validation set (Table~\ref{tab:tuned}; networks: mean $\pm$ standard deviation over the five seeds of the mean MSE on the three test sets; ridge: one fit).
+
+\begin{table}[t]
+\centering
+\caption{Equal-input comparison of ridge and tuned networks.}
+\label{tab:tuned}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Estimator & Parameters & MSE \\
+\midrule
+Ridge, 64 steps, 300 training trajectories & --- & $0.087$ \\
+Ridge, 64 steps, 8,000 trajectories, tuned penalty & --- & $0.086$ \\
+Ridge, 64 steps + time-of-day features & --- & $0.073$ \\
+Linear recurrent network (64 hidden) & 4,806 & $0.0711\pm0.0000$ \\
+MLP on the last 16 steps (256 hidden) & 83,974 & $0.0405\pm0.0003$ \\
+LSTM (128 hidden) & 69,382 & $0.0404\pm0.0020$ \\
+GRU (64 hidden) & 13,830 & $\mathbf{0.0383\pm0.0024}$ \\
+\midrule
+Kalman filter, true transition matrix & --- & $0.0785$ \\
+RTS smoother, true transition matrix (offline) & --- & $0.0716$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+With the same inputs and a modest amount of tuning, the nonlinear networks reach $0.038$--$0.041$, about half the MSE of the full-history ridge regression ($0.086$) and of the true-transition-matrix Kalman filter ($0.078$). The ranking of the original comparison therefore depended on tuning and the statement that ridge beats the neural observers holds only for the untuned networks. Equal training data did not change ridge ($0.086$ against $0.087$). A time-of-day feature (sine and cosine of the diurnal phase) lowers ridge to $0.073$ and products of these with the current readings only to $0.072$, so the diurnal forcing explains part of the gap but not most of it. The linear recurrent network ($0.071$) is similar to the ridge model with the clock features. For one MLP seed, the error is lower at every kind of step: $0.011$ against $0.040$ at calm steps, $0.015$ against $0.065$ during dropouts, $0.041$ against $0.139$ during pump trips and $0.246$ against $0.333$ during demand spikes. The advantage therefore is not confined to events. Appendix~\ref{sec:model_based} isolates the mechanism with model-based estimators and with controls on the start. In the J2-minus-J4 direction all tuned networks stay at $0.0695$--$0.0696$, the prior-only level, so tuning improves the observed part of the state and not the weak direction (Section~\ref{sec:antisym}).
+
+The ridge penalty of the original fit was fixed at a single value before evaluation and not tuned on the test sets.
+
+\subsection{Model-based estimators with regime knowledge and controls on the start}
+\label{sec:model_based}
+
+Table~\ref{tab:tuned} raises two questions: why do networks beat the Kalman filter that has the true transition matrix and how much of their advantage comes from the fixed start and the deterministic diurnal demand? We tested both with estimators that use only the tank readings and masks. (i) A \emph{time-only} estimator: the mean state at each time index over the training set, with no sensor reading. (ii) The Kalman filter re-implemented with the true transition matrix, the mean pump and diurnal forcing and an empirically calibrated process covariance $Q$, with a diffuse start prior or told the start distribution. (iii) An interacting multiple-model (IMM) filter with seven regimes (calm, a pump trip at either tank, a demand spike at either junction), the simulator's regime dynamics, $Q$ from the demand noise alone and regime transition probabilities derived from the event process (event durations approximated as geometric; sensor dropouts are known from the masks and are not a regime). We also repeated the comparison with a randomised start: initial tank levels $\mathcal N(5,0.5^2)$, junction heads $\mathcal N(4,0.5^2)$ and a diurnal phase uniform over the 48-step day, drawn independently per trajectory, with all learned models retrained under the same protocol (five seeds). In the randomised setting the model-based estimators are given the phase, a privilege the networks do not have. A graph estimator (two graph-convolution layers on the tank-node features $[\text{reading},\text{mask}]$ followed by an LSTM, four configurations tuned on the validation set) was added to the temporal networks. Table~\ref{tab:modelbased} gives the MSE with a fixed start and with a randomised start and phase; all rows use only the tank readings and masks and differ in model knowledge. Networks: five training seeds, mean $\pm$ standard deviation over seeds. Model-based estimators, including all IMM rows: the same 900 test trajectories (300 per test set); label-free full-state identification: mean $\pm$ standard deviation over five independent identification seeds. In the randomised setting the model-based estimators are given the diurnal phase.
+
+\begin{table*}[t]
+\centering
+\caption{MSE by estimator, fixed and randomised start.}
+\label{tab:modelbased}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llcc}
+\toprule
+Estimator & Model knowledge & Fixed start & Random start \\
+\midrule
+Time only & none, no sensor readings & $0.123$ & $0.899$ \\
+Ridge, 64 steps (8,000 trajectories) & learned & $0.086$ & $0.132$ \\
+MLP, last 16 steps & learned & $0.0405\pm0.0003$ & $0.0419\pm0.0006$ \\
+LSTM (128) & learned & $0.0404\pm0.0020$ & $0.0411\pm0.0013$ \\
+GRU (64) & learned & $0.0383\pm0.0024$ & $0.0406\pm0.0010$ \\
+Graph-LSTM (tuned) & learned & $0.0374\pm0.0031$ & $0.0367\pm0.0018$ \\
+\midrule
+Kalman filter, diffuse start & true matrix, mean forcing & $0.078$ & $0.073$ \\
+Kalman filter, known start & + start distribution & $0.078$ & $0.071$ \\
+IMM, supervised model identification & learned from hidden states and regime labels, + start & $0.0235$ & --- \\
+IMM, label-free full-state identification (BIC-selected $K$) & learned from hidden states, no labels, + start & $0.0236\pm0.0001$ & --- \\
+IMM, diffuse start & true regimes and event process & $0.027$ & $0.025$ \\
+IMM, known start & + start distribution & $\mathbf{0.0235}$ & $\mathbf{0.022}$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+The time-only estimator reaches $0.123$, so the clock alone does not explain the networks' advantage and the sensors matter. Telling the Kalman filter the start distribution changes little ($0.078$ to $0.078$; $0.073$ to $0.071$). Randomising the start and phase barely moves the networks (GRU $0.038\to0.041$, graph $0.037\to0.037$), while the ridge regression, which cannot form a nonlinear clock, worsens from $0.086$ to $0.132$: the networks' advantage over ridge does not rely on a fixed start or on reading the time from the step count and they infer the phase from the readings.
+
+\textbf{Equal observed inputs, unequal model knowledge.} Every row of Table~\ref{tab:modelbased} uses the same observations, but the model-based rows are given different amounts of model knowledge.
+
+\emph{True model.} The true-model IMM ($0.022$--$0.027$, below every network in both settings) is a privileged reference: it knows the regime dynamics, the event process and, in the randomised setting, the phase.
+
+\emph{Supervised identification.} The transition matrices, forcing, process covariances, regime transition probabilities and measurement variance are estimated from 2,000 training trajectories, using the hidden states and the regime labels. The IMM reaches $0.0235$ on the 900 common test trajectories, within $0.0001$ of the true-model value, and is still below every network. This is not an equal-information comparison: the networks also train on the hidden states but never see the regime labels, and supervised identification was run only with a known start.
+
+\emph{Label-free identification.} Without regime labels, but with the full hidden states of the training trajectories, we fitted a single affine model, clustered its residuals with k-means and refined the result by hard-EM switching regression (Appendix~B). Over five identification seeds, with the number of groups $K$ chosen by BIC from $\{3,5,7,8,9,10,11,12\}$ (BIC selects $K=8$ or $9$), the IMM reaches $0.0236\pm0.0001$ (range $0.0235$--$0.0237$), against $0.0235$ for supervised identification and for the true regimes. Each of the five BIC-selected models recovers all seven true regimes on held-out trajectories (purity $99.97\%$; groups are matched to regimes by majority vote on the training transitions, for evaluation only), although recovery is not guaranteed at a given $K$: two of five seeds at $K=8$ and four of five at $K=9$. For $K\le7$ the IMM is worse and less stable ($0.033$ at $K=7$, up to $1.13$ at $K=3$). This method still uses the hidden states, which a deployed observer with two tank sensors would not have.
+
+\emph{From the tank readings alone.} A grey-box identification from the tank readings and masks, which assumes the graph and the regime structure and estimates five scalar parameters, reaches $0.0237$ (range $0.0234$--$0.0242$; Appendix~B). For those parameters the IMM's advantage therefore does not depend on hidden states or regime labels, but it still depends on the assumed structure; identifying the structure itself from the readings alone was not tested.
+
+\emph{Why the regime structure matters.} With a known start the single-regime Kalman filter's error is $0.41$ during demand spikes against $0.16$ for the IMM, and its single process covariance, calibrated on a mixture of calm and event data, also inflates the error at calm steps ($0.039$ against $0.007$). The networks' advantage over the true-transition-matrix Kalman filter is therefore explained by that filter's single noise model, not by a limit of model-based estimation, and a model-based estimator that has learned the regime structure from data beats the networks as well.
+
+The tuned graph estimator performs like the temporal networks with a fixed start; with a random start it is slightly and consistently better. Paired by training seed (five seeds), graph minus GRU is $-0.0009$ (95\% CI $[-0.0062,0.0044]$) with a fixed start and $-0.0039$ ($[-0.0063,-0.0016]$, lower on all five seeds) with a random start; against the LSTM and MLP the random-start differences are $-0.0044$ and $-0.0052$ (both lower on all five seeds). These comparisons are exploratory. In the J2-minus-J4 direction every estimator, including the IMMs, stays at the prior-only level ($0.069$ with a fixed start, $0.063$ with a random start).
+
+\textbf{Kalman filter timing.} An earlier version of this work reported $0.085$ for the Kalman filter; the values in this paper are $0.078$. The earlier code applied the forcing $b(t-1)$ to the transition into step $t$, although the simulator applies $b(t)$ at that step, and it used the start prior as the prediction at $t=0$ without propagating it. Correcting the timing changes $0.0844$ to $0.0814$ on the same 300 trajectories and propagating the start gives $0.0782$. All classical baselines (Tables~\ref{tab:tuned}, \ref{tab:baselines} and~\ref{tab:smoother}) were recomputed with the corrected timing.
+
+\subsection{Other topologies and nonlinear pipe flow}
+\label{sec:topo_est}
+
+Do the findings depend on the benchmark graph and on linear flow? We repeated the comparison with a fixed start on two eight-state topologies, a six-junction ring with the tanks opposite (two unobservable directions) and with the tanks on adjacent junctions (none) and on the benchmark graph with nonlinear (turbulent, square-root) pipe flow, $\Delta h\mapsto\mathrm{sign}(\Delta h)\sqrt{|\Delta h|}$. The ridge regression, a GRU and the graph estimator were trained as before, with the hyper-parameters re-selected on each setting from a seven-configuration grid (Appendix~A) and five training seeds. The model-based estimators always use the linear model, so with nonlinear flow they are misspecified; the supervised-identification IMM is fitted on data from the setting itself (Table~\ref{tab:topo_est}). The nonlinear variant is a simple turbulent-flow modification of the benchmark, not a hydraulic simulation. Table~\ref{tab:topo_est} reports the MSE over all states and, where there are unobservable directions, the MSE in those directions (fixed start). Networks are mean $\pm$ standard deviation over the five seeds; model-based and time-only estimators use 300 test trajectories; the ridge is a single fit.
+
+\begin{table*}[t]
+\centering
+\caption{Estimators on other topologies and with nonlinear flow.}
+\label{tab:topo_est}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+ & & \multicolumn{2}{c}{Ring, tanks opposite} & Ring, tanks adjacent & \multicolumn{2}{c}{Nonlinear flow} \\
+Estimator & Model knowledge & all & unobs. & all & all & J2--J4 \\
+\midrule
+Time only (prior) & none & $0.120$ & $0.0695$ & $0.126$ & $0.243$ & $0.1267$ \\
+Ridge, 64 steps & learned & $0.102$ & $0.0668$ & $0.117$ & $0.204$ & $0.1202$ \\
+GRU (re-tuned) & learned & $0.0397\pm0.0006$ & $0.0669$ & $0.0516\pm0.0018$ & $0.0772\pm0.0024$ & $0.1203$ \\
+Graph-LSTM (re-tuned) & learned & $0.0400\pm0.0032$ & $0.0669$ & $0.0511\pm0.0082$ & $0.0801\pm0.0056$ & $0.1202$ \\
+\midrule
+Kalman filter, linear model & true linear matrix & $0.084$ & $0.0692$ & $0.101$ & $1.297$ & $0.1266$ \\
+IMM, linear regime model & true linear regimes & $0.031$ & $0.0693$ & $0.036$ & $1.406$ & $0.1266$ \\
+IMM, supervised identification & hidden states, labels & $0.031$ & $0.0703$ & $0.035$ & $0.066$ & $0.1273$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+On both ring topologies the ordering of the benchmark persists: the IMMs (true or supervised) are $23$--$31\%$ below the tuned GRU ($0.031$ against $0.040$ with the tanks opposite, $0.035$ against $0.052$ with the tanks adjacent) and well below the Kalman filter and the ridge regression. With hyper-parameters selected on each setting and five seeds, the graph estimator and the GRU differ by less than the seed-to-seed variation: paired by seed, graph minus GRU is $+0.0003$ (95\% CI $[-0.004,+0.005]$) on the opposite-tank ring, $-0.0005$ ($[-0.011,+0.010]$) on the adjacent-tank ring and $+0.0029$ ($[-0.005,+0.011]$) with nonlinear flow, so we claim no difference between graph and temporal encoders. In the two unobservable directions of the opposite-tank ring every estimator is within $4\%$ of the prior-only level ($0.0668$--$0.0703$ against $0.0695$), as on the benchmark graph. With nonlinear flow the Kalman filter and the IMM built on the linear model fail ($1.30$ and $1.41$, worse than the no-sensor estimator at $0.243$) because the model is misspecified, while the IMM fitted to data from the nonlinear system is the most accurate ($0.066$), followed by the GRU ($0.077$), the graph estimator ($0.080$) and the ridge regression ($0.204$). Model-based accuracy therefore depends on model fidelity and supervised identification restores it on this benchmark, at the cost of using hidden states and regime labels in training. The unobservable direction stays at the prior-only level ($0.12$ against $0.127$). These are small exploratory experiments and not a ranking of estimator families.
+
+\textbf{Robustness.} We also tested the estimators, built on the nominal benchmark and not retrained, on shifted simulators (Appendix~B, Table~\ref{tab:robust}). The IMM stays the best estimator under changes of the event duration and rate, under overlapping events and under changes of the demand level and noise, although its error rises (for example from $0.023$ to $0.068$ with overlapping events at rate $0.08$). It is not best under every change of the dynamics: with the pump gain $20\%$ lower the Kalman filter ($0.074$) and the ridge regression ($0.093$) beat the IMM ($0.192$) and the GRU ($0.174$). The gap between the GRU and the ridge regression persists with as few as $250$ training trajectories. The losses under dynamics mismatch disappear when the estimators are rebuilt on data from the shifted system (networks retrained, IMM parameters re-identified from the tank readings alone; Appendix~B, Table~\ref{tab:adapt}), so we restrict the claims to approximately stationary systems or to settings in which such adaptation data exist.
+
+\textbf{Hydraulic check.} Appendix~G repeats the comparison on a simulation of the same graph with the EPANET hydraulic engine (Hazen--Williams head loss, cylindrical tanks, fixed-head supplies). The unobservable direction is reproduced (every estimator is at the prior-only level) and the GRU is $31\%$ below the ridge regression, but the IMMs ($0.352$ supervised, $0.402$ label-free) do not beat the GRU ($0.339$), so the IMM's lead over the networks does not carry over to this system. This is a simulation with homogeneous pipes and not field validation. On the BattLeDIM L-Town pressures (themselves EPANET-generated, not field data), the linearised model's ranking of sensor placements agrees with the measured recoverability of held-out sensors (rank correlation $0.80$--$0.93$ for the model-based estimator), but its ordering of individual unrecoverable directions does not (Appendix~C).
+
+\textbf{IMM specification and sensitivity.} Appendix~B gives the specification. Events in the simulator never overlap (none among 7,487), the filter is causal (60 perturbation checks), its error changes within $3\%$ under altered transition probabilities and an exact-duration version is $14\%$ more accurate.
+
+\subsection{Classical baselines and their information status}
+\label{sec:baselines}
+
+The true-transition-matrix Kalman filter and RTS smoother use the true simulator matrices and the mean forcing but not the event regimes and so are privileged references, not best-possible estimators. The fitted Kalman filter and RTS smoother estimate a linear model by least squares on full simulator state trajectories, including the four hidden junction states. They are therefore also privileged and they are not equal-information comparators. Table~\ref{tab:baselines} gives the values.
+
+\begin{table}[t]
+\centering
+\caption{Classical baselines (seed 777).}
+\label{tab:baselines}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lll}
+\toprule
+Estimator & Information & MSE \\
+\midrule
+Kalman filter & true transition matrix & $0.0785$ \\
+RTS smoother & true transition matrix (offline) & $0.0716$ \\
+Kalman filter & fitted on full state (privileged) & $0.1195$ \\
+RTS smoother & fitted on full state (privileged, offline) & $0.1202$ \\
+Ridge, full history (64 steps) & tank readings and masks & $0.087$ \\
+Ridge, 6-step window & tank readings and masks & $0.142$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_baselines.pdf}
+\caption{Estimators on the fixed-start benchmark, all using the tank readings and masks: single-regime filters, ridge regression, tuned networks (five seeds, error bars show the standard deviation over seeds), IMM filters and for context the best original untuned network. The dashed line is the no-sensor estimator.}
+\label{fig:baselines}
+\end{figure}
 
 \begin{thebibliography}{9}
 \bibitem{kalman1960} R. E. Kalman, ``A New Approach to Linear Filtering and Prediction Problems,'' \emph{Journal of Basic Engineering}, 1960.
