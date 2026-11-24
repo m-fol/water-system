@@ -1,0 +1,468 @@
+{
+ "n_runs": 5,
+ "n_configs": 15,
+ "cells": {
+  "b1_nominal_weak": {
+   "random": {
+    "mean": 1.107673797955186,
+    "sd": 0.0,
+    "min": 1.107673797955186,
+    "max": 1.107673797955186,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 1.0
+   },
+   "gram_E": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 1.0
+   },
+   "gram_trace": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 1.0
+   },
+   "bayes": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 1.0
+   },
+   "bayes_weak": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 1.0
+   }
+  },
+  "b1_nominal_total": {
+   "random": {
+    "mean": 1.2856291239090976,
+    "sd": 0.0,
+    "min": 1.2856291239090976,
+    "max": 1.2856291239090976,
+    "best_frequency": 1.0
+   },
+   "symmetry": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   },
+   "gram_E": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   },
+   "bayes": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   }
+  },
+  "b1_fitted_weak": {
+   "random": {
+    "mean": 1.107673797955186,
+    "sd": 0.0,
+    "min": 1.107673797955186,
+    "max": 1.107673797955186,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0767526905924885,
+    "sd": 0.0,
+    "min": 1.0767526905924885,
+    "max": 1.0767526905924885,
+    "best_frequency": 0.0
+   },
+   "gram_E": {
+    "mean": 1.0152112210564728,
+    "sd": 0.0,
+    "min": 1.0152112210564728,
+    "max": 1.0152112210564728,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.1435411268744626,
+    "sd": 0.0,
+    "min": 1.1435411268744626,
+    "max": 1.1435411268744626,
+    "best_frequency": 0.0
+   },
+   "bayes": {
+    "mean": 1.0094439526847223,
+    "sd": 0.0,
+    "min": 1.0094439526847223,
+    "max": 1.0094439526847223,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.0058473025542818,
+    "sd": 0.0,
+    "min": 1.0058473025542818,
+    "max": 1.0058473025542818,
+    "best_frequency": 1.0
+   }
+  },
+  "b1_fitted_total": {
+   "random": {
+    "mean": 1.2856291239090976,
+    "sd": 0.0,
+    "min": 1.2856291239090976,
+    "max": 1.2856291239090976,
+    "best_frequency": 1.0
+   },
+   "symmetry": {
+    "mean": 1.4470010426945306,
+    "sd": 0.0,
+    "min": 1.4470010426945306,
+    "max": 1.4470010426945306,
+    "best_frequency": 0.0
+   },
+   "gram_E": {
+    "mean": 1.5260943420610966,
+    "sd": 0.0,
+    "min": 1.5260943420610966,
+    "max": 1.5260943420610966,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.4015019010210592,
+    "sd": 0.0,
+    "min": 1.4015019010210592,
+    "max": 1.4015019010210592,
+    "best_frequency": 0.0
+   },
+   "bayes": {
+    "mean": 1.4535637890009714,
+    "sd": 0.0,
+    "min": 1.4535637890009714,
+    "max": 1.4535637890009714,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.5252840126266491,
+    "sd": 0.0,
+    "min": 1.5252840126266491,
+    "max": 1.5252840126266491,
+    "best_frequency": 0.0
+   }
+  },
+  "b2_nominal_weak": {
+   "random": {
+    "mean": 20.723002034738514,
+    "sd": 0.0,
+    "min": 20.723002034738514,
+    "max": 20.723002034738514,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "gram_E": {
+    "mean": 20.573923462374164,
+    "sd": 0.0,
+    "min": 20.573923462374164,
+    "max": 20.573923462374164,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "bayes": {
+    "mean": 20.573923462374164,
+    "sd": 0.0,
+    "min": 20.573923462374164,
+    "max": 20.573923462374164,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   }
+  },
+  "b2_nominal_total": {
+   "random": {
+    "mean": 2.108831375889897,
+    "sd": 0.0,
+    "min": 2.108831375889897,
+    "max": 2.108831375889897,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "gram_E": {
+    "mean": 2.2799451434431117,
+    "sd": 0.0,
+    "min": 2.2799451434431117,
+    "max": 2.2799451434431117,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "bayes": {
+    "mean": 2.2799451434431117,
+    "sd": 0.0,
+    "min": 2.2799451434431117,
+    "max": 2.2799451434431117,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   }
+  },
+  "b2_fitted_weak": {
+   "random": {
+    "mean": 20.723002034738514,
+    "sd": 0.0,
+    "min": 20.723002034738514,
+    "max": 20.723002034738514,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "gram_E": {
+    "mean": 12.811333583237564,
+    "sd": 1.9860273225978185e-15,
+    "min": 12.811333583237563,
+    "max": 12.811333583237563,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 10.184325163586767,
+    "sd": 0.0,
+    "min": 10.184325163586767,
+    "max": 10.184325163586767,
+    "best_frequency": 0.0
+   },
+   "bayes": {
+    "mean": 1.8317183769395675,
+    "sd": 0.0,
+    "min": 1.8317183769395675,
+    "max": 1.8317183769395675,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.0604174650604425,
+    "sd": 0.0,
+    "min": 1.0604174650604425,
+    "max": 1.0604174650604425,
+    "best_frequency": 0.0
+   }
+  },
+  "b2_fitted_total": {
+   "random": {
+    "mean": 2.108831375889897,
+    "sd": 0.0,
+    "min": 2.108831375889897,
+    "max": 2.108831375889897,
+    "best_frequency": 0.0
+   },
+   "symmetry": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "min": 1.0,
+    "max": 1.0,
+    "best_frequency": 1.0
+   },
+   "gram_E": {
+    "mean": 1.5514698877202133,
+    "sd": 0.0,
+    "min": 1.5514698877202133,
+    "max": 1.5514698877202133,
+    "best_frequency": 0.0
+   },
+   "gram_trace": {
+    "mean": 1.720284416631582,
+    "sd": 0.0,
+    "min": 1.720284416631582,
+    "max": 1.720284416631582,
+    "best_frequency": 0.0
+   },
+   "bayes": {
+    "mean": 1.0975185125158167,
+    "sd": 0.0,
+    "min": 1.0975185125158167,
+    "max": 1.0975185125158167,
+    "best_frequency": 0.0
+   },
+   "bayes_weak": {
+    "mean": 1.0175477428167168,
+    "sd": 0.0,
+    "min": 1.0175477428167168,
+    "max": 1.0175477428167168,
+    "best_frequency": 0.0
+   }
+  }
+ },
+ "pair_choice": {
+  "nominal_random": {
+   "configs_choosing_J2J4_per_run": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "nominal_symmetry": {
+   "configs_choosing_J2J4_per_run": [
+    15,
+    15,
+    15,
+    15,
+    15
+   ]
+  },
+  "nominal_gram_E": {
+   "configs_choosing_J2J4_per_run": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "nominal_gram_trace": {
+   "configs_choosing_J2J4_per_run": [
+    15,
+    15,
+    15,
+    15,
+    15
+   ]
+  },
+  "nominal_bayes": {
+   "configs_choosing_J2J4_per_run": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "nominal_bayes_weak": {
+   "configs_choosing_J2J4_per_run": [
+    15,
+    15,
+    15,
+    15,
+    15
+   ]
+  },
+  "fitted_random": {
+   "configs_choosing_J2J4_per_run": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "fitted_symmetry": {
+   "configs_choosing_J2J4_per_run": [
+    15,
+    15,
+    15,
+    15,
+    15
+   ]
+  },
+  "fitted_gram_E": {
+   "configs_choosing_J2J4_per_run": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ]
+  },
+  "fitted_gram_trace": {
+   "configs_choosing_J2J4_per_run": [
+    10,
+    10,
+    10,
+    10,
+    10
+   ]
+  },
+  "fitted_bayes": {
+   "configs_choosing_J2J4_per_run": [
+    13,
+    13,
+    13,
+    13,
+    13
+   ]
+  },
+  "fitted_bayes_weak": {
+   "configs_choosing_J2J4_per_run": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ]
+  }
+ }
+}
