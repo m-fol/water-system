@@ -1,6 +1,6 @@
 import itertools, json, os
 import numpy as np
-import topologies as TD
+import benchmark as TD
 DT, KP, K0 = TD.DT, TD.KP, TD.K0
 
 

@@ -4,15 +4,15 @@ import torch, torch.nn as nn
 from multiprocessing import Pool
 import neural_controls as N9
 import sensor_only_identification as E
-import simulator_shifts as S
-from data import FLOW_GAIN, PUMP_GAIN
+import benchmark as S
+from benchmark import FLOW_GAIN, PUMP_GAIN
 
 V = N9.V
 SHIFTS = {"pump gain x0.8": {"pump_gain": PUMP_GAIN * 0.8}, "flow gain x0.8": {"k": FLOW_GAIN * 0.8}, "flow gain x1.2": {"k": FLOW_GAIN * 1.2}}
 
 
 def gen(seed, n, kw):
-    rng = np.random.default_rng(seed); out = [S.simulate(T=64, rng=rng, **kw) for _ in range(n)]
+    rng = np.random.default_rng(seed); out = [S.simulate_simulator_shifts(T=64, rng=rng, **kw) for _ in range(n)]
     U = np.stack([np.concatenate([o[:, :2], m[:, :2].astype(np.float32)], axis=1) for o, m, x in out]).astype(np.float32)
     X = np.stack([x for o, m, x in out]).astype(np.float32)
     return out, U, X
@@ -36,7 +36,7 @@ def gru_job(args):
 
 def imm_job(args):
     shift, seed = args; kw = SHIFTS[shift]; t0 = time.time()
-    rng = np.random.default_rng(100 + seed); train = [S.simulate(T=64, rng=rng, **kw)[:2] for _ in range(30)]
+    rng = np.random.default_rng(100 + seed); train = [S.simulate_simulator_shifts(T=64, rng=rng, **kw)[:2] for _ in range(30)]
     th, f, nfev = E.fit("imm", train, E.TRUE.copy())
     tests, _, _ = gen(777, 300, kw); mse, an = E.evaluate("imm", th, tests)
     r = {"kind": "imm_id", "shift": shift, "seed": seed, "theta": th.tolist(), "rel_err_to_nominal": (th / E.TRUE - 1).tolist(), "mse": mse, "antisym": an, "nfev": nfev, "seconds": time.time() - t0}

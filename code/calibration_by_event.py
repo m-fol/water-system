@@ -3,8 +3,8 @@ import numpy as np
 import torch
 from multiprocessing import Pool
 
-import train_architecture_controls as T6
-from data import generate_trajectory
+import training as T6
+from benchmark import generate_trajectory
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -13,7 +13,7 @@ V = np.array([0, 0, 0, 1, 0, -1.0]) / np.sqrt(2)
 
 def one(seed):
     torch.set_num_threads(1)
-    net = T6.train("prob", seed)
+    net = T6.train_architecture_controls("prob", seed)
     rows = {k: {"n": 0, "cover": 0, "width": 0.0, "se": 0.0} for k in ("calm", "dropout", "pump_trip", "demand_spike")}
     anti = {"n": 0, "cover": 0, "sd": 0.0, "se": 0.0}
     for s in (777, 888, 999):

@@ -7,8 +7,8 @@ REPRO = os.path.join(RES, "repro")
 os.makedirs(REPRO, exist_ok=True)
 
 SUITES = {
-    "architectures": ("jobs_architectures.txt", "train_architectures.py", "results_architectures.txt"),
-    "controls": ("jobs_architecture_controls.txt", "train_architecture_controls.py", "results_architecture_controls.txt"),
+    "architectures": ("jobs_architectures.txt", "architectures", "results_architectures.txt"),
+    "controls": ("jobs_architecture_controls.txt", "architecture_controls", "results_architecture_controls.txt"),
 }
 
 
@@ -23,12 +23,12 @@ def read_jobs(path):
 
 
 def run_one(script, config, seed):
-    proc = subprocess.run([sys.executable, script, config, str(seed)], cwd=HERE,
+    proc = subprocess.run([sys.executable, "training.py", script, config, str(seed)], cwd=HERE,
                           capture_output=True, text=True)
     for line in proc.stdout.splitlines():
         if line.startswith("RESULT "):
             return line
-    raise RuntimeError(f"{script} {config} {seed} produced no RESULT line:\n{proc.stderr[-800:]}")
+    raise RuntimeError(f"training.py {script} {config} {seed} produced no RESULT line:\n{proc.stderr[-800:]}")
 
 
 def committed(path):

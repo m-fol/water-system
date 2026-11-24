@@ -1,11 +1,11 @@
 import json, os
 import numpy as np
-from data import generate_trajectory, MEASUREMENT_NOISE_STD
-import kalman_smoother as K
-from kalman_baselines import kf_general
+from benchmark import generate_trajectory, MEASUREMENT_NOISE_STD
+import kalman as K
+from kalman import kf_general
 from baseline_linear import ridge
-import data as D
-from network import STATE_DIM
+import benchmark as D
+from benchmark import STATE_DIM
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")

@@ -1,7 +1,7 @@
 import json, os
 import numpy as np
 from scipy.stats import rankdata
-from data import generate_trajectory
+from benchmark import generate_trajectory
 
 P = 6
 V_ANTI = np.array([0, 0, 0, 1, 0, -1.0]) / np.sqrt(2)

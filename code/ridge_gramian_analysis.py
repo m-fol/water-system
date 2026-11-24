@@ -1,9 +1,9 @@
 import json, os
 import numpy as np
 from scipy.stats import t as tdist, ttest_1samp
-from data import generate_trajectory
+from benchmark import generate_trajectory
 from baseline_linear import sample, ridge, auc
-from network import STATE_DIM
+from benchmark import STATE_DIM
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")

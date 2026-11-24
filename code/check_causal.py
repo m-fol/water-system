@@ -1,9 +1,9 @@
 import numpy as np
 import torch
 
-from data import generate_trajectory
-from train_architectures import make
-from network import STATE_DIM
+from benchmark import generate_trajectory
+from training import make_architectures as make
+from benchmark import STATE_DIM
 
 N_TRAJ = 30
 T = 64

@@ -1,6 +1,6 @@
 import json, os, sys, time
 import numpy as np
-from data import FLOW_GAIN, PUMP_GAIN, TANK_SETPOINT, BASE_DEMAND, MEASUREMENT_NOISE_STD, generate_trajectory
+from benchmark import FLOW_GAIN, PUMP_GAIN, TANK_SETPOINT, BASE_DEMAND, MEASUREMENT_NOISE_STD, generate_trajectory
 
 DT, SIGMA_D = 0.5, 0.05
 TOPOS = {

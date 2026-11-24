@@ -2,9 +2,9 @@ import json, os, sys
 import numpy as np
 from multiprocessing import Pool
 import imm_true_regimes as E
-from simulator import simulate
-from data import MEASUREMENT_NOISE_STD
-from network import STATE_DIM
+from benchmark import simulate
+from benchmark import MEASUREMENT_NOISE_STD
+from benchmark import STATE_DIM
 
 V = E.V
 N_PER_SET = 100

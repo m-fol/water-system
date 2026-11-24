@@ -7,7 +7,7 @@ import imm_true_regimes as E9
 import imm_supervised as E10
 import imm_label_free as E12
 import neural_controls as N9
-from simulator import simulate as _unused
+from benchmark import simulate as _unused
 
 V = np.array([0, 0, 0, 1, 0, -1.0]) / np.sqrt(2)
 HERE = os.path.dirname(os.path.abspath(__file__))

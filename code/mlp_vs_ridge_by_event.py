@@ -7,7 +7,7 @@ def design(U, P):
     X = np.stack([pad[:, t:t + P].reshape(n, -1) for t in range(T)], axis=1)
     X = np.concatenate([X, np.ones((n, T, 1), np.float32)], axis=2)
     return X.reshape(n * T, -1)
-from data import generate_trajectory
+from benchmark import generate_trajectory
 
 torch.set_num_threads(8); torch.manual_seed(0)
 Utr, Xtr = gen(1000, N_TRAIN)

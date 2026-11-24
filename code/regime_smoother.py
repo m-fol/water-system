@@ -1,8 +1,8 @@
 import json, os
 import numpy as np
 
-from data import generate_trajectory
-from kalman_smoother import build_A, calibrate_Q, kalman_filter, rts_smoother
+from benchmark import generate_trajectory
+from kalman import build_A, calibrate_Q, kalman_filter, rts_smoother
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "results", "smoother_uncorrected_timing.json")

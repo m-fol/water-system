@@ -1,6 +1,6 @@
 import json, os
 import numpy as np
-from simulator import simulate
+from benchmark import simulate
 
 R = 0.03 ** 2
 V = np.array([0, 0, 0, 1, 0, -1.0]) / np.sqrt(2)

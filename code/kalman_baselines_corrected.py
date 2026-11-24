@@ -1,9 +1,9 @@
 import json, os
 import numpy as np
-from data import MEASUREMENT_NOISE_STD
-from network import STATE_DIM
+from benchmark import MEASUREMENT_NOISE_STD
+from benchmark import STATE_DIM
 import imm_true_regimes as E
-from simulator import simulate
+from benchmark import simulate
 
 R = MEASUREMENT_NOISE_STD ** 2
 A0 = E.A_R[0]

@@ -1,8 +1,8 @@
 import json, os, sys
 import numpy as np
-from data import (ADJ, FLOW_GAIN, PUMP_GAIN, TANK_SETPOINT, BASE_DEMAND, MEASUREMENT_NOISE_STD, TANK_IDX, JUNCTION_IDX)
-from network import STATE_DIM
-from simulator import simulate, diurnal
+from benchmark import (ADJ, FLOW_GAIN, PUMP_GAIN, TANK_SETPOINT, BASE_DEMAND, MEASUREMENT_NOISE_STD, TANK_IDX, JUNCTION_IDX)
+from benchmark import STATE_DIM
+from benchmark import simulate, diurnal
 
 DT = 0.5
 R = MEASUREMENT_NOISE_STD ** 2

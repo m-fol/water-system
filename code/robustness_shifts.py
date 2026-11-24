@@ -5,8 +5,8 @@ from multiprocessing import Pool
 import neural_controls as N9
 import imm_true_regimes as E9
 import sensor_only_identification as E21
-import simulator_shifts as S
-from data import FLOW_GAIN, PUMP_GAIN, BASE_DEMAND, MEASUREMENT_NOISE_STD
+import benchmark as S
+from benchmark import FLOW_GAIN, PUMP_GAIN, BASE_DEMAND, MEASUREMENT_NOISE_STD
 
 V = N9.V
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -25,7 +25,7 @@ SCEN = {
 def test_set(name, n=300, seed=777):
     rng = np.random.default_rng(seed); out = []
     for _ in range(n):
-        o, m, x = S.simulate(T=64, rng=rng, **SCEN[name]); out.append((o, m, x))
+        o, m, x = S.simulate_simulator_shifts(T=64, rng=rng, **SCEN[name]); out.append((o, m, x))
     U = np.stack([np.concatenate([o[:, :2], m[:, :2].astype(np.float32)], axis=1) for o, m, x in out]).astype(np.float32)
     X = np.stack([x for o, m, x in out]).astype(np.float32)
     return out, U, X

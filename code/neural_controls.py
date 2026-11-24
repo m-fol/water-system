@@ -2,10 +2,10 @@ import json, os, sys, time
 import numpy as np
 import torch, torch.nn as nn
 from multiprocessing import Pool
-from simulator import simulate
+from benchmark import simulate
 from tune_temporal_networks import build as build_temporal
-from models import _normalized_adjacency, GraphConv
-from data import TANK_IDX
+from neural_models import _normalized_adjacency, GraphConv
+from benchmark import TANK_IDX
 
 STEPS, BATCH, N_TRAIN = 4000, 32, 8000
 V = np.array([0, 0, 0, 1, 0, -1.0]) / np.sqrt(2)

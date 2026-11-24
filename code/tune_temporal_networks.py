@@ -3,7 +3,7 @@ import numpy as np
 import torch, torch.nn as nn
 from multiprocessing import Pool
 
-from data import generate_trajectory
+from benchmark import generate_trajectory
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")

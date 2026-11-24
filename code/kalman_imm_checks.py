@@ -1,10 +1,10 @@
 import json, os
 import numpy as np
-import kalman_smoother as K
-from kalman_baselines import kf_general
-from data import generate_trajectory, MEASUREMENT_NOISE_STD
-import data as D
-from network import STATE_DIM
+import kalman as K
+from kalman import kf_general
+from benchmark import generate_trajectory, MEASUREMENT_NOISE_STD
+import benchmark as D
+from benchmark import STATE_DIM
 import imm_true_regimes as E
 
 R = MEASUREMENT_NOISE_STD ** 2
